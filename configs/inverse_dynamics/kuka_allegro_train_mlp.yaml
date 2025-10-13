@@ -1,0 +1,32 @@
+model:
+  _target_: generative_policies.inverse_dynamics.MlpInverseDynamics
+  name: kuka_allegro_mlp_id
+  action_dim: 23  # Kuka (7 joints) + Allegro (16 joints) = 23 DoF
+  obs_dim: 170  # Actual observation dimension from the dataset
+  net_arch: [256, 256, 256]
+  device: cuda
+  checkpoint_path: null 
+
+training:
+  num_epochs: 1000
+  batch_size: 256
+  learning_rate: 0.001  # 1e-3
+  device: cuda
+  val_split: 0.2
+  save_every_n_epochs: 10
+
+  weight_decay: 0.0001  # 1e-4 (L2 regularization)
+  grad_clip: 1.0        # Gradient clipping threshold (0 to disable)
+
+  lr_scheduler: cosine  # Options: cosine, plateau, step, none
+  warmup_epochs: 10
+
+  early_stopping_patience: 50  # Set to 0 to disable
+
+  normalize_data: true
+
+  use_mixed_precision: true  # Enable mixed precision training on GPU
+
+data:
+  filter_success_only: false  # Only use successful episodes
+  min_reward_threshold: null  # Minimum episode reward (null to disable)
