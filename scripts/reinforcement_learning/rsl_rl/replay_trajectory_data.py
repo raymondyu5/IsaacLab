@@ -130,9 +130,35 @@ def main():
     if env_name is None:
         raise ValueError("Task/env name was not specified nor found in the dataset.")
 
-    num_envs = args_cli.num_envs
+    # Determine required number of environments based on stored env_ids
+    # For MultiAssetSpawner to select correct objects, we need to create all environments up to max env_id
+    episode_names = list(dataset_file_handler.get_episode_names())
+    max_env_id = 0
+    env_id_map = {}  # Maps episode index to env_id
+
+    for idx in episode_indices_to_replay:
+        if idx < len(episode_names):
+            ep_data = dataset_file_handler.load_episode(episode_names[idx], args_cli.device)
+            if ep_data.env_id is not None:
+                env_id_map[idx] = ep_data.env_id
+                max_env_id = max(max_env_id, ep_data.env_id)
+            else:
+                print("env_id not stored")
+                env_id_map[idx] = 0  # Default to 0 if not stored
+
+    # Create enough environments to include the highest env_id
+    # This is required for MultiAssetSpawner determinism (uses env_id % num_assets)
+    num_envs = max(args_cli.num_envs, max_env_id + 1)
+
+    if num_envs != args_cli.num_envs:
+        print(f"[INFO] Adjusted num_envs from {args_cli.num_envs} to {num_envs} for deterministic object spawning")
 
     env_cfg = parse_env_cfg(env_name, device=args_cli.device, num_envs=num_envs)
+
+    # Set seed for deterministic object spawning (must match eval_id_sim)
+    if not hasattr(env_cfg, 'seed') or env_cfg.seed is None:
+        env_cfg.seed = 42
+    print(f"[INFO] Environment seed: {env_cfg.seed}")
 
     # Disable all recorders for clean replay
     env_cfg.recorders = {}
@@ -169,6 +195,38 @@ def main():
 
     env_cfg.terminations = {}
 
+    # Disable all randomization for deterministic replay
+    print("\n[INFO] Configuring deterministic environment...")
+    env_cfg.events = {}
+    if hasattr(env_cfg, 'curriculum'):
+        env_cfg.curriculum = {}
+
+    # Disable observation noise
+    if hasattr(env_cfg, 'observations'):
+        for group_name in ['policy', 'critic']:
+            if hasattr(env_cfg.observations, group_name):
+                group = getattr(env_cfg.observations, group_name)
+                for term_name in dir(group):
+                    if not term_name.startswith('_'):
+                        term = getattr(group, term_name)
+                        if hasattr(term, 'noise'):
+                            term.noise = None
+
+    # Disable action noise
+    if hasattr(env_cfg, 'actions'):
+        for action_name in dir(env_cfg.actions):
+            if not action_name.startswith('_'):
+                action = getattr(env_cfg.actions, action_name)
+                if hasattr(action, 'noise'):
+                    action.noise = None
+
+    # Configure viewer to follow the correct environment
+    if args_cli.video and len(episode_indices_to_replay) == 1:
+        first_ep_idx = list(episode_indices_to_replay)[0]
+        target_env_id = env_id_map.get(first_ep_idx, 0)
+        if hasattr(env_cfg, 'viewer') and env_cfg.viewer is not None:
+            env_cfg.viewer.env_index = target_env_id
+
     # Create environment from loaded config
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None).unwrapped
 
@@ -200,6 +258,7 @@ def main():
     with contextlib.suppress(KeyboardInterrupt) and torch.inference_mode():
         while simulation_app.is_running() and not simulation_app.is_exiting():
             env_episode_data_map = {index: EpisodeData() for index in range(num_envs)}
+            env_episode_index_map = {index: None for index in range(num_envs)}  # Track which episode is in which env
             video_frames_map = {index: [] for index in range(num_envs)} if args_cli.video else None
             first_loop = True
             has_next_action = True
@@ -209,28 +268,46 @@ def main():
                 actions = idle_action
                 has_next_action = False
 
+                # Process episodes by their original env_id to ensure correct object spawning
                 for env_id in range(num_envs):
                     env_next_action = env_episode_data_map[env_id].get_next_action()
 
                     if env_next_action is None:
+                        # Find an episode that should be played in this env_id
                         next_episode_index = None
-                        while episode_indices_to_replay:
-                            next_episode_index = episode_indices_to_replay.pop(0)
-                            if next_episode_index < episode_count:
-                                break
-                            next_episode_index = None
 
-                        if next_episode_index is not None:
+                        # First, try to find an episode that matches this env_id
+                        episodes_to_check = episode_indices_to_replay.copy()
+                        for idx in episodes_to_check:
+                            if idx in env_id_map and env_id_map[idx] == env_id:
+                                next_episode_index = idx
+                                episode_indices_to_replay.remove(idx)
+                                break
+
+                        # REMOVED fallback to env_0 - episodes MUST load into their recorded env_id for correct object spawning
+
+                        if next_episode_index is not None and next_episode_index < episode_count:
                             replayed_episode_count += 1
-                            print(f"{replayed_episode_count :4}: Loading #{next_episode_index} episode to env_{env_id}")
+                            print(f"{replayed_episode_count :4}: Loading episode #{next_episode_index} (env_id={env_id}) to env_{env_id}")
                             episode_data = dataset_file_handler.load_episode(
                                 episode_names[next_episode_index], env.device
                             )
                             env_episode_data_map[env_id] = episode_data
+                            env_episode_index_map[env_id] = next_episode_index  # Track which episode is loaded
 
                             # Set initial state for the new episode
                             initial_state = episode_data.get_initial_state()
                             env.reset_to(initial_state, torch.tensor([env_id], device=env.device), is_relative=True)
+
+                            # Verify initial state (only for first episode)
+                            if replayed_episode_count == 1:
+                                try:
+                                    obj_pos_w = env.scene['object'].data.root_pos_w[env_id]
+                                    env_origin = env.scene.env_origins[env_id]
+                                    obj_pos_local = obj_pos_w - env_origin
+                                    print(f"\nInitial state - Object local position: [{obj_pos_local[0]:.4f}, {obj_pos_local[1]:.4f}, {obj_pos_local[2]:.4f}]")
+                                except (KeyError, AttributeError):
+                                    pass
 
                             # Capture first frame for video
                             if args_cli.video:
@@ -268,9 +345,17 @@ def main():
                     if args_cli.video:
                         frame = env.render()
                         if frame is not None:
-                            for env_id in range(num_envs):
-                                if len(video_frames_map[env_id]) > 0:  # Only if episode is active
-                                    video_frames_map[env_id].append(frame)
+                            # Check if frame is an array of frames (multiple envs) or single frame
+                            if isinstance(frame, (list, tuple)) and len(frame) > 1:
+                                # Multiple frames, one per env
+                                for env_id in range(num_envs):
+                                    if len(video_frames_map[env_id]) > 0 and env_id < len(frame):
+                                        video_frames_map[env_id].append(frame[env_id])
+                            else:
+                                # Single frame for all envs (or just one env)
+                                for env_id in range(num_envs):
+                                    if len(video_frames_map[env_id]) > 0:
+                                        video_frames_map[env_id].append(frame)
 
                     # Validate states if enabled
                     if state_validation_enabled:
@@ -297,20 +382,20 @@ def main():
             # Save videos for completed episodes
             if args_cli.video:
                 for env_id in range(num_envs):
-                    if len(video_frames_map[env_id]) > 1:  # More than just initial frame
-                        # Find which episode this was
-                        episode_idx = replayed_episode_count - (num_envs - env_id)
-                        if episode_idx >= 0:
-                            video_path = os.path.join(args_cli.video_dir, f"episode_{episode_idx:06d}.mp4")
-                            print(f"Saving video for episode {episode_idx} ({len(video_frames_map[env_id])} frames)...")
-                            try:
-                                import imageio
-                                # Stack frames if needed
-                                frames = video_frames_map[env_id]
-                                imageio.mimsave(video_path, frames, fps=30, macro_block_size=1)
-                                print(f"  ✓ Video saved to: {video_path}")
-                            except Exception as e:
-                                print(f"  ✗ Failed to save video: {e}")
+                    num_frames = len(video_frames_map[env_id])
+                    episode_idx = env_episode_index_map[env_id]
+
+                    if num_frames > 1 and episode_idx is not None:  # More than just initial frame
+                        video_path = os.path.join(args_cli.video_dir, f"episode_{episode_idx:06d}.mp4")
+                        print(f"Saving video for episode {episode_idx} ({num_frames} frames)...")
+                        try:
+                            import imageio
+                            # Stack frames if needed
+                            frames = video_frames_map[env_id]
+                            imageio.mimsave(video_path, frames, fps=30, macro_block_size=1)
+                            print(f"Video saved to: {video_path}")
+                        except Exception as e:
+                            print(f"Failed to save video: {e}")
 
             break
 

@@ -132,7 +132,8 @@ class HDF5DatasetFileHandler(DatasetFileHandlerBase):
         if "success" in h5_episode_group.attrs:
             episode.success = h5_episode_group.attrs["success"]
 
-        episode.env_id = self.get_env_name()
+        if "env_id" in h5_episode_group.attrs:
+            episode.env_id = h5_episode_group.attrs["env_id"]
 
         return episode
 
@@ -160,6 +161,9 @@ class HDF5DatasetFileHandler(DatasetFileHandlerBase):
 
         if episode.success is not None:
             h5_episode_group.attrs["success"] = episode.success
+
+        if episode.env_id is not None:
+            h5_episode_group.attrs["env_id"] = episode.env_id
 
         def create_dataset_helper(group, key, value):
             """Helper method to create dataset that contains recursive dict objects."""

@@ -163,6 +163,7 @@ class RecorderManager(ManagerBase):
         self._episodes: dict[int, EpisodeData] = dict()
         for env_id in range(env.num_envs):
             self._episodes[env_id] = EpisodeData()
+            self._episodes[env_id].env_id = env_id
 
         env_name = getattr(env.cfg, "env_name", None)
 
@@ -282,6 +283,7 @@ class RecorderManager(ManagerBase):
 
         for env_id in env_ids:
             self._episodes[env_id] = EpisodeData()
+            self._episodes[env_id].env_id = env_id
 
         # nothing to log here
         return {}
@@ -495,6 +497,7 @@ class RecorderManager(ManagerBase):
                     self._exported_failed_episode_count[env_id] = self._exported_failed_episode_count.get(env_id, 0) + 1
             # Reset the episode buffer for the given environment after export
             self._episodes[env_id] = EpisodeData()
+            self._episodes[env_id].env_id = env_id
 
         if need_to_flush:
             if self._dataset_file_handler is not None:

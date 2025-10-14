@@ -53,6 +53,7 @@ class SceneCfg(InteractiveSceneCfg):
                 ConeCfg(radius=0.05, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
                 ConeCfg(radius=0.025, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
             ],
+            random_choice=False,  # Use deterministic selection based on env_id (env_id % num_assets)
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 solver_position_iteration_count=16,
                 solver_velocity_iteration_count=0,
