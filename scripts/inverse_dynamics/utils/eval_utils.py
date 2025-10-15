@@ -54,7 +54,7 @@ def compute_evaluation_metrics(predictions, ground_truth):
     return metrics
 
 
-def plot_evaluation_results(predictions, ground_truth, metrics, output_path=None):
+def plot_evaluation_results(predictions, ground_truth, metrics, output_path=None, additional_dims=None):
     """
     Create visualization plots for evaluation results.
 
@@ -63,6 +63,7 @@ def plot_evaluation_results(predictions, ground_truth, metrics, output_path=None
         ground_truth: Ground truth actions (N, action_dim)
         metrics: Dictionary of computed metrics
         output_path: Path to save the plot (if None, displays instead)
+        additional_dims: List of additional dimension indices to plot separately (e.g., [14, 16, 22])
     """
     action_dim = predictions.shape[1]
 
@@ -123,3 +124,42 @@ def plot_evaluation_results(predictions, ground_truth, metrics, output_path=None
         plt.show()
 
     plt.close()
+
+    # Create additional plot for user-specified dimensions
+    if additional_dims is not None and len(additional_dims) > 0:
+        # Filter to only valid dimensions
+        available_dims = [d for d in additional_dims if d < action_dim]
+
+        if len(available_dims) > 0:
+            # Calculate grid layout
+            n_dims = len(available_dims)
+            n_cols = min(3, n_dims)
+            n_rows = (n_dims + n_cols - 1) // n_cols
+
+            fig2 = plt.figure(figsize=(6 * n_cols, 5 * n_rows))
+
+            for idx, dim in enumerate(available_dims):
+                plt.subplot(n_rows, n_cols, idx + 1)
+                plt.scatter(ground_truth[:, dim], predictions[:, dim], alpha=0.3, s=1)
+
+                # Add y=x line
+                min_val = min(ground_truth[:, dim].min(), predictions[:, dim].min())
+                max_val = max(ground_truth[:, dim].max(), predictions[:, dim].max())
+                plt.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2, label='Perfect prediction')
+
+                plt.xlabel(f'Ground Truth Dim {dim}')
+                plt.ylabel(f'Predicted Dim {dim}')
+                plt.title(f'Dimension {dim}\ncorr={metrics["correlations"][dim]:.3f}, MSE={metrics["mse_per_dim"][dim]:.6f}')
+                plt.grid(True, alpha=0.3)
+                plt.legend()
+
+            plt.tight_layout()
+
+            if output_path is not None:
+                additional_path = output_path.replace('.png', '_additional_dims.png')
+                plt.savefig(additional_path, dpi=150, bbox_inches='tight')
+                print(f"Additional dimensions plot saved to: {additional_path}")
+            else:
+                plt.show()
+
+            plt.close()

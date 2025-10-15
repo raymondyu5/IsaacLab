@@ -58,7 +58,6 @@ simulation_app = app_launcher.app
 
 """Rest everything follows."""
 
-import contextlib
 import gymnasium as gym
 import os
 import torch
@@ -212,7 +211,7 @@ def main():
                         if hasattr(term, 'noise'):
                             term.noise = None
 
-    # Disable action noise
+    # Disable action noise for directrlenvs
     if hasattr(env_cfg, 'actions'):
         for action_name in dir(env_cfg.actions):
             if not action_name.startswith('_'):
@@ -238,6 +237,7 @@ def main():
         print("Warning: State validation is only supported with a single environment. Skipping state validation.")
 
     # Get idle action (idle actions are applied to envs without next action)
+    # delete? not sure what this is for
     if hasattr(env_cfg, "idle_action"):
         idle_action = env_cfg.idle_action.repeat(num_envs, 1)
     else:
@@ -251,11 +251,10 @@ def main():
     # Reset before starting
     env.reset()
 
-    # Simulate environment -- run everything in inference mode
     episode_names = list(dataset_file_handler.get_episode_names())
     replayed_episode_count = 0
 
-    with contextlib.suppress(KeyboardInterrupt) and torch.inference_mode():
+    with torch.inference_mode():
         while simulation_app.is_running() and not simulation_app.is_exiting():
             env_episode_data_map = {index: EpisodeData() for index in range(num_envs)}
             env_episode_index_map = {index: None for index in range(num_envs)}  # Track which episode is in which env
@@ -283,8 +282,6 @@ def main():
                                 next_episode_index = idx
                                 episode_indices_to_replay.remove(idx)
                                 break
-
-                        # REMOVED fallback to env_0 - episodes MUST load into their recorded env_id for correct object spawning
 
                         if next_episode_index is not None and next_episode_index < episode_count:
                             replayed_episode_count += 1

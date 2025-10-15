@@ -285,7 +285,16 @@ def train_inverse_dynamics(states, actions, next_states, model,
 
         epochs_since_save += 1
         if model_output_path is not None and avg_val_loss <= best_val_loss and epochs_since_save >= save_every_n_epochs:
-            torch.save(model.state_dict(), model_output_path)
+            # Save model state dict along with normalization statistics
+            checkpoint = {
+                'model_state_dict': model.state_dict(),
+                'state_mean': state_mean,
+                'state_std': state_std,
+                'action_mean': action_mean,
+                'action_std': action_std,
+                'normalize_data': normalize_data
+            }
+            torch.save(checkpoint, model_output_path)
             print(f"\nNew best validation loss: {avg_val_loss:.6f}. Checkpoint saved to {model_output_path}")
             epochs_since_save = 0
 

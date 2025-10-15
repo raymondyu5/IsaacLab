@@ -13,6 +13,13 @@ Example usage:
         --config configs/inverse_dynamics/kuka_allegro_train_flow.yaml \
         --dataset_path trajectory_data/data.hdf5 \
         --num_episodes 100
+
+    # Visualize specific action dimensions
+    ./isaaclab.sh -p scripts/inverse_dynamics/eval_id.py \
+        --checkpoint trajectory_data/kuka_allegro_flow_id_20251012_235017.pth \
+        --config configs/inverse_dynamics/kuka_allegro_train_flow.yaml \
+        --dataset_path trajectory_data/data.hdf5 \
+        --plot_dims 14 16 22
 """
 
 import argparse
@@ -50,7 +57,7 @@ def evaluate_inverse_dynamics(states, actions, next_states, model,
 
     batch_size = eval_config.get('batch_size', 256)
     device = eval_config.get('device', 'cpu')
-    normalize_data = eval_config.get('normalize_data', True)
+    normalize_data = eval_config.get('normalize_data', True) # what if we do false for this?
     state_mean = eval_config.get('state_mean', None)
     state_std = eval_config.get('state_std', None)
     action_mean = eval_config.get('action_mean', None)
@@ -134,7 +141,8 @@ def evaluate_inverse_dynamics(states, actions, next_states, model,
     if output_dir is not None:
         os.makedirs(output_dir, exist_ok=True)
         plot_path = os.path.join(output_dir, 'evaluation_results.png')
-        plot_evaluation_results(predictions, ground_truth, metrics, plot_path)
+        plot_evaluation_results(predictions, ground_truth, metrics, plot_path,
+                               additional_dims=eval_config.get('plot_dims', None))
 
         # Save metrics to file
         metrics_path = os.path.join(output_dir, 'evaluation_metrics.txt')
@@ -178,6 +186,8 @@ def main():
                        help='Number of episodes to evaluate (default: all episodes)')
     parser.add_argument('--batch_size', type=int, default=256,
                        help='Batch size for evaluation (default: 256)')
+    parser.add_argument('--plot_dims', type=int, nargs='+', default=None,
+                       help='Additional action dimensions to plot (e.g., --plot_dims 14 16 22)')
 
     args = parser.parse_args()
 
@@ -232,17 +242,25 @@ def main():
 
     print(f"Loading checkpoint from: {args.checkpoint}")
     checkpoint = torch.load(args.checkpoint, map_location='cpu')
-    model.load_state_dict(checkpoint)
+
+    if not isinstance(checkpoint, dict) or 'model_state_dict' not in checkpoint:
+        raise ValueError(
+            "Checkpoint is missing normalization statistics. "
+            "Please retrain the model with the updated train_id.py script."
+        )
+
+    model.load_state_dict(checkpoint['model_state_dict'])
     print("Checkpoint loaded successfully!\n")
 
     eval_config = {
         'batch_size': args.batch_size,
         'device': train_config.get('device', 'cuda'),
-        'normalize_data': train_config.get('normalize_data', True),
-        'state_mean': None,
-        'state_std': None,
-        'action_mean': None,
-        'action_std': None,
+        'normalize_data': checkpoint.get('normalize_data', train_config.get('normalize_data', True)),
+        'state_mean': checkpoint.get('state_mean', None),
+        'state_std': checkpoint.get('state_std', None),
+        'action_mean': checkpoint.get('action_mean', None),
+        'action_std': checkpoint.get('action_std', None),
+        'plot_dims': args.plot_dims,
     }
 
     metrics = evaluate_inverse_dynamics(
