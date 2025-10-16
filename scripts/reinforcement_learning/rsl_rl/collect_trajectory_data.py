@@ -1,9 +1,23 @@
 """
 Script to collect trajectory data from a trained RL policy.
 
-operates simialrly to play.py but collects complete trajectories without recording any env transitions/resets
+Operates similarly to play.py but collects complete trajectories without recording any env transitions/resets.
+Supports automatic train/val/test splitting with metadata preservation for easy replay.
 
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py     --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0     --checkpoint /home/raymond/projects/policy_translation/IsaacLab/logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt     --num_trajectories 30   --num_envs 16     --output_dir ./trajectory_data --min_reward 10 --headless 
+Example usage:
+
+# Basic collection (no splitting)
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py \
+    --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0 \
+    --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt \
+    --num_trajectories 30 \
+    --num_envs 16 \
+    --output_dir ./trajectory_data \
+    --min_reward 10 \
+    --headless
+
+# With train/val/test splitting
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py     --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0     --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt     --num_trajectories 5000     --num_envs 128     --output_dir ./trajectory_data     --min_reward 10     --split_dataset     --train_ratio 0.7     --val_ratio 0.2     --test_ratio 0.1   --split_mode random     --headless
 """
 
 import argparse
@@ -36,6 +50,37 @@ parser.add_argument(
     default=None,
     help="Minimum total episode reward to save (filters out low-reward episodes).",
 )
+parser.add_argument(
+    "--split_dataset",
+    action="store_true",
+    default=False,
+    help="Split collected dataset into train/val/test splits.",
+)
+parser.add_argument(
+    "--train_ratio",
+    type=float,
+    default=0.7,
+    help="Fraction of episodes for training split (default: 0.7).",
+)
+parser.add_argument(
+    "--val_ratio",
+    type=float,
+    default=0.15,
+    help="Fraction of episodes for validation split (default: 0.15).",
+)
+parser.add_argument(
+    "--test_ratio",
+    type=float,
+    default=0.15,
+    help="Fraction of episodes for test split (default: 0.15).",
+)
+parser.add_argument(
+    "--split_mode",
+    type=str,
+    default="sequential",
+    choices=["sequential", "random"],
+    help="How to assign episodes to splits: 'sequential' or 'random' (default: sequential).",
+)
 # append RSL-RL cli arguments
 cli_args.add_rsl_rl_args(parser)
 # append AppLauncher cli args
@@ -56,6 +101,7 @@ import gymnasium as gym
 import os
 import torch
 from datetime import datetime
+from tqdm import tqdm
 
 from rsl_rl.runners import DistillationRunner, OnPolicyRunner
 
@@ -70,11 +116,144 @@ from isaaclab.envs.mdp.recorders import ActionStateRecorderManagerCfg
 from isaaclab.managers import DatasetExportMode, RecorderTermCfg
 from isaaclab.managers.recorder_manager import RecorderTerm
 from isaaclab.utils.assets import retrieve_file_path
+from isaaclab.utils.datasets import HDF5DatasetFileHandler
 
 from isaaclab_rl.rsl_rl import RslRlBaseRunnerCfg, RslRlVecEnvWrapper
 
 import isaaclab_tasks  # noqa: F401
 from isaaclab_tasks.utils.hydra import hydra_task_config
+
+
+def split_dataset_into_train_val_test(
+    source_hdf5_path: str,
+    output_dir: str,
+    train_ratio: float,
+    val_ratio: float,
+    test_ratio: float,
+    split_mode: str = "sequential",
+) -> dict:
+    """
+    Splits a single HDF5 dataset into train/val/test files.
+
+    Each output file will contain:
+    - Subset of episodes based on split ratios
+    - Full environment metadata (identical across all splits)
+    - All episode-level metadata (seed, env_id, success)
+
+    Args:
+        source_hdf5_path: Path to the source HDF5 dataset file
+        output_dir: Directory to save the split files
+        train_ratio: Fraction of episodes for training (e.g., 0.7)
+        val_ratio: Fraction of episodes for validation (e.g., 0.15)
+        test_ratio: Fraction of episodes for test (e.g., 0.15)
+        split_mode: How to assign episodes - "sequential" or "random"
+
+    Returns:
+        Dictionary with statistics about the split
+    """
+    import random
+    import h5py
+
+    # Validate ratios
+    total_ratio = train_ratio + val_ratio + test_ratio
+    if not torch.isclose(torch.tensor(total_ratio), torch.tensor(1.0), atol=1e-6):
+        raise ValueError(f"Split ratios must sum to 1.0, got {total_ratio}")
+
+    # Open source file
+    source_handler = HDF5DatasetFileHandler()
+    source_handler.open(source_hdf5_path, mode="r")
+
+    episode_names = list(source_handler.get_episode_names())
+    num_episodes = len(episode_names)
+
+    if num_episodes == 0:
+        print("[WARNING] Source dataset is empty. No splits created.")
+        source_handler.close()
+        return {}
+
+    print(f"\n[INFO] Splitting {num_episodes} episodes into train/val/test...")
+    print(f"  Ratios: train={train_ratio:.2f}, val={val_ratio:.2f}, test={test_ratio:.2f}")
+    print(f"  Mode: {split_mode}")
+
+    # Calculate split sizes
+    num_train = int(num_episodes * train_ratio)
+    num_val = int(num_episodes * val_ratio)
+    num_test = num_episodes - num_train - num_val  # Remainder goes to test
+
+    # Assign episodes to splits
+    if split_mode == "sequential":
+        train_episodes = episode_names[:num_train]
+        val_episodes = episode_names[num_train : num_train + num_val]
+        test_episodes = episode_names[num_train + num_val :]
+    elif split_mode == "random":
+        shuffled_episodes = episode_names.copy()
+        random.shuffle(shuffled_episodes)
+        train_episodes = shuffled_episodes[:num_train]
+        val_episodes = shuffled_episodes[num_train : num_train + num_val]
+        test_episodes = shuffled_episodes[num_train + num_val :]
+    else:
+        raise ValueError(f"Unknown split_mode: {split_mode}")
+
+    # Create output filenames
+    base_name = os.path.splitext(os.path.basename(source_hdf5_path))[0]
+    train_path = os.path.join(output_dir, f"{base_name}_train.hdf5")
+    val_path = os.path.join(output_dir, f"{base_name}_val.hdf5")
+    test_path = os.path.join(output_dir, f"{base_name}_test.hdf5")
+
+    # Get environment metadata from source
+    with h5py.File(source_hdf5_path, "r") as src_file:
+        env_args = src_file["data"].attrs.get("env_args", "{}")
+
+    # Helper function to create split file
+    def create_split_file(split_path, episode_list, split_name):
+        if len(episode_list) == 0:
+            print(f"[WARNING] No episodes for {split_name} split. Skipping file creation.")
+            return {"total": 0, "successful": 0, "failed": 0}
+
+        handler = HDF5DatasetFileHandler()
+        handler.create(split_path.replace(".hdf5", ""))  # create() adds .hdf5 extension
+
+        # Copy environment metadata
+        import json
+
+        handler._env_args = json.loads(env_args)
+        handler._hdf5_data_group.attrs["env_args"] = env_args
+
+        successful_count = 0
+        failed_count = 0
+
+        for ep_name in episode_list:
+            episode = source_handler.load_episode(ep_name, device="cpu")
+            if episode is not None:
+                handler.write_episode(episode)
+                if episode.success:
+                    successful_count += 1
+                else:
+                    failed_count += 1
+
+        handler.flush()
+        handler.close()
+
+        print(f"  {split_name}: {len(episode_list)} episodes ({successful_count} successful, {failed_count} failed)")
+        print(f"    Saved to: {split_path}")
+
+        return {"total": len(episode_list), "successful": successful_count, "failed": failed_count}
+
+    # Create split files
+    train_stats = create_split_file(train_path, train_episodes, "Train")
+    val_stats = create_split_file(val_path, val_episodes, "Validation")
+    test_stats = create_split_file(test_path, test_episodes, "Test")
+
+    source_handler.close()
+
+    return {
+        "train": train_stats,
+        "val": val_stats,
+        "test": test_stats,
+        "train_path": train_path,
+        "val_path": val_path,
+        "test_path": test_path,
+    }
 
 
 class PostStepRewardsRecorder(RecorderTerm):
@@ -288,6 +467,9 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             device=env.unwrapped.device
         )
 
+    # Initialize progress bar
+    pbar = tqdm(total=args_cli.num_trajectories, desc="Collecting trajectories", unit="traj")
+
     with torch.inference_mode():
         while simulation_app.is_running():
             # Get actions from policy
@@ -325,22 +507,32 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
                     else:
                         status = "SAVED"
                     # print sum meta data
-                    print(f"[INFO] Episode completed (env {env_id_int}): "
-                          f"length = {length} steps, "
-                          f"reward = {total_reward:.2f} [{status}]")
+                    pbar.write(f"[INFO] Episode completed (env {env_id_int}): "
+                               f"length = {length} steps, "
+                               f"reward = {total_reward:.2f} [{status}]")
 
                     # reset counters for this environment
                     episode_rewards[env_id_int] = 0.0
                     episode_lengths[env_id_int] = 0
 
             # Check total episodes collected across all environments (check every step!)
-            total_episodes = env.unwrapped.recorder_manager.exported_successful_episode_count + \
-                           env.unwrapped.recorder_manager.exported_failed_episode_count
+            current_successful_count = env.unwrapped.recorder_manager.exported_successful_episode_count
+            total_episodes = current_successful_count + env.unwrapped.recorder_manager.exported_failed_episode_count
+
+            # Update progress bar only when new successful episodes are saved
+            if current_successful_count > prev_successful_count:
+                pbar.update(current_successful_count - prev_successful_count)
+                prev_successful_count = current_successful_count
 
             # Stop when we've collected enough trajectories
             if total_episodes >= args_cli.num_trajectories:
+                pbar.close()
                 print(f"[INFO] Target of {args_cli.num_trajectories} trajectories reached. Stopping collection.")
                 break
+
+    # Close progress bar if still open
+    if pbar is not None and not pbar.disable:
+        pbar.close()
 
     # final stats
     total_successful = env.unwrapped.recorder_manager.exported_successful_episode_count
@@ -356,6 +548,52 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     print(f"  Failed: {total_failed}")
     print(f"Saved to: {output_file}")
     print(f"{'='*80}\n")
+
+    # Split dataset into train/val/test if requested
+    if args_cli.split_dataset:
+        if not os.path.exists(output_file):
+            print(f"[WARNING] Cannot split dataset: source file not found: {output_file}")
+        elif total_successful + total_failed == 0:
+            print(f"[WARNING] Cannot split dataset: no episodes were collected")
+        else:
+            print(f"\n{'='*80}")
+            print(f"SPLITTING DATASET INTO TRAIN/VAL/TEST")
+            print(f"{'='*80}")
+
+            split_stats = split_dataset_into_train_val_test(
+                source_hdf5_path=output_file,
+                output_dir=output_dir,
+                train_ratio=args_cli.train_ratio,
+                val_ratio=args_cli.val_ratio,
+                test_ratio=args_cli.test_ratio,
+                split_mode=args_cli.split_mode,
+            )
+
+            if split_stats:
+                print(f"\n{'='*80}")
+                print(f"DATASET SPLIT COMPLETED")
+                print(f"{'='*80}")
+                print(f"Source: {output_file}")
+                print(f"Total episodes: {total_successful + total_failed}")
+                print(f"\nTrain split: {os.path.basename(split_stats['train_path'])}")
+                print(f"  Episodes: {split_stats['train']['total']} "
+                      f"({100 * split_stats['train']['total'] / (total_successful + total_failed):.1f}%)")
+                print(f"  Successful: {split_stats['train']['successful']}")
+                print(f"  Failed: {split_stats['train']['failed']}")
+                print(f"\nValidation split: {os.path.basename(split_stats['val_path'])}")
+                print(f"  Episodes: {split_stats['val']['total']} "
+                      f"({100 * split_stats['val']['total'] / (total_successful + total_failed):.1f}%)")
+                print(f"  Successful: {split_stats['val']['successful']}")
+                print(f"  Failed: {split_stats['val']['failed']}")
+                print(f"\nTest split: {os.path.basename(split_stats['test_path'])}")
+                print(f"  Episodes: {split_stats['test']['total']} "
+                      f"({100 * split_stats['test']['total'] / (total_successful + total_failed):.1f}%)")
+                print(f"  Successful: {split_stats['test']['successful']}")
+                print(f"  Failed: {split_stats['test']['failed']}")
+                print(f"{'='*80}\n")
+            else:
+                print(f"[WARNING] Dataset splitting failed or produced no output")
+                print(f"{'='*80}\n")
 
 
 if __name__ == "__main__":
