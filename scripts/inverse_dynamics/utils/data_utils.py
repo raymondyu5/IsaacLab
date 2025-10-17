@@ -74,7 +74,14 @@ def load_trajectory_dataset(dataset_path, filter_success_only=False, min_reward_
                 continue
 
             # Load episode data
-            obs = ep_group['obs'][:]  # (T, obs_dim)
+            # Handle both 'obs' and 'observations' field names
+            if 'obs' in ep_group:
+                obs = ep_group['obs'][:]  # (T, obs_dim)
+            elif 'observations' in ep_group:
+                obs = ep_group['observations'][:]  # (T, obs_dim)
+            else:
+                raise KeyError(f"Episode {ep_name} has no 'obs' or 'observations' field")
+
             actions = ep_group['actions'][:]  # (T, action_dim)
 
             num_steps = obs.shape[0]

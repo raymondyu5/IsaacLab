@@ -17,12 +17,7 @@ Usage:
         --input trajectory_data.h5 \\
         --splits arm:0:6 hand:7:22 gripper:23:24
 
-    # Verify split without creating files
-    python split_trajectory_data.py \\
-        --input trajectory_data.h5 \\
-        --arm_indices 0 6 \\
-        --hand_indices 7 22 \\
-        --dry_run
+    python scripts/reinforcement_learning/rsl_rl/split_trajectory_data.py --input trajectory_data/data2.hdf5 --arm_indices 0 6 --hand_indices 7 22
 """
 
 import argparse
@@ -325,13 +320,6 @@ Examples:
   python split_trajectory_data.py \\
       --input trajectory_data.h5 \\
       --splits left_arm:0:7 right_arm:7:14 torso:14:17
-
-  # Dry run to preview without creating files
-  python split_trajectory_data.py \\
-      --input trajectory_data.h5 \\
-      --arm_indices 0 6 \\
-      --hand_indices 7 22 \\
-      --dry_run
         """
     )
 
@@ -373,12 +361,6 @@ Examples:
         help='Hand action indices (inclusive). Example: --hand_indices 7 22'
     )
 
-    parser.add_argument(
-        '--dry_run',
-        action='store_true',
-        help='Print what would be done without actually creating files'
-    )
-
     args = parser.parse_args()
 
     # Set default output directory
@@ -392,8 +374,7 @@ Examples:
     split_trajectory_data(
         input_path=args.input,
         output_dir=args.output_dir,
-        splits=splits,
-        dry_run=args.dry_run
+        splits=splits
     )
 
 

@@ -99,12 +99,18 @@ def evaluate_inverse_dynamics(states, actions, next_states, model,
     all_ground_truth = []
 
     print("Running inference on evaluation dataset...")
+    if normalize_data and action_mean is not None and action_std is not None:
+        print("Note: Predictions will be denormalized to match ground truth scale")
     with torch.no_grad():
         for batch_states, batch_actions, batch_next_states in tqdm(dataloader, desc="Evaluating"):
             batch_states = batch_states.to(device)
             batch_next_states = batch_next_states.to(device)
 
             preds = model.predict(batch_states, batch_next_states)
+
+            # Denormalize predictions to match ground truth scale
+            if normalize_data and action_mean is not None and action_std is not None:
+                preds = preds * action_std.cpu().numpy() + action_mean.cpu().numpy()
 
             all_predictions.append(preds)
             all_ground_truth.append(batch_actions.cpu().numpy())

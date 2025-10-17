@@ -1,15 +1,17 @@
 """Script to train inverse dynamics model from trajectory data.
 
 Example usage:
-    # Train with config file
+    # Train with separate train/val datasets
     ./isaaclab.sh -p scripts/inverse_dynamics/train_id.py \
-        --config configs/inverse_dynamics/training_config.yaml \
-        --dataset_path trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251012_221227.hdf5
+        --config configs/inverse_dynamics/kuka_allegro_train_mlp.yaml \
+        --train_dataset trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251016_000750_train.hdf5 \
+        --val_dataset trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251016_000750_test.hdf5
 
     # Train with custom output directory
     ./isaaclab.sh -p scripts/inverse_dynamics/train_id.py \
-        --config configs/inverse_dynamics/training_config.yaml \
-        --dataset_path trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251012_221227.hdf5 \
+        --config configs/inverse_dynamics/kuka_allegro_train_mlp.yaml \
+        --train_dataset trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251016_000750_train.hdf5 \
+        --val_dataset trajectory_data/trajectories_Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0_20251016_000750_test.hdf5 \
         --output_dir trained_models/
 """
 
@@ -18,7 +20,7 @@ import os
 import yaml
 import torch
 import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset, random_split
+from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 import wandb
 import datetime
@@ -28,14 +30,18 @@ import inspect
 from utils.data_utils import load_trajectory_dataset
 
 
-def train_inverse_dynamics(states, actions, next_states, model,
-                          train_config, model_output_path=None):
+def train_inverse_dynamics(train_states, train_actions, train_next_states,
+                          val_states, val_actions, val_next_states,
+                          model, train_config, model_output_path=None):
     """Train the Inverse Dynamics model.
 
     Args:
-        states: Training state observations
-        actions: Training actions
-        next_states: Training next state observations
+        train_states: Training state observations
+        train_actions: Training actions
+        train_next_states: Training next state observations
+        val_states: Validation state observations
+        val_actions: Validation actions
+        val_next_states: Validation next state observations
         model: The inverse dynamics model to train
         train_config: Dictionary containing all training hyperparameters
         model_output_path: Path to save the best model checkpoint
@@ -45,7 +51,6 @@ def train_inverse_dynamics(states, actions, next_states, model,
     learning_rate = train_config.get('learning_rate', 1e-3)
     batch_size = train_config.get('batch_size', 64)
     device = train_config.get('device', 'cpu')
-    val_split = train_config.get('val_split', 0.2)
     save_every_n_epochs = train_config.get('save_every_n_epochs', 1)
     weight_decay = train_config.get('weight_decay', 1e-4)
     grad_clip = train_config.get('grad_clip', 1.0)
@@ -59,13 +64,19 @@ def train_inverse_dynamics(states, actions, next_states, model,
     print("=" * 80)
 
     # Convert to tensors
-    states_tensor = torch.FloatTensor(states)
-    actions_tensor = torch.FloatTensor(actions)
-    next_states_tensor = torch.FloatTensor(next_states)
+    train_states_tensor = torch.FloatTensor(train_states)
+    train_actions_tensor = torch.FloatTensor(train_actions)
+    train_next_states_tensor = torch.FloatTensor(train_next_states)
+
+    val_states_tensor = torch.FloatTensor(val_states)
+    val_actions_tensor = torch.FloatTensor(val_actions)
+    val_next_states_tensor = torch.FloatTensor(val_next_states)
 
     # Add action dimension if not present
-    if len(actions_tensor.shape) == 1:
-        actions_tensor = actions_tensor.unsqueeze(1)
+    if len(train_actions_tensor.shape) == 1:
+        train_actions_tensor = train_actions_tensor.unsqueeze(1)
+    if len(val_actions_tensor.shape) == 1:
+        val_actions_tensor = val_actions_tensor.unsqueeze(1)
 
     # Normalize data for stable training
     state_mean, state_std = None, None
@@ -76,16 +87,20 @@ def train_inverse_dynamics(states, actions, next_states, model,
         print("DATA NORMALIZATION")
         print("-" * 80)
 
-        # Normalize states
-        state_mean = states_tensor.mean(dim=0, keepdim=True)
-        state_std = states_tensor.std(dim=0, keepdim=True) + 1e-8
-        states_tensor = (states_tensor - state_mean) / state_std
-        next_states_tensor = (next_states_tensor - state_mean) / state_std
+        # Normalize states (compute statistics from training set only)
+        state_mean = train_states_tensor.mean(dim=0, keepdim=True)
+        state_std = train_states_tensor.std(dim=0, keepdim=True) + 1e-8
+        train_states_tensor = (train_states_tensor - state_mean) / state_std
+        train_next_states_tensor = (train_next_states_tensor - state_mean) / state_std
 
-        # Normalize actions
-        action_mean = actions_tensor.mean(dim=0, keepdim=True)
-        action_std = actions_tensor.std(dim=0, keepdim=True) + 1e-8
-        actions_tensor = (actions_tensor - action_mean) / action_std
+        val_states_tensor = (val_states_tensor - state_mean) / state_std
+        val_next_states_tensor = (val_next_states_tensor - state_mean) / state_std
+
+        # Normalize actions (compute statistics from training set only)
+        action_mean = train_actions_tensor.mean(dim=0, keepdim=True)
+        action_std = train_actions_tensor.std(dim=0, keepdim=True) + 1e-8
+        train_actions_tensor = (train_actions_tensor - action_mean) / action_std
+        val_actions_tensor = (val_actions_tensor - action_mean) / action_std
 
         print(f"State mean: min={state_mean.min().item():.4f}, max={state_mean.max().item():.4f}")
         print(f"State std: min={state_std.min().item():.4f}, max={state_std.max().item():.4f}")
@@ -93,16 +108,9 @@ def train_inverse_dynamics(states, actions, next_states, model,
         print(f"Action std: min={action_std.min().item():.4f}, max={action_std.max().item():.4f}")
         print("-" * 80 + "\n")
 
-    # Create dataset and split into train/val
-    dataset = TensorDataset(states_tensor, actions_tensor, next_states_tensor)
-
-    # Calculate split sizes
-    total_size = len(dataset)
-    val_size = int(val_split * total_size)
-    train_size = total_size - val_size
-
-    # Split dataset
-    train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+    # Create datasets
+    train_dataset = TensorDataset(train_states_tensor, train_actions_tensor, train_next_states_tensor)
+    val_dataset = TensorDataset(val_states_tensor, val_actions_tensor, val_next_states_tensor)
 
     # Create dataloaders with num_workers for faster loading
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
@@ -111,8 +119,8 @@ def train_inverse_dynamics(states, actions, next_states, model,
                                num_workers=2, pin_memory=True if device == 'cuda' else False)
 
     print(f"\nDataset Split:")
-    print(f"  Train samples: {train_size:,}")
-    print(f"  Validation samples: {val_size:,}")
+    print(f"  Train samples: {len(train_dataset):,}")
+    print(f"  Validation samples: {len(val_dataset):,}")
 
     model.to(device)
 
@@ -346,10 +354,12 @@ def main():
     parser = argparse.ArgumentParser(description='Train inverse dynamics model from trajectory dataset')
     parser.add_argument('--config', type=str, required=True,
                        help='Path to training config YAML file containing model and training hyperparameters')
-    parser.add_argument('--dataset_path', type=str, required=True,
-                       help='Path to trajectory dataset HDF5 file (from collect_trajectory_data.py)')
+    parser.add_argument('--train_dataset', type=str, required=True,
+                       help='Path to training trajectory dataset HDF5 file')
+    parser.add_argument('--val_dataset', type=str, required=True,
+                       help='Path to validation trajectory dataset HDF5 file')
     parser.add_argument('--output_dir', type=str, default=None,
-                       help='Directory to save trained model (default: same directory as dataset)')
+                       help='Directory to save trained model (default: same directory as train dataset)')
     parser.add_argument('--wandb_mode', type=str, default='online', choices=['online', 'offline', 'disabled'],
                        help='Wandb logging mode (default: online)')
 
@@ -361,15 +371,18 @@ def main():
     with open(args.config, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
-    if not os.path.exists(args.dataset_path):
-        raise FileNotFoundError(f"Dataset file not found: {args.dataset_path}")
+    if not os.path.exists(args.train_dataset):
+        raise FileNotFoundError(f"Train dataset file not found: {args.train_dataset}")
+
+    if not os.path.exists(args.val_dataset):
+        raise FileNotFoundError(f"Validation dataset file not found: {args.val_dataset}")
 
     model_config = config.get('model', {})
     train_config = config.get('training', {})
     data_config = config.get('data', {})
 
     model_name = model_config.get('name', 'inverse_dynamics_model')
-    output_dir = args.output_dir if args.output_dir else os.path.dirname(args.dataset_path)
+    output_dir = args.output_dir if args.output_dir else os.path.dirname(args.train_dataset)
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     model_output_path = os.path.join(output_dir, f'{model_name}_{timestamp}.pth')
@@ -378,14 +391,24 @@ def main():
     print("INVERSE DYNAMICS TRAINING")
     print("=" * 80)
     print(f"Config: {args.config}")
-    print(f"Dataset: {args.dataset_path}")
+    print(f"Train dataset: {args.train_dataset}")
+    print(f"Val dataset: {args.val_dataset}")
     print(f"Output path: {model_output_path}")
     print(f"Device: {train_config.get('device', 'cuda')}")
     print("=" * 80 + "\n")
 
-    # Load dataset
-    states, actions, next_states = load_trajectory_dataset(
-        args.dataset_path,
+    # Load train dataset
+    print("Loading training dataset...")
+    train_states, train_actions, train_next_states = load_trajectory_dataset(
+        args.train_dataset,
+        filter_success_only=data_config.get('filter_success_only', False),
+        min_reward_threshold=data_config.get('min_reward_threshold', None)
+    )
+
+    # Load validation dataset
+    print("Loading validation dataset...")
+    val_states, val_actions, val_next_states = load_trajectory_dataset(
+        args.val_dataset,
         filter_success_only=data_config.get('filter_success_only', False),
         min_reward_threshold=data_config.get('min_reward_threshold', None)
     )
@@ -403,13 +426,14 @@ def main():
     model = model_class(**model_params)
 
     wandb_config = {
-        "dataset_path": args.dataset_path,
+        "train_dataset_path": args.train_dataset,
+        "val_dataset_path": args.val_dataset,
         "config_path": args.config,
     }
     wandb_config.update(config)
 
-    # Extract task name from dataset path for tags (remove later)
-    dataset_basename = os.path.basename(args.dataset_path)
+    # Extract task name from dataset path for tags
+    dataset_basename = os.path.basename(args.train_dataset)
     wandb_tags = [model_name, 'inverse_dynamics']
     if 'Dexsuite' in dataset_basename:
         wandb_tags.append('dexsuite')
@@ -425,7 +449,9 @@ def main():
     )
 
     model, train_losses, val_losses = train_inverse_dynamics(
-        states, actions, next_states, model,
+        train_states, train_actions, train_next_states,
+        val_states, val_actions, val_next_states,
+        model,
         train_config=train_config,
         model_output_path=model_output_path
     )

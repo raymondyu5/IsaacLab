@@ -515,14 +515,13 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
                     episode_rewards[env_id_int] = 0.0
                     episode_lengths[env_id_int] = 0
 
-            # Check total episodes collected across all environments (check every step!)
-            current_successful_count = env.unwrapped.recorder_manager.exported_successful_episode_count
-            total_episodes = current_successful_count + env.unwrapped.recorder_manager.exported_failed_episode_count
+                # Update progress bar based on total completed episodes
+                total_episodes = env.unwrapped.recorder_manager.exported_successful_episode_count + env.unwrapped.recorder_manager.exported_failed_episode_count
+                pbar.n = total_episodes
+                pbar.refresh()
 
-            # Update progress bar only when new successful episodes are saved
-            if current_successful_count > prev_successful_count:
-                pbar.update(current_successful_count - prev_successful_count)
-                prev_successful_count = current_successful_count
+            # Check total episodes collected across all environments
+            total_episodes = env.unwrapped.recorder_manager.exported_successful_episode_count + env.unwrapped.recorder_manager.exported_failed_episode_count
 
             # Stop when we've collected enough trajectories
             if total_episodes >= args_cli.num_trajectories:
