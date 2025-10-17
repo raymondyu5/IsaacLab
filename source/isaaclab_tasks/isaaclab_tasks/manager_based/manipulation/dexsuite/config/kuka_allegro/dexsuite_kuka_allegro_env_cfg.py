@@ -77,3 +77,37 @@ class DexsuiteKukaAllegroLiftEnvCfg(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEn
 @configclass
 class DexsuiteKukaAllegroLiftEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
     pass
+
+
+@configclass
+class DexsuiteKukaAllegroLiftSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg):
+    """Kuka Allegro lift task with slippery objects"""
+
+    def __post_init__(self):
+        super().__post_init__()
+
+        # Make only the objects more slippery (reduce friction)
+        self.events.object_physics_material.params["static_friction_range"] = [0.05, 0.2]
+        self.events.object_physics_material.params["dynamic_friction_range"] = [0.05, 0.2]
+
+        # Also reduce the base object friction (defined in scene)
+        for asset in self.scene.object.spawn.assets_cfg:
+            asset.physics_material.static_friction = 0.1
+            asset.physics_material.dynamic_friction = 0.1
+
+
+@configclass
+class DexsuiteKukaAllegroLiftSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
+    """Kuka Allegro lift task with slippery objects (play mode)"""
+
+    def __post_init__(self):
+        super().__post_init__()
+
+        # Make only the objects more slippery (reduce friction)
+        self.events.object_physics_material.params["static_friction_range"] = [0.05, 0.2]
+        self.events.object_physics_material.params["dynamic_friction_range"] = [0.05, 0.2]
+
+        # Also reduce the base object friction (defined in scene)
+        for asset in self.scene.object.spawn.assets_cfg:
+            asset.physics_material.static_friction = 0.1
+            asset.physics_material.dynamic_friction = 0.1
