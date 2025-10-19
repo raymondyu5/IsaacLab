@@ -71,7 +71,7 @@ class DexsuiteKukaAllegroReorientEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.Dexsu
 
 @configclass
 class DexsuiteKukaAllegroReorientSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.DexsuiteReorientEnvCfg):
-    """Kuka Allegro reorient task with slippery objects"""
+    """Kuka Allegro reorient task with slippery and heavy objects"""
 
     def __post_init__(self):
         super().__post_init__()
@@ -84,11 +84,17 @@ class DexsuiteKukaAllegroReorientSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.De
         for asset in self.scene.object.spawn.assets_cfg:
             asset.physics_material.static_friction = 0.1
             asset.physics_material.dynamic_friction = 0.1
+
+        # Make objects heavier (increase base mass from 0.2 kg to 0.4 kg)
+        self.scene.object.spawn.mass_props.mass = 0.4
+
+        # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
+        self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
 
 
 @configclass
 class DexsuiteKukaAllegroReorientSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteReorientEnvCfg_PLAY):
-    """Kuka Allegro reorient task with slippery objects (play mode)"""
+    """Kuka Allegro reorient task with slippery and heavy objects (play mode)"""
 
     def __post_init__(self):
         super().__post_init__()
@@ -101,6 +107,12 @@ class DexsuiteKukaAllegroReorientSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsui
         for asset in self.scene.object.spawn.assets_cfg:
             asset.physics_material.static_friction = 0.1
             asset.physics_material.dynamic_friction = 0.1
+
+        # Make objects heavier (increase base mass from 0.2 kg to 0.4 kg)
+        self.scene.object.spawn.mass_props.mass = 0.4
+
+        # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
+        self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
 
 
 @configclass
@@ -115,7 +127,7 @@ class DexsuiteKukaAllegroLiftEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteL
 
 @configclass
 class DexsuiteKukaAllegroLiftSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg):
-    """Kuka Allegro lift task with slippery objects"""
+    """Kuka Allegro lift task with slippery and heavy objects"""
 
     def __post_init__(self):
         super().__post_init__()
@@ -128,11 +140,17 @@ class DexsuiteKukaAllegroLiftSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.Dexsui
         for asset in self.scene.object.spawn.assets_cfg:
             asset.physics_material.static_friction = 0.1
             asset.physics_material.dynamic_friction = 0.1
+
+        # Make objects heavier (increase base mass from 0.2 kg to 0.4 kg)
+        self.scene.object.spawn.mass_props.mass = 0.4
+
+        # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
+        self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
 
 
 @configclass
 class DexsuiteKukaAllegroLiftSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
-    """Kuka Allegro lift task with slippery objects (play mode)"""
+    """Kuka Allegro lift task with slippery and heavy objects (play mode)"""
 
     def __post_init__(self):
         super().__post_init__()
@@ -145,3 +163,9 @@ class DexsuiteKukaAllegroLiftSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.D
         for asset in self.scene.object.spawn.assets_cfg:
             asset.physics_material.static_friction = 0.1
             asset.physics_material.dynamic_friction = 0.1
+
+        # Make objects heavier (increase base mass from 0.2 kg to 0.4 kg)
+        self.scene.object.spawn.mass_props.mass = 0.4
+
+        # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
+        self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
