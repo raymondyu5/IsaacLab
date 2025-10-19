@@ -16,6 +16,17 @@ Example usage:
     --min_reward 10 \
     --headless
 
+# With reward range filtering (min and max)
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py \
+    --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0 \
+    --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt \
+    --num_trajectories 100 \
+    --num_envs 32 \
+    --output_dir ./trajectory_data \
+    --min_reward 10 \
+    --max_reward 25 \
+    --headless
+
 # With train/val/test splitting
 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py     --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0     --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt     --num_trajectories 5000     --num_envs 128     --output_dir ./trajectory_data     --min_reward 10     --split_dataset     --train_ratio 0.7     --val_ratio 0.2     --test_ratio 0.1   --split_mode random     --headless
 """
@@ -49,6 +60,12 @@ parser.add_argument(
     type=float,
     default=None,
     help="Minimum total episode reward to save (filters out low-reward episodes).",
+)
+parser.add_argument(
+    "--max_reward",
+    type=float,
+    default=None,
+    help="Maximum total episode reward to save (filters out high-reward episodes).",
 )
 parser.add_argument(
     "--split_dataset",
@@ -271,12 +288,13 @@ _reward_success_tracker = None
 class RewardBasedSuccess:
     """helper to track cumulative rewards and determine success based on threshold.
 
-    mark episodes as successful if their total reward exceeds a threshold,
+    mark episodes as successful if their total reward is within [min_reward, max_reward],
     enabling filtering with EXPORT_SUCCEEDED_ONLY mode.
     """
 
-    def __init__(self, num_envs: int, min_reward: float, device: str):
-        self.min_reward = min_reward
+    def __init__(self, num_envs: int, min_reward: float = None, max_reward: float = None, device: str = "cuda"):
+        self.min_reward = min_reward if min_reward is not None else float('-inf')
+        self.max_reward = max_reward if max_reward is not None else float('inf')
         self.device = device
         self.cumulative_rewards = torch.zeros(num_envs, device=device)
 
@@ -288,9 +306,11 @@ class RewardBasedSuccess:
         """check if current cumulative rewards meet threshold.
 
         Returns:
-            boolean tensor indicating which episodes currently meet the threshold
+            boolean tensor indicating which episodes are within [min_reward, max_reward]
         """
-        return self.cumulative_rewards >= self.min_reward
+        above_min = self.cumulative_rewards >= self.min_reward
+        below_max = self.cumulative_rewards <= self.max_reward
+        return above_min & below_max
 
     def reset(self, env_ids: torch.Tensor):
         """reset cumulative rewards for completed episodes.
@@ -301,22 +321,31 @@ class RewardBasedSuccess:
         self.cumulative_rewards[env_ids] = 0.0
 
 
-def reward_threshold_success(env, min_reward: float) -> torch.Tensor:
-    """termination function that checks if cumulative reward meets threshold.
+def reward_threshold_success(env, min_reward: float = None, max_reward: float = None) -> torch.Tensor:
+    """termination function that checks if cumulative reward is within threshold range.
 
     used by the TerminationManager to mark episodes as successful
     based on total reward, enabling filtering with EXPORT_SUCCEEDED_ONLY mode.
 
+    IMPORTANT: This should only return True when episodes are actually terminating,
+    not during the episode. Otherwise episodes get marked successful prematurely.
+
     Args:
         env: The environment instance
-        min_reward: Minimum reward threshold
+        min_reward: Minimum reward threshold (inclusive)
+        max_reward: Maximum reward threshold (inclusive)
 
     Returns:
-        Boolean tensor indicating which episodes are successful
+        Boolean tensor indicating which episodes are successful (only for terminating episodes)
     """
     global _reward_success_tracker
     if _reward_success_tracker is not None:
-        return _reward_success_tracker.check_success()
+        # Only check success for episodes that are actually done
+        # This prevents marking episodes as successful before they complete
+        done_mask = env.termination_manager.terminated | env.termination_manager.time_outs
+        success_mask = _reward_success_tracker.check_success()
+        # Return True only for episodes that are both done AND meet the reward threshold
+        return done_mask & success_mask
     else:
         # never mark as successful
         return torch.zeros(env.num_envs, dtype=torch.bool, device=env.device)
@@ -385,9 +414,16 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     env_cfg.recorders.dataset_filename = output_file_name
 
     # Set export mode based on reward filtering
-    if args_cli.min_reward is not None:
+    if args_cli.min_reward is not None or args_cli.max_reward is not None:
         env_cfg.recorders.dataset_export_mode = DatasetExportMode.EXPORT_SUCCEEDED_ONLY
-        print(f"[INFO] Reward filtering enabled: Only saving episodes with total reward >= {args_cli.min_reward}")
+
+        # Build filter description
+        filter_desc = []
+        if args_cli.min_reward is not None:
+            filter_desc.append(f"reward >= {args_cli.min_reward}")
+        if args_cli.max_reward is not None:
+            filter_desc.append(f"reward <= {args_cli.max_reward}")
+        print(f"[INFO] Reward filtering enabled: Only saving episodes with {' and '.join(filter_desc)}")
 
         # add a "success" termination term that checks reward threshold
         # used by RecorderManager to determine which episodes to export
@@ -402,7 +438,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
         # add custom success termination based on reward threshold
         env_cfg.terminations.success = TerminationTermCfg(
             func=reward_threshold_success,
-            params={"min_reward": args_cli.min_reward}
+            params={"min_reward": args_cli.min_reward, "max_reward": args_cli.max_reward}
         )
     else:
         env_cfg.recorders.dataset_export_mode = DatasetExportMode.EXPORT_ALL
@@ -460,10 +496,11 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
 
     # Initialize reward-based success tracker if filtering is enabled
     global _reward_success_tracker
-    if args_cli.min_reward is not None:
+    if args_cli.min_reward is not None or args_cli.max_reward is not None:
         _reward_success_tracker = RewardBasedSuccess(
             num_envs=env_cfg.scene.num_envs,
             min_reward=args_cli.min_reward,
+            max_reward=args_cli.max_reward,
             device=env.unwrapped.device
         )
 
@@ -501,8 +538,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
                     length = episode_lengths[env_id_int].item()
 
                     # Determine if this episode will be saved
-                    if args_cli.min_reward is not None:
-                        will_save = total_reward >= args_cli.min_reward
+                    if args_cli.min_reward is not None or args_cli.max_reward is not None:
+                        min_ok = total_reward >= args_cli.min_reward if args_cli.min_reward is not None else True
+                        max_ok = total_reward <= args_cli.max_reward if args_cli.max_reward is not None else True
+                        will_save = min_ok and max_ok
                         status = "SAVED" if will_save else "FILTERED"
                     else:
                         status = "SAVED"

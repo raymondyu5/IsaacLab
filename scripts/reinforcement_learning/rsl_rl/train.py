@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 """Script to train RL agent with RSL-RL."""
-
+"""./isaaclab.sh -p -m torch.distributed.run --nnodes=1 --nproc_per_node=1 scripts/reinforcement_learning/rsl_rl/train.py --task Isaac-Dexsuite-Kuka-Allegro-Reorient-v0 --num_envs 4096 --headless --distributed"""
 """Launch Isaac Sim Simulator first."""
 
 import argparse
@@ -31,6 +31,9 @@ parser.add_argument(
     "--distributed", action="store_true", default=False, help="Run training with multiple GPUs or nodes."
 )
 parser.add_argument("--export_io_descriptors", action="store_true", default=False, help="Export IO descriptors.")
+parser.add_argument("--wandb", action="store_true", default=False, help="Enable Weights & Biases logging.")
+parser.add_argument("--wandb_project", type=str, default="isaaclab-rsl-rl", help="Weights & Biases project name.")
+parser.add_argument("--wandb_entity", type=str, default=None, help="Weights & Biases entity (team) name.")
 # append RSL-RL cli arguments
 cli_args.add_rsl_rl_args(parser)
 # append AppLauncher cli args
@@ -79,6 +82,12 @@ from datetime import datetime
 
 import omni
 from rsl_rl.runners import DistillationRunner, OnPolicyRunner
+
+try:
+    import wandb
+    WANDB_AVAILABLE = True
+except ImportError:
+    WANDB_AVAILABLE = False
 
 from isaaclab.envs import (
     DirectMARLEnv,
@@ -141,6 +150,37 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
         log_dir += f"_{agent_cfg.run_name}"
     log_dir = os.path.join(log_root_path, log_dir)
 
+    # initialize wandb if enabled
+    if args_cli.wandb:
+        if not WANDB_AVAILABLE:
+            raise ImportError(
+                "Weights & Biases is not installed. Please install it with: pip install wandb"
+            )
+
+        # only initialize wandb on the main process in distributed training
+        if not args_cli.distributed or app_launcher.local_rank == 0:
+            wandb_config = {
+                "task": args_cli.task,
+                "num_envs": env_cfg.scene.num_envs,
+                "seed": agent_cfg.seed,
+                "max_iterations": agent_cfg.max_iterations,
+                "agent": vars(agent_cfg),
+                "env": vars(env_cfg),
+            }
+
+            wandb.init(
+                project=args_cli.wandb_project,
+                entity=args_cli.wandb_entity,
+                name=log_dir.split("/")[-1],  # use the timestamped run name
+                config=wandb_config,
+                sync_tensorboard=True,  # sync tensorboard logs to wandb
+                monitor_gym=False,  # we'll handle logging manually
+                save_code=True,
+            )
+            print(f"[INFO] Weights & Biases logging enabled. Project: {args_cli.wandb_project}")
+        else:
+            print(f"[INFO] Skipping wandb initialization on rank {app_launcher.local_rank}")
+
     # set the IO descriptors export flag if requested
     if isinstance(env_cfg, ManagerBasedRLEnvCfg):
         env_cfg.export_io_descriptors = args_cli.export_io_descriptors
@@ -201,6 +241,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
 
     # run training
     runner.learn(num_learning_iterations=agent_cfg.max_iterations, init_at_random_ep_len=True)
+
+    # finish wandb run if enabled
+    if args_cli.wandb and (not args_cli.distributed or app_launcher.local_rank == 0):
+        wandb.finish()
 
     # close the simulator
     env.close()
