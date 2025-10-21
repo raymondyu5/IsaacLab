@@ -44,6 +44,18 @@ parser.add_argument(
 parser.add_argument(
     "--save_results", type=str, default=None, help="Path to save evaluation results (JSON format)."
 )
+parser.add_argument(
+    "--visualize_obs",
+    action="store_true",
+    default=False,
+    help="Visualize the first 3 observation dimensions in real-time.",
+)
+parser.add_argument(
+    "--visualize_episode",
+    type=int,
+    default=None,
+    help="Record observations only for a specific episode number (1-indexed, e.g., 1 = first episode, 5 = fifth episode). If None, records all episodes.",
+)
 # append RSL-RL cli arguments
 cli_args.add_rsl_rl_args(parser)
 # append AppLauncher cli args
@@ -65,6 +77,7 @@ simulation_app = app_launcher.app
 
 import gymnasium as gym
 import json
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 import time
@@ -89,6 +102,172 @@ from isaaclab_rl.rsl_rl import RslRlBaseRunnerCfg, RslRlVecEnvWrapper, export_po
 import isaaclab_tasks  # noqa: F401
 from isaaclab_tasks.utils import get_checkpoint_path
 from isaaclab_tasks.utils.hydra import hydra_task_config
+
+
+class ObservationVisualizer:
+    """Class to collect and save observation data as plots."""
+
+    def __init__(self, num_envs: int, save_dir: str, target_episode: int = None, env=None):
+        """
+        Args:
+            num_envs: Number of parallel environments.
+            save_dir: Directory to save the plots.
+            target_episode: If specified, only record this episode number (1-indexed). None = record all.
+            env: Environment instance to extract true joint positions from (optional).
+        """
+        self.num_envs = num_envs
+        self.save_dir = save_dir
+        self.target_episode = target_episode
+        self.env = env
+
+        # Store all observations from the first environment
+        self.obs_history = []
+
+        # Track current episode number for env 0 (starts at 1, increments when episodes complete)
+        self.current_episode = 1
+        # Start recording immediately if no target specified, or if target is episode 1
+        self.is_recording = (target_episode is None) or (target_episode == 1)
+        self.recording_started = False
+
+        # Create save directory
+        os.makedirs(save_dir, exist_ok=True)
+
+        if target_episode is not None:
+            if target_episode < 1:
+                raise ValueError(f"Episode number must be >= 1, got {target_episode}")
+            print(f"[INFO] Will record observations only for episode {target_episode}")
+
+    def update(self, obs, dones):
+        """Collect observations (first 3 proprio joint values).
+
+        Args:
+            obs: Observation (can be TensorDict or Tensor).
+            dones: Done flags to track episode boundaries.
+        """
+        # Only record if we're on the target episode or recording all episodes
+        if self.is_recording:
+            # Handle TensorDict - extract the 'proprio' term
+            if hasattr(obs, 'keys'):
+                # Debug: print available keys on first call
+                if not hasattr(self, '_printed_keys'):
+                    print(f"[DEBUG] Available observation keys: {list(obs.keys())}")
+                    self._printed_keys = True
+
+                # TensorDict - extract the 'proprio' key which contains proprioceptive observations
+                if 'proprio' in obs:
+                    obs_tensor = obs['proprio']
+                    if not hasattr(self, '_printed_proprio_shape'):
+                        print(f"[DEBUG] Proprio shape: {obs_tensor.shape}")
+                        print(f"[DEBUG] First 30 proprio values (env 0): {obs_tensor[0, :30].cpu().numpy()}")
+                        print(f"[DEBUG] Values at indices 100-130: {obs_tensor[0, 100:130].cpu().numpy()}")
+                        print(f"[DEBUG] Min/Max/Mean of all proprio: {obs_tensor[0].min():.4f} / {obs_tensor[0].max():.4f} / {obs_tensor[0].mean():.4f}")
+                        self._printed_proprio_shape = True
+                elif 'policy' in obs:
+                    # Fallback to 'policy' if 'proprio' doesn't exist
+                    obs_tensor = obs['policy']
+                    if not hasattr(self, '_warned_no_proprio'):
+                        print("[WARNING] No 'proprio' key found, using 'policy' observations instead")
+                        print(f"[DEBUG] Policy obs shape: {obs_tensor.shape}")
+                        print(f"[DEBUG] First 10 policy values (env 0): {obs_tensor[0, :10].cpu().numpy()}")
+                        self._warned_no_proprio = True
+                else:
+                    # If no 'policy' or 'proprio' key, try to get the first key
+                    first_key = list(obs.keys())[0]
+                    obs_tensor = obs[first_key]
+                    if not hasattr(self, '_warned_fallback'):
+                        print(f"[WARNING] No 'proprio' or 'policy' key found, using '{first_key}' instead")
+                        print(f"[DEBUG] {first_key} obs shape: {obs_tensor.shape}")
+                        self._warned_fallback = True
+            else:
+                # Regular tensor
+                obs_tensor = obs
+
+            # Option 1: Extract from observation tensor (might include history/corruption)
+            obs_from_tensor = obs_tensor[0, :3].cpu().numpy()
+
+            # Option 2: Extract directly from environment robot state (ground truth)
+            if self.env is not None and hasattr(self.env, 'unwrapped'):
+                try:
+                    # Get actual joint positions from the robot articulation
+                    robot = self.env.unwrapped.scene["robot"]
+                    true_joint_pos = robot.data.joint_pos[0, :3].cpu().numpy()
+                    obs_np = true_joint_pos
+
+                    # Debug: compare observation vs ground truth
+                    if not hasattr(self, '_compared_obs_vs_truth'):
+                        print(f"[DEBUG] Obs from tensor [0:3]: {obs_from_tensor}")
+                        print(f"[DEBUG] True joint pos [0:3]: {true_joint_pos}")
+                        print(f"[DEBUG] Difference: {obs_from_tensor - true_joint_pos}")
+                        self._compared_obs_vs_truth = True
+                except Exception as e:
+                    print(f"[WARNING] Could not extract ground truth joint positions: {e}")
+                    obs_np = obs_from_tensor
+            else:
+                obs_np = obs_from_tensor
+
+            self.obs_history.append(obs_np)
+
+        # Check if episode ended for env 0
+        if dones[0]:
+            self.current_episode += 1
+
+            # If we just finished recording the target episode, stop recording
+            if self.target_episode is not None and self.is_recording:
+                self.is_recording = False
+                print(f"[INFO] Finished recording episode {self.target_episode} ({len(self.obs_history)} steps)")
+
+            # If we're about to start the target episode, start recording
+            if self.target_episode is not None and self.current_episode == self.target_episode:
+                self.is_recording = True
+                print(f"[INFO] Starting to record episode {self.target_episode}")
+
+    def save_plots(self):
+        """Save collected observations as plots."""
+        if len(self.obs_history) == 0:
+            print("[WARNING] No observations collected, skipping visualization")
+            return
+
+        obs_array = np.array(self.obs_history)  # Shape: (timesteps, 3)
+
+        # Save raw observation data for later comparison
+        data_path = os.path.join(self.save_dir, "observation_data.npy")
+        np.save(data_path, obs_array)
+        print(f"[INFO] Raw observation data saved to: {data_path}")
+
+        # Create figure with 3 subplots
+        fig, axes = plt.subplots(3, 1, figsize=(12, 8))
+        fig.suptitle("Proprio Observations (First 3 Joints - Environment 0)", fontsize=14)
+
+        timesteps = np.arange(len(self.obs_history))
+
+        for i, ax in enumerate(axes):
+            ax.plot(timesteps, obs_array[:, i], "b-", linewidth=1.0, alpha=0.8)
+            ax.set_ylabel(f"Joint {i}", fontsize=10)
+            ax.grid(True, alpha=0.3)
+
+        axes[-1].set_xlabel("Timestep", fontsize=10)
+        plt.tight_layout()
+
+        # Save the plot
+        save_path = os.path.join(self.save_dir, "observation_visualization.png")
+        plt.savefig(save_path, dpi=150, bbox_inches="tight")
+        print(f"[INFO] Observation visualization saved to: {save_path}")
+
+        # Also save individual plots for each joint
+        for i in range(3):
+            fig_single, ax = plt.subplots(figsize=(12, 4))
+            ax.plot(timesteps, obs_array[:, i], "b-", linewidth=1.0, alpha=0.8)
+            ax.set_xlabel("Timestep", fontsize=10)
+            ax.set_ylabel(f"Joint {i} Position", fontsize=10)
+            ax.set_title(f"Joint {i} Position Over Time", fontsize=12)
+            ax.grid(True, alpha=0.3)
+
+            save_path_single = os.path.join(self.save_dir, f"joint_{i}.png")
+            plt.savefig(save_path_single, dpi=150, bbox_inches="tight")
+            plt.close(fig_single)
+
+        plt.close(fig)
+        print(f"[INFO] Individual joint plots saved to: {self.save_dir}/joint_*.png")
 
 
 class EvaluationMetrics:
@@ -348,6 +527,19 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # Initialize metrics tracker
     metrics = EvaluationMetrics(num_envs=env_cfg.scene.num_envs, device=env.unwrapped.device)
 
+    # Initialize observation visualizer if requested
+    visualizer = None
+    if args_cli.visualize_obs:
+        print("[INFO] Enabling observation visualization for first 3 proprio joints")
+        print("[INFO] Will extract ground truth joint positions from environment for accurate comparison")
+        vis_dir = os.path.join(log_dir, "observation_plots")
+        visualizer = ObservationVisualizer(
+            num_envs=env_cfg.scene.num_envs,
+            save_dir=vis_dir,
+            target_episode=args_cli.visualize_episode,
+            env=env
+        )
+
     # Calculate target number of total episodes
     target_episodes = args_cli.num_episodes
     print(f"\n[INFO] Starting evaluation for {target_episodes} episodes across {env_cfg.scene.num_envs} parallel environments")
@@ -372,6 +564,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
 
         # update metrics
         metrics.update(rewards, dones, infos, env)
+
+        # update visualization if enabled
+        if visualizer is not None:
+            visualizer.update(obs, dones)
 
         timestep += 1
 
@@ -416,6 +612,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
         with open(save_path, "w") as f:
             json.dump(summary, f, indent=2)
         print(f"[INFO] Results saved to: {save_path}")
+
+    # save visualization plots if enabled
+    if visualizer is not None:
+        visualizer.save_plots()
 
     # close the simulator
     env.close()
