@@ -40,7 +40,7 @@ class KukaAllegroIKActionCfg:
     # Allegro hand uses EMA joint position control for smoothness
     hand_action = mdp.EMAJointPositionToLimitsActionCfg(
         asset_name="robot",
-        joint_names=["index_joint.*", "middle_joint.*", "ring_joint.*", "thumb_joint.*"],
+        joint_names="(index|middle|ring|thumb)_joint_.*",  # Matches all finger joints
         alpha=0.95,
         rescale_to_limits=True,
     )

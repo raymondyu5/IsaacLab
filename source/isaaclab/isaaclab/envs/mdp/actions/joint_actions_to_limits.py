@@ -255,14 +255,22 @@ class EMAJointPositionToLimitsAction(JointPositionToLimitsAction):
         return self._IO_descriptor
 
     def reset(self, env_ids: Sequence[int] | None = None) -> None:
+        # store original env_ids for super().reset() call
+        original_env_ids = env_ids
+
         # check if specific environment ids are provided
         if env_ids is None:
             env_ids = slice(None)
         else:
             env_ids = env_ids[:, None]
+
         super().reset(env_ids)
-        # reset history to current joint positions
-        self._prev_applied_actions[env_ids, :] = self._asset.data.joint_pos[env_ids, self._joint_ids]
+
+        # reset history to current joint positions using original env_ids
+        if original_env_ids is None:
+            self._prev_applied_actions[:, :] = self._asset.data.joint_pos[:, self._joint_ids]
+        else:
+            self._prev_applied_actions[original_env_ids, :] = self._asset.data.joint_pos[original_env_ids, :][:, self._joint_ids]
 
     def process_actions(self, actions: torch.Tensor):
         # apply affine transformations
