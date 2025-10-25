@@ -25,24 +25,22 @@ class KukaAllegroRelJointPosActionCfg:
 
 @configclass
 class KukaAllegroIKActionCfg:
-    """IK control for arm and joint position control for hand."""
+    """IK control for arm and relative joint position control for hand."""
 
-    # Use IK delta control for arm (iiwa7 joints)
     arm_action = DifferentialInverseKinematicsActionCfg(
         asset_name="robot",
         joint_names=["iiwa7_joint.*"],
         body_name="palm_link",  # Use Allegro hand palm as the end effector for IK
         controller=DifferentialIKControllerCfg(command_type="pose", use_relative_mode=True, ik_method="dls"),
-        scale=0.5,
+        scale=0.1,
         body_offset=DifferentialInverseKinematicsActionCfg.OffsetCfg(pos=[0.0, 0.0, 0.0]),
     )
 
-    # Allegro hand uses EMA joint position control for smoothness
-    hand_action = mdp.EMAJointPositionToLimitsActionCfg(
+    hand_action = mdp.RelativeJointPositionActionCfg(
         asset_name="robot",
-        joint_names="(index|middle|ring|thumb)_joint_.*",  # Matches all finger joints
-        alpha=0.95,
-        rescale_to_limits=True,
+        joint_names="(index|middle|ring|thumb)_joint_.*", 
+        scale=0.1,
+        use_zero_offset=True,
     )
 
 
