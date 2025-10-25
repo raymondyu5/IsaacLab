@@ -269,7 +269,8 @@ class DexsuiteKukaAllegroLiftIKEnvCfg(KukaAllegroIKMixinCfg, dexsuite.DexsuiteLi
         # Use only a single easy object (medium sphere)
         from isaaclab.sim import SphereCfg, RigidBodyMaterialCfg
         self.scene.object.spawn.assets_cfg = [
-            SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            # SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
         ]
 
 
@@ -283,7 +284,9 @@ class DexsuiteKukaAllegroLiftIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsuite.Dexsu
         # Use only a single easy object (medium sphere)
         from isaaclab.sim import SphereCfg, RigidBodyMaterialCfg
         self.scene.object.spawn.assets_cfg = [
-            SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            # SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+
         ]
 
 
@@ -297,7 +300,9 @@ class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg(KukaAllegroIKMixinCfg, dexsuite.De
         # Use only a single easy object (medium sphere)
         from isaaclab.sim import SphereCfg, RigidBodyMaterialCfg
         self.scene.object.spawn.assets_cfg = [
-            SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            # SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+
         ]
 
         # Make only the objects more slippery (reduce friction)
@@ -326,7 +331,9 @@ class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsui
         # Use only a single easy object (medium sphere)
         from isaaclab.sim import SphereCfg, RigidBodyMaterialCfg
         self.scene.object.spawn.assets_cfg = [
-            SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            # SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+
         ]
 
         # Make only the objects more slippery (reduce friction)
