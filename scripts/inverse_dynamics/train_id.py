@@ -162,7 +162,7 @@ def train_inverse_dynamics(train_states, train_actions, train_next_states,
     elif lr_scheduler == 'plateau':
         # Reduce on plateau
         scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer, mode='min', factor=0.5, patience=20, verbose=True
+            optimizer, mode='min', factor=0.5, patience=20
         )
     elif lr_scheduler == 'step':
         # Step decay
