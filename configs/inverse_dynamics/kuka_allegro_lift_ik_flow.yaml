@@ -1,0 +1,45 @@
+model:
+  _target_: generative_policies.inverse_dynamics.FlowInverseDynamics
+  name: kuka_allegro_lift_ik_flow_id
+  action_dim: 22  # IK arm (6D: position + axis-angle) + Allegro hand (16D joints) = 22 DOF
+  obs_dim: 165    # Observation dimension from Lift-IK task
+
+  # Flow model architecture
+  diffusion_step_embed_dim: 64
+  down_dims: [64, 128, 256]   # Balanced architecture (same as reference config)
+  num_inference_steps: 100    # Number of ODE integration steps during inference
+
+  # LayerNorm enabled by default (use_spectral_norm=False)
+  use_spectral_norm: false    # false = use LayerNorm, true = use SpectralNorm
+
+  device: cuda
+  checkpoint_path: null  # Set to path to resume from checkpoint
+
+training:
+  num_epochs: 1000
+  batch_size: 256       # Standard batch size for flow models
+  learning_rate: 0.0001  # 1e-3, standard for LayerNorm models
+  device: cuda
+  val_split: 0.2
+  save_every_n_epochs: 10
+
+  # Regularization
+  weight_decay: 0.0001  # 1e-4 (L2 regularization)
+  grad_clip: 1.0        # Gradient clipping threshold (0 to disable)
+
+  # Learning rate scheduling
+  lr_scheduler: cosine  # Options: cosine, plateau, step, none
+  warmup_epochs: 10     # Standard warmup for flow models
+
+  # Early stopping
+  early_stopping_patience: 50  # Early stopping to prevent overfitting
+
+  # Data preprocessing
+  normalize_data: true
+
+  # Performance optimization
+  use_mixed_precision: true  # Enable mixed precision training on GPU
+
+data:
+  filter_success_only: false  # Use all episodes (successful and unsuccessful)
+  min_reward_threshold: null  # Minimum episode reward (null to disable filtering)
