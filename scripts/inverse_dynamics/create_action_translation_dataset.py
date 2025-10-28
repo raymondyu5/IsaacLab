@@ -26,7 +26,7 @@ import sys
 
 # Import utility functions
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from scripts.inverse_dynamics.utils.data_utils import load_trajectory_dataset
+from scripts.inverse_dynamics.utils.dataset import load_trajectory_dataset
 
 
 def load_inverse_dynamics_model(model_path, model_config_path, device='cuda'):

@@ -6,38 +6,37 @@
 # Total: 60 dims
 model:
   _target_: generative_policies.inverse_dynamics.FlowInverseDynamics
-  name: kuka_allegro_lift_ik_flow_id_clean_states
+  name: lift_ik_flow_id
   action_dim: 22  # IK arm (6D: position + axis-angle) + Allegro hand (16D joints) = 22 DOF
   obs_dim: 60
 
-  # Flow model architecture - scaled for smaller state space
-  diffusion_step_embed_dim: 64
-  down_dims: [128, 256, 512]
-  num_inference_steps: 100     # Number of ODE integration steps during inference
+  diffusion_step_embed_dim: 128  # Increased from 64 to 128 for better expressiveness
+  down_dims: [256, 512, 512]     # Increased capacity: [128, 256, 512] → [256, 512, 512]
+  num_inference_steps: 100       # Number of ODE integration steps during inference
 
-  use_spectral_norm: false
+  use_spectral_norm: false       # Could try true for better stability
 
   device: cuda
   checkpoint_path: null  # Set to path to resume from checkpoint
 
 training:
-  num_epochs: 1500
+  num_epochs: 1000
   batch_size: 512
-  learning_rate: 0.0003
+  learning_rate: 0.0003      # Reduced from 0.0003 to reduce overfitting
   device: cuda
   val_split: 0.0
   save_every_n_epochs: 20
 
   # Regularization
-  weight_decay: 0.0001       # 1e-4 (L2 regularization)
-  grad_clip: 1.0             # Gradient clipping threshold
+  weight_decay: 0.0001        # Increased from 0.0001 to 0.001 for stronger regularization
+  grad_clip: 3.0             # Gradient clipping threshold
 
   # Learning rate scheduling
   lr_scheduler: cosine
   warmup_epochs: 20
 
   # Early stopping
-  early_stopping_patience: 100
+  early_stopping_patience: 50
 
   # Data preprocessing
   normalize_data: true

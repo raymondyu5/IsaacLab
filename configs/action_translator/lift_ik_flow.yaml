@@ -1,13 +1,14 @@
 model:
-  _target_: generative_policies.inverse_dynamics.FlowInverseDynamics
-  name: kuka_allegro_lift_ik_flow_id
+  _target_: generative_policies.action_translation.FlowActionPriorTranslator
+  name: lift_ik_flow_translator
   action_dim: 22  # IK arm (6D: position + axis-angle) + Allegro hand (16D joints) = 22 DOF
-  obs_dim: 165    # Observation dimension from Lift-IK task
+  obs_dim: 60     # Clean state dimension (60D clean states)
 
   # Flow model architecture
   diffusion_step_embed_dim: 64
   down_dims: [64, 128, 256]   # Balanced architecture (same as reference config)
   num_inference_steps: 100    # Number of ODE integration steps during inference
+  model_type: unet            # Model architecture type
 
   # LayerNorm enabled by default (use_spectral_norm=False)
   use_spectral_norm: false    # false = use LayerNorm, true = use SpectralNorm
@@ -18,7 +19,7 @@ model:
 training:
   num_epochs: 1000
   batch_size: 256       # Standard batch size for flow models
-  learning_rate: 0.0001  # 1e-3, standard for LayerNorm models
+  learning_rate: 0.0001  # 1e-4, standard for LayerNorm models
   device: cuda
   val_split: 0.2
   save_every_n_epochs: 10

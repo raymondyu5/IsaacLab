@@ -60,4 +60,3 @@ class ActionStateRecorderManagerCfg(RecorderManagerBaseCfg):
     record_post_step_states = PostStepStatesRecorderCfg()
     record_pre_step_actions = PreStepActionsRecorderCfg()
     record_pre_step_flat_policy_observations = PreStepFlatPolicyObservationsRecorderCfg()
-    record_post_step_processed_actions = PostStepProcessedActionsRecorderCfg()

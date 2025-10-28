@@ -31,8 +31,8 @@ from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 import inspect
 
-from utils.data_utils import load_trajectory_dataset
-from utils.eval_utils import compute_evaluation_metrics, plot_evaluation_results
+from utils.dataset import load_trajectory_dataset
+from utils.evaluation import compute_evaluation_metrics, plot_evaluation_results
 
 
 def evaluate_inverse_dynamics(states, actions, next_states, model,

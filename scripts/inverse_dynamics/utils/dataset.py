@@ -3,6 +3,8 @@
 import h5py
 import numpy as np
 
+from .states import extract_states_from_demo
+
 
 def load_trajectory_dataset(dataset_path, filter_success_only=False, min_reward_threshold=None, num_episodes=None):
     """
@@ -11,6 +13,11 @@ def load_trajectory_dataset(dataset_path, filter_success_only=False, min_reward_
     Loads episode-based trajectory data collected by collect_trajectory_data.py
     and converts it into state-action-next_state transitions for inverse dynamics training.
     Automatically filters terminal transitions (last step of each episode).
+
+    Expected format: policy_data structure with instantaneous states
+    - demo['policy_data']['state']: (T, state_dim) instantaneous positional states
+    - demo['policy_data']['obs']: (T, obs_dim) full observations (for action translator)
+    - demo['actions']: (T, action_dim) actions
 
     Args:
         dataset_path: Path to HDF5 trajectory dataset file
@@ -44,6 +51,7 @@ def load_trajectory_dataset(dataset_path, filter_success_only=False, min_reward_
 
         print(f"\nFound {total_episodes} episodes in dataset")
         print(f"Dataset path: {dataset_path}")
+        print(f"Expected format: policy_data with instantaneous states")
 
         if num_episodes is not None:
             print(f"Limiting to first {num_episodes} episodes (after filtering)")
@@ -73,33 +81,21 @@ def load_trajectory_dataset(dataset_path, filter_success_only=False, min_reward_
             if not should_load:
                 continue
 
-            # Load episode data
-            # Handle both 'obs' and 'observations' field names
-            if 'obs' in ep_group:
-                obs = ep_group['obs'][:]  # (T, obs_dim)
-            elif 'observations' in ep_group:
-                obs = ep_group['observations'][:]  # (T, obs_dim)
-            else:
-                raise KeyError(f"Episode {ep_name} has no 'obs' or 'observations' field")
-
-            actions = ep_group['actions'][:]  # (T, action_dim)
-
-            num_steps = obs.shape[0]
+            # Extract states from policy_data format
+            states_full, actions_full = extract_states_from_demo(ep_group)
 
             # Create transitions: (s_t, a_t, s_{t+1})
-            # We exclude the last transition because s_{T+1} doesn't exist
-            # (the episode terminated at step T)
-            if num_steps > 1:
-                states = obs[:-1]  # s_0 to s_{T-1}
-                next_states = obs[1:]  # s_1 to s_T
-                ep_actions = actions[:-1]  # a_0 to a_{T-1}
+            if len(states_full) > 1:
+                states = states_full[:-1]       # s_0 to s_{T-1}
+                next_states = states_full[1:]   # s_1 to s_T
+                ep_actions = actions_full[:-1]  # a_0 to a_{T-1}
 
                 all_states.append(states)
                 all_actions.append(ep_actions)
                 all_next_states.append(next_states)
 
                 total_transitions += len(states)
-                filtered_terminals += 1  # We filtered the terminal transition
+                filtered_terminals += 1
                 loaded_episodes += 1
 
     if len(all_states) == 0:
