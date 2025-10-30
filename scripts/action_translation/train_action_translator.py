@@ -22,7 +22,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from scripts.lib.training import (
     TrainConfig,
-    load_action_translation_dataset,
+    load_processed_dataset,
     build_model_from_config,
     normalize_tensors,
     create_dataloaders,
@@ -89,23 +89,35 @@ def main():
     print("=" * 80 + "\n")
 
     # Load dataset
-    states, next_states, actions_src, actions_target, obs_dim, action_dim = load_action_translation_dataset(args.dataset)
+    states, next_states, actions_src, actions_target, obs_dim, action_dim = load_processed_dataset(args.dataset)
 
     # Build model
     print(f"Building action translator model from config...\n")
     model = build_model_from_config(model_config, obs_dim, action_dim)
 
-    # Prepare tensors (we use states and target actions for translator: state -> action_target)
-    all_tensors = (
-        torch.FloatTensor(states),
-        torch.FloatTensor(actions_target)
-    )
+    # Prepare tensors as dict for normalization
+    # Action translator needs: obs, action_prior (source), action (target)
+    all_tensors_dict = {
+        'states': torch.FloatTensor(states),
+        'actions_src': torch.FloatTensor(actions_src),
+        'actions_target': torch.FloatTensor(actions_target)
+    }
 
     # Normalize data
     if train_config.normalize_data:
-        all_tensors, normalization_stats = normalize_tensors(all_tensors, compute_stats_from=all_tensors)
+        all_tensors_dict, normalization_stats = normalize_tensors(
+            all_tensors_dict,
+            compute_stats_from=['states', 'actions_src', 'actions_target']
+        )
     else:
         normalization_stats = None
+
+    # Convert back to tuple for dataloader
+    all_tensors = (
+        all_tensors_dict['states'],
+        all_tensors_dict['actions_src'],
+        all_tensors_dict['actions_target']
+    )
 
     # Split into train/val
     total_samples = all_tensors[0].shape[0]
@@ -147,15 +159,23 @@ def main():
         tags=wandb_tags
     )
 
-    # Define model forward function for training
     def model_forward(model, batch):
-        states, actions_target = batch
-        return model(obs=states, action=actions_target)
+        states, actions_src, actions_target = batch
+        return model(obs=states, action_prior=actions_src, action=actions_target)
 
-    # Define model predict function for validation
     def model_predict(model, batch):
-        states, actions_target = batch
-        preds = model.predict(states)
+        states, actions_src, actions_target = batch
+        preds = model.predict(obs=states, action_prior=actions_src)
+
+        if hasattr(model, 'compute_path_length'):
+            with torch.no_grad():
+                result = model.compute_path_length(obs=states, action_prior=actions_src, action=actions_target)
+                # compute_path_length returns (path_lengths, num_steps) tuple
+                path_lengths = result[0] if isinstance(result, tuple) else result
+                wandb.log({
+                    'val_path_length_mean': path_lengths.mean().item(),
+                })
+
         return torch.as_tensor(preds).to(actions_target.device), actions_target
 
     # Train model

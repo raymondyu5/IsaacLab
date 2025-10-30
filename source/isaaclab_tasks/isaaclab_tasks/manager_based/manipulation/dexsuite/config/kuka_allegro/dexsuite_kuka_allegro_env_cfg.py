@@ -152,6 +152,14 @@ class DexsuiteKukaAllegroLiftEnvCfg(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEn
             SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
         ]
 
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
 
 @configclass
 class DexsuiteKukaAllegroLiftEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
@@ -165,6 +173,28 @@ class DexsuiteKukaAllegroLiftEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteL
         self.scene.object.spawn.assets_cfg = [
             SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
         ]
+
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
+        # Remove object spawn pose randomization
+        self.events.reset_object.params["pose_range"] = {
+            "x": [0.0, 0.0],
+            "y": [0.0, 0.0],
+            "z": [0.0, 0.0],
+            "roll": [0.0, 0.0],
+            "pitch": [0.0, 0.0],
+            "yaw": [0.0, 0.0],
+        }
+
+        # remove randomization
+        self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]
+        self.events.reset_robot_wrist_joint.params["position_range"] = [0.0, 0.0]
 
 
 @configclass
@@ -195,6 +225,14 @@ class DexsuiteKukaAllegroLiftSlipperyEnvCfg(KukaAllegroMixinCfg, dexsuite.Dexsui
         # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
         self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
 
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
 
 @configclass
 class DexsuiteKukaAllegroLiftSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
@@ -223,6 +261,28 @@ class DexsuiteKukaAllegroLiftSlipperyEnvCfg_PLAY(KukaAllegroMixinCfg, dexsuite.D
 
         # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
         self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
+
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
+        # Remove object spawn pose randomization
+        self.events.reset_object.params["pose_range"] = {
+            "x": [0.0, 0.0],
+            "y": [0.0, 0.0],
+            "z": [0.0, 0.0],
+            "roll": [0.0, 0.0],
+            "pitch": [0.0, 0.0],
+            "yaw": [0.0, 0.0],
+        }
+
+        # Fix robot joint positions - remove randomization
+        self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]
+        self.events.reset_robot_wrist_joint.params["position_range"] = [0.0, 0.0]
 
 
 ##
@@ -273,6 +333,14 @@ class DexsuiteKukaAllegroLiftIKEnvCfg(KukaAllegroIKMixinCfg, dexsuite.DexsuiteLi
             # SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
         ]
 
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
 
 @configclass
 class DexsuiteKukaAllegroLiftIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
@@ -288,6 +356,28 @@ class DexsuiteKukaAllegroLiftIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsuite.Dexsu
             SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
 
         ]
+
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
+        # Remove object spawn pose randomization
+        self.events.reset_object.params["pose_range"] = {
+            "x": [0.0, 0.0],
+            "y": [0.0, 0.0],
+            "z": [0.0, 0.0],
+            "roll": [0.0, 0.0],
+            "pitch": [0.0, 0.0],
+            "yaw": [0.0, 0.0],
+        }
+
+        # Fix robot joint positions - remove randomization
+        self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]
+        self.events.reset_robot_wrist_joint.params["position_range"] = [0.0, 0.0]
 
 
 @configclass
@@ -320,6 +410,14 @@ class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg(KukaAllegroIKMixinCfg, dexsuite.De
         # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
         self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
 
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
 
 @configclass
 class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
@@ -350,3 +448,25 @@ class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsui
 
         # Increase mass randomization range (from [0.2, 2.0] to [1.0, 2.5] scale)
         self.events.object_scale_mass.params["mass_distribution_params"] = [1.0, 2.5]
+
+        # Remove target pose randomization - set fixed target position
+        self.commands.object_pose.ranges.pos_x = (-0.5, -0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.7, 0.7)
+        self.commands.object_pose.ranges.roll = (0.0, 0.0)
+        self.commands.object_pose.ranges.pitch = (0.0, 0.0)
+        self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
+        # Remove object spawn pose randomization
+        self.events.reset_object.params["pose_range"] = {
+            "x": [0.0, 0.0],
+            "y": [0.0, 0.0],
+            "z": [0.0, 0.0],
+            "roll": [0.0, 0.0],
+            "pitch": [0.0, 0.0],
+            "yaw": [0.0, 0.0],
+        }
+
+        # Fix robot joint positions - remove randomization
+        self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]
+        self.events.reset_robot_wrist_joint.params["position_range"] = [0.0, 0.0]

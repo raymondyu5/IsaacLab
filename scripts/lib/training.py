@@ -56,11 +56,14 @@ class TrainConfig:
         return self
 
 
-def load_action_translation_dataset(dataset_path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, int, int]:
-    """Load action translation dataset from HDF5 file.
+def load_processed_dataset(dataset_path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, int, int]:
+    """Load processed flat dataset from HDF5 file.
 
-    This unified loader replaces the duplicate functions in train_bc_sanity_check.py
-    and train_action_translator.py.
+    Loads datasets created by process_trajectories.py for BC or Action Translation training.
+
+    Supports two formats:
+    1. Action translation format: data/states, data/next_states, data/actions_src, data/actions_target
+    2. BC Markov format: states, actions, next_states (actions_src = actions)
 
     Returns:
         states: State observations
@@ -71,28 +74,47 @@ def load_action_translation_dataset(dataset_path: str) -> Tuple[np.ndarray, np.n
         action_dim: Action dimension
     """
     print("=" * 80)
-    print("LOADING ACTION TRANSLATION DATASET")
+    print("LOADING PROCESSED DATASET")
     print("=" * 80)
     print(f"Dataset path: {dataset_path}\n")
 
     with h5py.File(dataset_path, 'r') as f:
-        states = f['data']['states'][:]
-        next_states = f['data']['next_states'][:]
-        actions_src = f['data']['actions_src'][:]
-        actions_target = f['data']['actions_target'][:]
+        # Check if this is BC Markov format (no 'data' group)
+        if 'data' not in f and 'states' in f and 'actions' in f:
+            print("[INFO] Detected BC Markov dataset format (Markovian states)")
+            states = f['states'][:]
+            next_states = f['next_states'][:]
+            actions_target = f['actions'][:]
+            actions_src = actions_target  # For BC, we don't use source actions
 
-        # Load metadata
-        num_samples = f['meta'].attrs['num_samples']
-        obs_dim = f['meta'].attrs['obs_dim']
-        action_dim = f['meta'].attrs['action_dim']
+            # Load metadata
+            num_samples = f.attrs['num_samples']
+            obs_dim = f.attrs['state_dim']
+            action_dim = f.attrs['action_dim']
+            markovian = True
+        else:
+            # Original action translation format
+            print("[INFO] Detected action translation dataset format (165D observations)")
+            states = f['data']['states'][:]
+            next_states = f['data']['next_states'][:]
+            actions_src = f['data']['actions_src'][:]
+            actions_target = f['data']['actions_target'][:]
+
+            # Load metadata
+            num_samples = f['meta'].attrs['num_samples']
+            obs_dim = f['meta'].attrs['obs_dim']
+            action_dim = f['meta'].attrs['action_dim']
+            markovian = False
 
     print(f"Dataset loaded successfully!")
     print(f"  Number of samples: {num_samples:,}")
     print(f"  Observation dimension: {obs_dim}")
     print(f"  Action dimension: {action_dim}")
+    print(f"  Markovian states (no action history): {markovian}")
     print(f"  States shape: {states.shape}")
     print(f"  Next states shape: {next_states.shape}")
-    print(f"  Actions (source) shape: {actions_src.shape}")
+    if not markovian:
+        print(f"  Actions (source) shape: {actions_src.shape}")
     print(f"  Actions (target) shape: {actions_target.shape}")
     print("=" * 80 + "\n")
 
@@ -555,19 +577,24 @@ def generic_training_loop(
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             epochs_without_improvement = 0
+            # Save best model immediately when validation improves
+            if output_path:
+                save_checkpoint(model, output_path, avg_val_loss, normalization_stats)
+                epochs_since_save = 0
         else:
             epochs_without_improvement += 1
+            epochs_since_save += 1
 
         # Early stopping
-        if config.early_stopping_patience > 0 and epochs_without_improvement >= config.early_stopping_patience:
+        if config.early_stopping_patience is not None and config.early_stopping_patience > 0 and epochs_without_improvement >= config.early_stopping_patience:
             print(f"\n\nEarly stopping triggered! No improvement for {config.early_stopping_patience} epochs.")
             print(f"Best validation loss: {best_val_loss:.6f}")
             break
 
-        # Save checkpoint
-        epochs_since_save += 1
-        if output_path and avg_val_loss <= best_val_loss and epochs_since_save >= config.save_every_n_epochs:
-            save_checkpoint(model, output_path, avg_val_loss, normalization_stats)
+        # Periodic checkpoint saving (even if not improving)
+        if output_path and epochs_since_save >= config.save_every_n_epochs:
+            print(f"\nSaving periodic checkpoint (not best, but saving progress)...")
+            save_checkpoint(model, output_path.replace('.pth', f'_epoch{epoch}.pth'), avg_val_loss, normalization_stats)
             epochs_since_save = 0
 
         # Learning rate scheduling

@@ -18,7 +18,7 @@ import wandb
 # Add scripts directory to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-from utils.dataset import load_trajectory_dataset
+from scripts.lib.trajectory_dataset import load_trajectory_dataset
 from scripts.lib.training import (
     TrainConfig,
     build_model_from_config,
@@ -137,8 +137,6 @@ def main():
     wandb_tags = [model_name, 'inverse_dynamics']
     if 'Dexsuite' in dataset_basename:
         wandb_tags.append('dexsuite')
-    if 'ShadowHand' in dataset_basename:
-        wandb_tags.append('shadow_hand')
 
     wandb.init(
         project="inverse_dynamics_training",
@@ -168,7 +166,8 @@ def main():
         model_forward_fn=model_forward,
         model_predict_fn=model_predict,
         output_path=model_output_path,
-        normalization_stats=normalization_stats
+        normalization_stats=normalization_stats,
+        wandb_enabled=True
     )
 
     wandb.finish()

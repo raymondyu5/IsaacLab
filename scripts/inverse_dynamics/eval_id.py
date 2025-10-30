@@ -31,8 +31,8 @@ from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 import inspect
 
-from utils.dataset import load_trajectory_dataset
-from utils.evaluation import compute_evaluation_metrics, plot_evaluation_results
+from scripts.lib.trajectory_dataset import load_trajectory_dataset
+from scripts.lib.offline_evaluation import compute_evaluation_metrics, plot_evaluation_results
 
 
 def evaluate_inverse_dynamics(states, actions, next_states, model,
@@ -147,8 +147,7 @@ def evaluate_inverse_dynamics(states, actions, next_states, model,
     if output_dir is not None:
         os.makedirs(output_dir, exist_ok=True)
         plot_path = os.path.join(output_dir, 'evaluation_results.png')
-        plot_evaluation_results(predictions, ground_truth, metrics, plot_path,
-                               additional_dims=eval_config.get('plot_dims', None))
+        plot_evaluation_results(predictions, ground_truth, metrics, plot_path)
 
         # Save metrics to file
         metrics_path = os.path.join(output_dir, 'evaluation_metrics.txt')
@@ -258,14 +257,17 @@ def main():
     model.load_state_dict(checkpoint['model_state_dict'])
     print("Checkpoint loaded successfully!\n")
 
+    state_mean, state_std = checkpoint.get('states', (None, None))
+    action_mean, action_std = checkpoint.get('actions', (None, None))
+
     eval_config = {
         'batch_size': args.batch_size,
         'device': train_config.get('device', 'cuda'),
         'normalize_data': checkpoint.get('normalize_data', train_config.get('normalize_data', True)),
-        'state_mean': checkpoint.get('state_mean', None),
-        'state_std': checkpoint.get('state_std', None),
-        'action_mean': checkpoint.get('action_mean', None),
-        'action_std': checkpoint.get('action_std', None),
+        'state_mean': state_mean,
+        'state_std': state_std,
+        'action_mean': action_mean,
+        'action_std': action_std,
         'plot_dims': args.plot_dims,
     }
 

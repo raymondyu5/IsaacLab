@@ -131,17 +131,14 @@ class EpisodeData:
     def get_action(self, action_index) -> torch.Tensor | None:
         """Get the action of the specified index from the dataset.
 
-        Prefers 'actions_raw' if present (normalized policy outputs),
-        falls back to 'actions' for backward compatibility.
+        Returns raw/unprocessed policy outputs from 'actions' key.
+        These are actions before scale/offset transformations.
         """
-        # Prefer actions_raw (normalized, pre-scaling) if available
-        action_key = "actions_raw" if "actions_raw" in self._data else "actions"
-
-        if action_key not in self._data:
+        if "actions" not in self._data:
             return None
-        if action_index >= len(self._data[action_key]):
+        if action_index >= len(self._data["actions"]):
             return None
-        return self._data[action_key][action_index]
+        return self._data["actions"][action_index]
 
     def get_next_action(self) -> torch.Tensor | None:
         """Get the next action from the dataset."""

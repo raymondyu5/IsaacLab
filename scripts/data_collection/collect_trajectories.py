@@ -1,41 +1,34 @@
 """
 Script to collect trajectory data from a trained RL policy.
 
-Operates similarly to play.py but collects complete trajectories without recording any env transitions/resets.
-Supports automatic train/val/test splitting with metadata preservation for easy replay.
+Collects complete trajectories with automatic reward filtering and optional train/val/test splitting.
+Supports episode truncation for balanced datasets.
 
 Example usage:
 
-# Basic collection (no splitting)
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py \
-    --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0 \
-    --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt \
-    --num_trajectories 30 \
-    --num_envs 16 \
+./isaaclab.sh -p scripts/data_collection/collect_trajectories.py \
+    --task Isaac-Dexsuite-Kuka-Allegro-Lift-IK-Play-v0 \
+    --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/model_4750_source.pt \
+    --num_trajectories 5000 \
+    --num_envs 128 \
     --output_dir ./trajectory_data \
     --min_reward 10 \
+    --max_steps_per_episode 75 \
+    --split_dataset \
+    --train_ratio 0.7 \
+    --val_ratio 0.2 \
+    --test_ratio 0.1 \
+    --split_mode random \
     --headless
-
-# With reward range filtering (min and max)
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py \
-    --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0 \
-    --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt \
-    --num_trajectories 100 \
-    --num_envs 32 \
-    --output_dir ./trajectory_data \
-    --min_reward 10 \
-    --max_reward 25 \
-    --headless
-
-# With train/val/test splitting
-./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/collect_trajectory_data.py     --task Isaac-Dexsuite-Kuka-Allegro-Reorient-Play-v0     --checkpoint logs/rsl_rl/dexsuite_kuka_allegro/2025-10-08_13-57-00/model_14999.pt     --num_trajectories 5000     --num_envs 128     --output_dir ./trajectory_data     --min_reward 10     --split_dataset     --train_ratio 0.7     --val_ratio 0.2     --test_ratio 0.1   --split_mode random     --headless
 """
 
 import argparse
 import sys
+import os
 from isaaclab.app import AppLauncher
 
 # local imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'reinforcement_learning', 'rsl_rl'))
 import cli_args  # isort: skip
 
 # add argparse arguments
@@ -50,10 +43,10 @@ parser.add_argument("--seed", type=int, default=None, help="Seed used for the en
 parser.add_argument("--output_dir", type=str, default="./trajectory_data", help="Output directory for trajectory data.")
 parser.add_argument("--max_episode_length", type=int, default=None, help="Maximum episode length (if overriding).")
 parser.add_argument(
-    "--constrain_object_spawn",
-    action="store_true",
-    default=True,
-    help="Constrain object spawning to table surface.",
+    "--max_steps_per_episode",
+    type=int,
+    default=None,
+    help="Maximum steps to save per episode (for balanced datasets). E.g., 75 to focus on grasping phase.",
 )
 parser.add_argument(
     "--min_reward",
@@ -133,144 +126,15 @@ from isaaclab.envs.mdp.recorders import ActionStateRecorderManagerCfg
 from isaaclab.managers import DatasetExportMode, RecorderTermCfg
 from isaaclab.managers.recorder_manager import RecorderTerm
 from isaaclab.utils.assets import retrieve_file_path
-from isaaclab.utils.datasets import HDF5DatasetFileHandler
 
 from isaaclab_rl.rsl_rl import RslRlBaseRunnerCfg, RslRlVecEnvWrapper
 
 import isaaclab_tasks  # noqa: F401
 from isaaclab_tasks.utils.hydra import hydra_task_config
 
-
-def split_dataset_into_train_val_test(
-    source_hdf5_path: str,
-    output_dir: str,
-    train_ratio: float,
-    val_ratio: float,
-    test_ratio: float,
-    split_mode: str = "sequential",
-) -> dict:
-    """
-    Splits a single HDF5 dataset into train/val/test files.
-
-    Each output file will contain:
-    - Subset of episodes based on split ratios
-    - Full environment metadata (identical across all splits)
-    - All episode-level metadata (seed, env_id, success)
-
-    Args:
-        source_hdf5_path: Path to the source HDF5 dataset file
-        output_dir: Directory to save the split files
-        train_ratio: Fraction of episodes for training (e.g., 0.7)
-        val_ratio: Fraction of episodes for validation (e.g., 0.15)
-        test_ratio: Fraction of episodes for test (e.g., 0.15)
-        split_mode: How to assign episodes - "sequential" or "random"
-
-    Returns:
-        Dictionary with statistics about the split
-    """
-    import random
-    import h5py
-
-    # Validate ratios
-    total_ratio = train_ratio + val_ratio + test_ratio
-    if not torch.isclose(torch.tensor(total_ratio), torch.tensor(1.0), atol=1e-6):
-        raise ValueError(f"Split ratios must sum to 1.0, got {total_ratio}")
-
-    # Open source file
-    source_handler = HDF5DatasetFileHandler()
-    source_handler.open(source_hdf5_path, mode="r")
-
-    episode_names = list(source_handler.get_episode_names())
-    num_episodes = len(episode_names)
-
-    if num_episodes == 0:
-        print("[WARNING] Source dataset is empty. No splits created.")
-        source_handler.close()
-        return {}
-
-    print(f"\n[INFO] Splitting {num_episodes} episodes into train/val/test...")
-    print(f"  Ratios: train={train_ratio:.2f}, val={val_ratio:.2f}, test={test_ratio:.2f}")
-    print(f"  Mode: {split_mode}")
-
-    # Calculate split sizes
-    num_train = int(num_episodes * train_ratio)
-    num_val = int(num_episodes * val_ratio)
-    num_test = num_episodes - num_train - num_val  # Remainder goes to test
-
-    # Assign episodes to splits
-    if split_mode == "sequential":
-        train_episodes = episode_names[:num_train]
-        val_episodes = episode_names[num_train : num_train + num_val]
-        test_episodes = episode_names[num_train + num_val :]
-    elif split_mode == "random":
-        shuffled_episodes = episode_names.copy()
-        random.shuffle(shuffled_episodes)
-        train_episodes = shuffled_episodes[:num_train]
-        val_episodes = shuffled_episodes[num_train : num_train + num_val]
-        test_episodes = shuffled_episodes[num_train + num_val :]
-    else:
-        raise ValueError(f"Unknown split_mode: {split_mode}")
-
-    # Create output filenames
-    base_name = os.path.splitext(os.path.basename(source_hdf5_path))[0]
-    train_path = os.path.join(output_dir, f"{base_name}_train.hdf5")
-    val_path = os.path.join(output_dir, f"{base_name}_val.hdf5")
-    test_path = os.path.join(output_dir, f"{base_name}_test.hdf5")
-
-    # Get environment metadata from source
-    with h5py.File(source_hdf5_path, "r") as src_file:
-        env_args = src_file["data"].attrs.get("env_args", "{}")
-
-    # Helper function to create split file
-    def create_split_file(split_path, episode_list, split_name):
-        if len(episode_list) == 0:
-            print(f"[WARNING] No episodes for {split_name} split. Skipping file creation.")
-            return {"total": 0, "successful": 0, "failed": 0}
-
-        handler = HDF5DatasetFileHandler()
-        handler.create(split_path.replace(".hdf5", ""))  # create() adds .hdf5 extension
-
-        # Copy environment metadata
-        import json
-
-        handler._env_args = json.loads(env_args)
-        handler._hdf5_data_group.attrs["env_args"] = env_args
-
-        successful_count = 0
-        failed_count = 0
-
-        for ep_name in episode_list:
-            episode = source_handler.load_episode(ep_name, device="cpu")
-            if episode is not None:
-                handler.write_episode(episode)
-                if episode.success:
-                    successful_count += 1
-                else:
-                    failed_count += 1
-
-        handler.flush()
-        handler.close()
-
-        print(f"  {split_name}: {len(episode_list)} episodes ({successful_count} successful, {failed_count} failed)")
-        print(f"    Saved to: {split_path}")
-
-        return {"total": len(episode_list), "successful": successful_count, "failed": failed_count}
-
-    # Create split files
-    train_stats = create_split_file(train_path, train_episodes, "Train")
-    val_stats = create_split_file(val_path, val_episodes, "Validation")
-    test_stats = create_split_file(test_path, test_episodes, "Test")
-
-    source_handler.close()
-
-    return {
-        "train": train_stats,
-        "val": val_stats,
-        "test": test_stats,
-        "train_path": train_path,
-        "val_path": val_path,
-        "test_path": test_path,
-    }
+# Import utility functions for dataset manipulation
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from lib.trajectory_dataset import truncate_episodes, split_dataset_into_train_val_test
 
 
 class PostStepRewardsRecorder(RecorderTerm):
@@ -279,6 +143,14 @@ class PostStepRewardsRecorder(RecorderTerm):
     def record_post_step(self):
         """Record rewards after each environment step."""
         return "rewards", self._env.reward_buf
+
+
+class PreStepProprioObservationsRecorder(RecorderTerm):
+    """Custom recorder term that records proprio group observations in each step."""
+
+    def record_pre_step(self):
+        """Record proprio observations before each environment step."""
+        return "proprio_obs", self._env.obs_buf["proprio"]
 
 
 # Global variable to track reward-based success (accessed by termination function)
@@ -358,7 +230,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     task_name = args_cli.task.split(":")[-1]
     train_task_name = task_name.replace("-Play", "")
 
-    # vverride configs
+    # override configs
     agent_cfg = cli_args.update_rsl_rl_cfg(agent_cfg, args_cli)
     env_cfg.scene.num_envs = args_cli.num_envs if args_cli.num_envs is not None else env_cfg.scene.num_envs
 
@@ -370,23 +242,6 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # override max episode length if specified
     if args_cli.max_episode_length is not None:
         env_cfg.episode_length_s = args_cli.max_episode_length * env_cfg.sim.dt * env_cfg.decimation
-
-    # Constrain object spawning since
-    # table is at z=0.235, height=0.04, so top surface is at z=0.255
-    # obj initial position is at (-0.55, 0.1, 0.35)
-    # modify the reset_object event to spawn objects closer to the table surface
-    if args_cli.constrain_object_spawn:
-        if hasattr(env_cfg, 'events') and env_cfg.events is not None:
-            if hasattr(env_cfg.events, 'reset_object'):
-                print(f"[INFO] Constraining object spawn to table surface")
-                env_cfg.events.reset_object.params["pose_range"] = {
-                    "x": [-0.15, 0.15],      # Narrower x range centered on table
-                    "y": [-0.15, 0.15],      # Narrower y range
-                    "z": [0.0, 0.05],        # Very small z range to keep on table (relative to init pos)
-                    "roll": [-0.3, 0.3],     # Smaller rotation range
-                    "pitch": [-0.3, 0.3],    # Smaller rotation range
-                    "yaw": [-3.14, 3.14],    # Keep full yaw rotation
-                }
 
     # get checkpoint path
     log_root_path = os.path.join("logs", "rsl_rl", agent_cfg.experiment_name)
@@ -447,6 +302,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # Add custom rewards recorder
     env_cfg.recorders.record_rewards = RecorderTermCfg(class_type=PostStepRewardsRecorder)
 
+    # Add custom proprio observations recorder (fingertips, contact forces, etc.)
+    # Note: The attribute name becomes the directory name in the dataset
+    env_cfg.recorders.record_proprio_data = RecorderTermCfg(class_type=PreStepProprioObservationsRecorder)
+
     # Create isaac environment
     print(f"[INFO] Creating environment: {args_cli.task}")
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode=None)
@@ -504,15 +363,12 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             device=env.unwrapped.device
         )
 
-    # Initialize progress bar
     pbar = tqdm(total=args_cli.num_trajectories, desc="Collecting trajectories", unit="traj")
 
     with torch.inference_mode():
         while simulation_app.is_running():
-            # Get actions from policy
             actions = policy(obs)
 
-            # Step environment (RecorderManager will automatically records data during this step)
             obs, rewards, dones, extras = env_wrapper.step(actions)
 
             # Accumulate rewards and step counts for each environment
@@ -531,7 +387,6 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
                 if _reward_success_tracker is not None:
                     _reward_success_tracker.reset(done_env_ids)
 
-                # Print reward and length for each completed episode
                 for env_id in done_env_ids:
                     env_id_int = env_id.item()
                     total_reward = episode_rewards[env_id_int].item()
@@ -562,7 +417,6 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             # Check total episodes collected across all environments
             total_episodes = env.unwrapped.recorder_manager.exported_successful_episode_count + env.unwrapped.recorder_manager.exported_failed_episode_count
 
-            # Stop when we've collected enough trajectories
             if total_episodes >= args_cli.num_trajectories:
                 pbar.close()
                 print(f"[INFO] Target of {args_cli.num_trajectories} trajectories reached. Stopping collection.")
@@ -587,7 +441,16 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     print(f"Saved to: {output_file}")
     print(f"{'='*80}\n")
 
-    # Split dataset into train/val/test if requested
+    if args_cli.max_steps_per_episode is not None:
+        print(f"\n{'='*80}")
+        print(f"TRUNCATING EPISODES TO {args_cli.max_steps_per_episode} STEPS")
+        print(f"{'='*80}")
+        truncated_file = truncate_episodes(output_file, args_cli.max_steps_per_episode)
+        if truncated_file:
+            output_file = truncated_file
+            print(f"Truncated dataset saved to: {output_file}")
+        print(f"{'='*80}\n")
+
     if args_cli.split_dataset:
         if not os.path.exists(output_file):
             print(f"[WARNING] Cannot split dataset: source file not found: {output_file}")

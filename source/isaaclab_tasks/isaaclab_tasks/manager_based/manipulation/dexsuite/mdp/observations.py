@@ -58,6 +58,31 @@ def object_quat_b(
     return quat_mul(quat_inv(robot.data.root_quat_w), object.data.root_quat_w)
 
 
+def object_velocity_b(
+    env: ManagerBasedRLEnv,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
+) -> torch.Tensor:
+    """Object velocity (linear + angular) in the robot's root frame.
+
+    Args:
+        env: The environment.
+        robot_cfg: Scene entity for the robot (reference frame). Defaults to ``SceneEntityCfg("robot")``.
+        object_cfg: Scene entity for the object. Defaults to ``SceneEntityCfg("object")``.
+
+    Returns:
+        Tensor of shape ``(num_envs, 6)``: object velocity [vx, vy, vz, wx, wy, wz] in the robot root frame.
+    """
+    robot: RigidObject = env.scene[robot_cfg.name]
+    object: RigidObject = env.scene[object_cfg.name]
+
+    # Transform linear and angular velocities to robot frame
+    lin_vel_b = quat_apply_inverse(robot.data.root_quat_w, object.data.root_lin_vel_w)
+    ang_vel_b = quat_apply_inverse(robot.data.root_quat_w, object.data.root_ang_vel_w)
+
+    return torch.cat([lin_vel_b, ang_vel_b], dim=-1)
+
+
 def body_state_b(
     env: ManagerBasedRLEnv,
     body_asset_cfg: SceneEntityCfg,
