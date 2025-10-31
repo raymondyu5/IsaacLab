@@ -115,30 +115,30 @@ KUKA_ALLEGRO_CFG = ArticulationCfg(
 """Configuration of Kuka Allegro robot with standard PD gains."""
 
 
-# Create a high PD control version
+# Create a low PD control version
 KUKA_ALLEGRO_HIGH_PD_CFG = KUKA_ALLEGRO_CFG.copy()
 KUKA_ALLEGRO_HIGH_PD_CFG.actuators["kuka_allegro_actuators"].stiffness = {
-    "iiwa7_joint_(1|2|3|4)": 750.0,  # 2.5x of 300.0
-    "iiwa7_joint_5": 250.0,  # 2.5x of 100.0
-    "iiwa7_joint_6": 125.0,  # 2.5x of 50.0
-    "iiwa7_joint_7": 62.5,   # 2.5x of 25.0
-    "index_joint_(0|1|2|3)": 7.5,   # 2.5x of 3.0
-    "middle_joint_(0|1|2|3)": 7.5,  # 2.5x of 3.0
-    "ring_joint_(0|1|2|3)": 7.5,    # 2.5x of 3.0
-    "thumb_joint_(0|1|2|3)": 7.5,   # 2.5x of 3.0
+    "iiwa7_joint_(1|2|3|4)": 30.0,   # 0.1x of 300.0
+    "iiwa7_joint_5": 10.0,   # 0.1x of 100.0
+    "iiwa7_joint_6": 5.0,    # 0.1x of 50.0
+    "iiwa7_joint_7": 2.5,    # 0.1x of 25.0
+    "index_joint_(0|1|2|3)": 0.3,    # 0.1x of 3.0
+    "middle_joint_(0|1|2|3)": 0.3,   # 0.1x of 3.0
+    "ring_joint_(0|1|2|3)": 0.3,     # 0.1x of 3.0
+    "thumb_joint_(0|1|2|3)": 0.3,    # 0.1x of 3.0
 }
 KUKA_ALLEGRO_HIGH_PD_CFG.actuators["kuka_allegro_actuators"].damping = {
-    "iiwa7_joint_(1|2|3|4)": 112.5,  # 2.5x of 45.0
-    "iiwa7_joint_5": 50.0,   # 2.5x of 20.0
-    "iiwa7_joint_6": 37.5,   # 2.5x of 15.0
-    "iiwa7_joint_7": 37.5,   # 2.5x of 15.0
-    "index_joint_(0|1|2|3)": 0.25,   # 2.5x of 0.1
-    "middle_joint_(0|1|2|3)": 0.25,  # 2.5x of 0.1
-    "ring_joint_(0|1|2|3)": 0.25,    # 2.5x of 0.1
-    "thumb_joint_(0|1|2|3)": 0.25,   # 2.5x of 0.1
+    "iiwa7_joint_(1|2|3|4)": 4.5,    # 0.1x of 45.0
+    "iiwa7_joint_5": 2.0,    # 0.1x of 20.0
+    "iiwa7_joint_6": 1.5,    # 0.1x of 15.0
+    "iiwa7_joint_7": 1.5,    # 0.1x of 15.0
+    "index_joint_(0|1|2|3)": 0.01,   # 0.1x of 0.1
+    "middle_joint_(0|1|2|3)": 0.01,  # 0.1x of 0.1
+    "ring_joint_(0|1|2|3)": 0.01,    # 0.1x of 0.1
+    "thumb_joint_(0|1|2|3)": 0.01,   # 0.1x of 0.1
 }
-"""Configuration of Kuka Allegro robot with high PD gains.
+"""Configuration of Kuka Allegro robot with low PD gains.
 
-This configuration uses stiffer PD control which creates a different dynamics domain
+This configuration uses softer PD control which creates a different dynamics domain
 for domain adaptation and action translation tasks.
 """
