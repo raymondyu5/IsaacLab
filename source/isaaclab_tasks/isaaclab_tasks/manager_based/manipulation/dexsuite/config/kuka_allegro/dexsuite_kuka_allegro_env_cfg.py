@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
-from isaaclab_assets.robots import KUKA_ALLEGRO_CFG
+from isaaclab_assets.robots import KUKA_ALLEGRO_CFG, KUKA_ALLEGRO_HIGH_PD_CFG
 
 from isaaclab.controllers.differential_ik_cfg import DifferentialIKControllerCfg
 from isaaclab.envs.mdp.actions.actions_cfg import DifferentialInverseKinematicsActionCfg
@@ -470,3 +470,49 @@ class DexsuiteKukaAllegroLiftSlipperyIKEnvCfg_PLAY(KukaAllegroIKMixinCfg, dexsui
         # Fix robot joint positions - remove randomization
         self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]
         self.events.reset_robot_wrist_joint.params["position_range"] = [0.0, 0.0]
+
+
+##
+# High PD gain domain environments
+##
+
+
+@configclass
+class KukaAllegroHighPDMixinCfg:
+    """Mixin for Kuka Allegro with high PD gains and IK arm control."""
+    rewards: KukaAllegroReorientRewardCfg = KukaAllegroReorientRewardCfg()
+    actions: KukaAllegroIKActionCfg = KukaAllegroIKActionCfg()
+
+    def __post_init__(self: dexsuite.DexsuiteReorientEnvCfg):
+        super().__post_init__()
+        self.commands.object_pose.body_name = "palm_link"
+        self.scene.robot = KUKA_ALLEGRO_HIGH_PD_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        finger_tip_body_list = ["index_link_3", "middle_link_3", "ring_link_3", "thumb_link_3"]
+        for link_name in finger_tip_body_list:
+            setattr(
+                self.scene,
+                f"{link_name}_object_s",
+                ContactSensorCfg(
+                    prim_path="{ENV_REGEX_NS}/Robot/ee_link/" + link_name,
+                    filter_prim_paths_expr=["{ENV_REGEX_NS}/Object"],
+                ),
+            )
+        self.observations.proprio.contact = ObsTerm(
+            func=mdp.fingers_contact_force_b,
+            params={"contact_sensor_names": [f"{link}_object_s" for link in finger_tip_body_list]},
+            clip=(-20.0, 20.0),  # contact force in finger tips is under 20N normally
+        )
+        self.observations.proprio.hand_tips_state_b.params["body_asset_cfg"].body_names = ["palm_link", ".*_tip"]
+        self.rewards.fingers_to_object.params["asset_cfg"] = SceneEntityCfg("robot", body_names=["palm_link", ".*_tip"])
+
+
+@configclass
+class DexsuiteKukaAllegroLiftHighPDEnvCfg(KukaAllegroHighPDMixinCfg, dexsuite.DexsuiteLiftEnvCfg):
+    """Kuka Allegro lift task with high PD gains"""
+    pass
+
+
+@configclass
+class DexsuiteKukaAllegroLiftHighPDEnvCfg_PLAY(KukaAllegroHighPDMixinCfg, dexsuite.DexsuiteLiftEnvCfg_PLAY):
+    """Kuka Allegro lift task with high PD gains (play mode)"""
+    pass
