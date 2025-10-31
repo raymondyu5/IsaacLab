@@ -66,21 +66,38 @@ def load_id_model(model_path: str, config_path: str, device: str = 'cuda'):
     checkpoint = torch.load(model_path, map_location=device)
 
     if 'model_state_dict' in checkpoint:
-        first_layer = None
-        for key in checkpoint['model_state_dict'].keys():
-            if 'weight' in key:
-                first_layer = key
+        # Extract dimensions from checkpoint layers
+        first_layer_weight = None
+        last_layer_weight = None
+
+        state_dict_keys = list(checkpoint['model_state_dict'].keys())
+
+        # Find first layer (input layer)
+        for key in state_dict_keys:
+            if 'network.0.weight' in key:
+                first_layer_weight = checkpoint['model_state_dict'][key]
                 break
 
-        if first_layer:
-            weight = checkpoint['model_state_dict'][first_layer]
-            obs_dim = weight.shape[1] if len(weight.shape) > 1 else 90
-        else:
-            obs_dim = 90 # bad behavior, fix later
-    else:
-        obs_dim = 90
+        # Find last layer (output layer)
+        for key in reversed(state_dict_keys):
+            if 'weight' in key and 'network' in key:
+                last_layer_weight = checkpoint['model_state_dict'][key]
+                break
 
-    action_dim = 23
+        if first_layer_weight is not None:
+            # First layer input is concatenated (state + next_state), so divide by 2
+            concat_dim = first_layer_weight.shape[1]
+            obs_dim = concat_dim // 2
+        else:
+            obs_dim = 134  # Default to 134D states
+
+        if last_layer_weight is not None:
+            action_dim = last_layer_weight.shape[0]
+        else:
+            action_dim = 22  # Default to 22D actions for Kuka-Allegro IK
+    else:
+        obs_dim = 134
+        action_dim = 22
 
     # Build model
     model = build_model_from_config(model_config, obs_dim, action_dim)
@@ -179,10 +196,13 @@ def create_dataset_from_trajectories(
     max_demos: Optional[int] = None,
     min_reward: Optional[float] = None,
     max_samples: Optional[int] = None,
-    use_90d_states: bool = False # remove later
+    use_90d_states: bool = True  # Keep for backward compat, but always True now
 ):
     """
-    Create dataset from trajectory data.
+    Create dataset from trajectory data using proper state extraction.
+
+    Always uses the same state representation that the ID model was trained on
+    (extracted from full observations, not raw 165D obs with action history).
 
     Args:
         trajectory_path: Path to trajectory HDF5 file
@@ -193,7 +213,7 @@ def create_dataset_from_trajectories(
         max_demos: Maximum number of demos to use
         min_reward: Minimum reward threshold for filtering
         max_samples: Maximum number of samples to include
-        use_90d_states: Use 90D Markovian states instead of 165D observations
+        use_90d_states: (Deprecated, kept for compatibility) Always uses proper state extraction
     """
     print("=" * 80)
     print(f"CREATING {dataset_type.upper()} DATASET FROM TRAJECTORIES")
@@ -291,10 +311,9 @@ def create_dataset_from_trajectories(
         # Create metadata
         meta_group = f.create_group('meta')
         meta_group.attrs['num_samples'] = len(states)
-        meta_group.attrs['obs_dim'] = state_dim
+        meta_group.attrs['state_dim'] = state_dim
         meta_group.attrs['action_dim'] = action_dim
         meta_group.attrs['dataset_type'] = dataset_type
-        meta_group.attrs['use_90d_states'] = use_90d_states
         meta_group.attrs['created_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         meta_group.attrs['source_trajectory_file'] = trajectory_path
 
@@ -371,13 +390,6 @@ if __name__ == "__main__":
         help="Maximum number of samples to include (default: all)"
     )
 
-    # State representation
-    parser.add_argument(
-        "--use_90d_states",
-        action="store_true",
-        help="Use 90D Markovian states instead of 165D observations"
-    )
-
     args = parser.parse_args()
 
     # Generate output filename with timestamp
@@ -394,5 +406,5 @@ if __name__ == "__main__":
         max_demos=args.max_demos,
         min_reward=args.min_reward,
         max_samples=args.max_samples,
-        use_90d_states=args.use_90d_states
+        use_90d_states=True  # Always use proper state extraction (actually 134D)
     )

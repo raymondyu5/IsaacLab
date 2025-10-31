@@ -94,7 +94,7 @@ def load_processed_dataset(dataset_path: str) -> Tuple[np.ndarray, np.ndarray, n
             markovian = True
         else:
             # Original action translation format
-            print("[INFO] Detected action translation dataset format (165D observations)")
+            print("[INFO] Detected action translation dataset format")
             states = f['data']['states'][:]
             next_states = f['data']['next_states'][:]
             actions_src = f['data']['actions_src'][:]
@@ -102,7 +102,7 @@ def load_processed_dataset(dataset_path: str) -> Tuple[np.ndarray, np.ndarray, n
 
             # Load metadata
             num_samples = f['meta'].attrs['num_samples']
-            obs_dim = f['meta'].attrs['obs_dim']
+            obs_dim = f['meta'].attrs['state_dim']
             action_dim = f['meta'].attrs['action_dim']
             markovian = False
 

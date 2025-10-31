@@ -236,6 +236,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
             source_policy=source_policy,
             translator_config=args_cli.translator_config,
             translator_checkpoint=args_cli.translator_checkpoint,
+            env=env.unwrapped,
             device=env.unwrapped.device,
             verbose=True
         )

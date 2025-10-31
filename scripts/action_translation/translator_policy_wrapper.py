@@ -48,6 +48,7 @@ class TranslatorPolicyWrapper:
         source_policy,
         translator_config: str,
         translator_checkpoint: str,
+        env=None,
         device: str = 'cuda',
         verbose: bool = True
     ):
@@ -58,10 +59,12 @@ class TranslatorPolicyWrapper:
             source_policy: The source domain policy (e.g., normal friction policy)
             translator_config: Path to action translator config YAML file
             translator_checkpoint: Path to trained action translator checkpoint (.pth)
+            env: Isaac Lab environment (needed for extracting 134D states)
             device: Device to run the translator on
             verbose: Whether to print loading information
         """
         self.source_policy = source_policy
+        self.env = env
         self.device = device
         self.verbose = verbose
 
@@ -70,12 +73,17 @@ class TranslatorPolicyWrapper:
             translator_config, translator_checkpoint
         )
 
+        # Import state extractor
+        from scripts.lib.state_extraction import extract_from_env
+        self.extract_from_env = extract_from_env
+
         if verbose:
             print("=" * 80)
             print("TRANSLATOR POLICY WRAPPER INITIALIZED")
             print("=" * 80)
             print(f"Translator checkpoint: {translator_checkpoint}")
             print(f"Normalization enabled: {self.checkpoint.get('normalize_data', False)}")
+            print(f"Environment provided: {env is not None}")
             print("=" * 80 + "\n")
 
     def _load_translator(self, config_path: str, checkpoint_path: str):
@@ -178,21 +186,10 @@ class TranslatorPolicyWrapper:
         with torch.no_grad():
             actions_src = self.source_policy(obs)
 
-        # Step 2: Extract state observations for the translator
-        # Handle TensorDict observations
-        if hasattr(obs, 'keys'):
-            # Try to get 'policy' observations (what the policy sees)
-            if 'policy' in obs:
-                states = obs['policy']
-            elif 'proprio' in obs:
-                states = obs['proprio']
-            else:
-                # Fallback to first available key
-                first_key = list(obs.keys())[0]
-                states = obs[first_key]
-        else:
-            # Regular tensor
-            states = obs
+        # Step 2: Extract 134D state from environment
+        # This matches the state representation used during translator training
+        # Pass None for obs_buf to use env.obs_buf directly (not the wrapped obs)
+        states = self.extract_from_env(self.env, obs_buf=None)
 
         # Ensure tensors are on correct device
         states = states.to(self.device)
