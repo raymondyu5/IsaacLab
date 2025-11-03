@@ -447,7 +447,11 @@ def save_checkpoint(
     }
 
     if normalization_stats:
+        # Add normalize_data flag to indicate stats are present
+        checkpoint['normalize_data'] = True
         checkpoint.update(normalization_stats)
+    else:
+        checkpoint['normalize_data'] = False
 
     if additional_info:
         checkpoint.update(additional_info)

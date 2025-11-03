@@ -135,21 +135,34 @@ class TranslatorPolicyWrapper:
             return states, actions_src
 
         # Normalize states
-        state_mean = self.checkpoint.get('state_mean')
-        state_std = self.checkpoint.get('state_std')
-
-        if state_mean is not None and state_std is not None:
+        # Stats are stored as tuples: 'states': (mean_tensor, std_tensor)
+        state_stats = self.checkpoint.get('states')
+        if state_stats is not None:
+            state_mean, state_std = state_stats
             state_mean = state_mean.to(self.device)
             state_std = state_std.to(self.device)
+
+            # Handle case where stats have extra dimension (shape [1, D] instead of [D])
+            if state_mean.dim() > 1:
+                state_mean = state_mean.squeeze(0)
+            if state_std.dim() > 1:
+                state_std = state_std.squeeze(0)
+
             states = (states - state_mean) / state_std
 
         # Normalize source actions
-        action_src_mean = self.checkpoint.get('action_src_mean')
-        action_src_std = self.checkpoint.get('action_src_std')
-
-        if action_src_mean is not None and action_src_std is not None:
+        action_src_stats = self.checkpoint.get('actions_src')
+        if action_src_stats is not None:
+            action_src_mean, action_src_std = action_src_stats
             action_src_mean = action_src_mean.to(self.device)
             action_src_std = action_src_std.to(self.device)
+
+            # Handle case where stats have extra dimension (shape [1, D] instead of [D])
+            if action_src_mean.dim() > 1:
+                action_src_mean = action_src_mean.squeeze(0)
+            if action_src_std.dim() > 1:
+                action_src_std = action_src_std.squeeze(0)
+
             actions_src = (actions_src - action_src_mean) / action_src_std
 
         return states, actions_src
@@ -162,12 +175,19 @@ class TranslatorPolicyWrapper:
             return actions_target
 
         # Denormalize target actions
-        action_target_mean = self.checkpoint.get('action_target_mean')
-        action_target_std = self.checkpoint.get('action_target_std')
-
-        if action_target_mean is not None and action_target_std is not None:
+        # Stats are stored as tuples: 'actions_target': (mean_tensor, std_tensor)
+        action_target_stats = self.checkpoint.get('actions_target')
+        if action_target_stats is not None:
+            action_target_mean, action_target_std = action_target_stats
             action_target_mean = action_target_mean.to(self.device)
             action_target_std = action_target_std.to(self.device)
+
+            # Handle case where stats have extra dimension (shape [1, D] instead of [D])
+            if action_target_mean.dim() > 1:
+                action_target_mean = action_target_mean.squeeze(0)
+            if action_target_std.dim() > 1:
+                action_target_std = action_target_std.squeeze(0)
+
             actions_target = actions_target * action_target_std + action_target_mean
 
         return actions_target

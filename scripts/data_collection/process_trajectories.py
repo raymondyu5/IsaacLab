@@ -136,15 +136,20 @@ def predict_actions_with_id_model(
 
     # Check if model uses normalization
     normalize_data = checkpoint.get('normalize_data', False)
-
     if normalize_data and 'states' in checkpoint:
         # Normalization stats stored as tuples (mean, std)
         state_mean, state_std = checkpoint['states']
         state_mean = state_mean.cpu().numpy() if isinstance(state_mean, torch.Tensor) else state_mean
         state_std = state_std.cpu().numpy() if isinstance(state_std, torch.Tensor) else state_std
+        # Also get action normalization stats for denormalization
+        action_mean, action_std = checkpoint['actions']
+        action_mean = action_mean.cpu().numpy() if isinstance(action_mean, torch.Tensor) else action_mean
+        action_std = action_std.cpu().numpy() if isinstance(action_std, torch.Tensor) else action_std
     else:
         state_mean = None
         state_std = None
+        action_mean = None
+        action_std = None
 
     num_samples = len(states)
     num_batches = (num_samples + batch_size - 1) // batch_size
@@ -175,6 +180,13 @@ def predict_actions_with_id_model(
 
             if not isinstance(predictions, torch.Tensor):
                 predictions = torch.tensor(predictions, device=device)
+
+            # Denormalize predictions if model was trained with normalization
+            if normalize_data and action_mean is not None:
+                # breakpoint()
+                action_mean_t = torch.FloatTensor(action_mean).to(device)
+                action_std_t = torch.FloatTensor(action_std).to(device)
+                predictions = predictions * action_std_t + action_mean_t
 
         all_predictions.append(predictions.cpu().numpy())
 

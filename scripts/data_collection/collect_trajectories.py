@@ -153,6 +153,14 @@ class PreStepProprioObservationsRecorder(RecorderTerm):
         return "proprio_obs", self._env.obs_buf["proprio"]
 
 
+class PreStepPerceptionObservationsRecorder(RecorderTerm):
+    """Custom recorder term that records perception group observations in each step."""
+
+    def record_pre_step(self):
+        """Record perception observations before each environment step."""
+        return "perception_obs", self._env.obs_buf["perception"]
+
+
 # Global variable to track reward-based success (accessed by termination function)
 _reward_success_tracker = None
 
@@ -305,6 +313,9 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     # Add custom proprio observations recorder (fingertips, contact forces, etc.)
     # Note: The attribute name becomes the directory name in the dataset
     env_cfg.recorders.record_proprio_data = RecorderTermCfg(class_type=PreStepProprioObservationsRecorder)
+
+    # Add custom perception observations recorder (point cloud, visual features, etc.)
+    env_cfg.recorders.record_perception_data = RecorderTermCfg(class_type=PreStepPerceptionObservationsRecorder)
 
     # Create isaac environment
     print(f"[INFO] Creating environment: {args_cli.task}")
