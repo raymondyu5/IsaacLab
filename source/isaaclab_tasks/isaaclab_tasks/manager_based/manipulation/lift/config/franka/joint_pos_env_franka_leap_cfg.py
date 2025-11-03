@@ -52,6 +52,9 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.episode_length_s = 3.6  # 180 steps * 0.02s (decimation=2, dt=0.01)
 
+        self.viewer.eye = (1.2, 0.8, 0.6)
+        self.viewer.lookat = (0.5, 0.0, 0.2)
+
         self.scene.robot = FRANKA_LEAP_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot",
             init_state=FRANKA_LEAP_CFG.init_state.replace(
@@ -86,8 +89,14 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             use_default_offset=False,
         )
 
+        # Disable random goal commands - we just want to lift the object straight up
         # Set the body name for the end effector (Leap hand base)
         self.commands.object_pose.body_name = "palm_lower"
+        # Set goal to be directly above object starting position
+        self.commands.object_pose.ranges.pos_x = (0.5, 0.5)
+        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
+        self.commands.object_pose.ranges.pos_z = (0.4, 0.4)
+        self.commands.object_pose.debug_vis = False
 
         # Set object (DexCube for now, YCB objects via nucleus server can be swapped in)
         self.scene.object = RigidObjectCfg(
@@ -120,11 +129,10 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
                     "yaw": (-3.14, 3.14),
                 },
                 "velocity_range": {},
-                "asset_cfg": SceneEntityCfg("object", body_names="Object"),
+                "asset_cfg": SceneEntityCfg("object"),
             },
         )
 
-        # Frame transformer for end-effector tracking (idk if needed)
         marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
         marker_cfg.prim_path = "/Visuals/FrameTransformer"
@@ -134,7 +142,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             visualizer_cfg=marker_cfg,
             target_frames=[
                 FrameTransformerCfg.FrameCfg(
-                    prim_path="{ENV_REGEX_NS}/Robot/palm_lower",  # Leap hand base
+                    prim_path="{ENV_REGEX_NS}/Robot/panda_link7",  # Franka wrist
                     name="end_effector",
                     offset=OffsetCfg(pos=[0.0, 0.0, 0.0]),
                 ),
@@ -142,31 +150,42 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         )
 
         # Contact sensors for fingertips
-        self.scene.contact_forces = ContactSensorCfg(
-            prim_path="{ENV_REGEX_NS}/Robot/palm_lower/.*fingertip.*",
-            history_length=3,
-            force_threshold=1.0,
-            filter_prim_paths_expr=["{ENV_REGEX_NS}/Object"],
-        )
+        # Note: Contact sensors require contact reporter API to be enabled in the USD file
+        # For now, commenting out until USD is updated with contact reporters
+        # self.scene.contact_forces = ContactSensorCfg(
+        #     prim_path="{ENV_REGEX_NS}/Robot/.*/.*fingertip.*",
+        #     history_length=3,
+        #     force_threshold=1.0,
+        #     filter_prim_paths_expr=["{ENV_REGEX_NS}/Object"],
+        # )
+
+        # Simplify rewards for simple lift task (just lift object straight up)
+        # Increase weight on lifting reward, decrease weight on goal tracking
+        self.rewards.lifting_object.weight = 50.0
+        self.rewards.object_goal_tracking.weight = 5.0
+        self.rewards.object_goal_tracking_fine_grained.weight = 10.0
 
 
 @configclass
 class FrankaLeapYCBLiftEnvCfg(FrankaLeapCubeLiftEnvCfg):
-    """Configuration for Franka+Leap lifting YCB objects from Isaac Sim nucleus server.
+    """Configuration for Franka+Leap lifting YCB mustard bottle from Isaac Sim nucleus server.
 
-    This variant uses YCB mustard bottle by default. To use different objects, modify the
-    usd_path in __post_init__ or create a new variant subclass.
+    Uses mustard bottle as the primary test object matching rfs-master's setup.
+
+    Note: For multiple objects, rfs-master spawns all objects in the scene and assigns
+    them round-robin to environments. MultiAssetSpawnerCfg doesn't work well with YCB USDs.
     """
 
     def __post_init__(self):
         super().__post_init__()
 
-        # Replace DexCube with YCB mustard bottle from Isaac Sim nucleus
-        # YCB objects are available at: {ISAAC_NUCLEUS_DIR}/Props/YCB/Axis_Aligned/
+        # Replace DexCube with YCB mustard bottle (one of the 6 target objects from rfs-master)
+        ycb_base_path = f"{ISAAC_NUCLEUS_DIR}/Props/YCB/Axis_Aligned"
+
         self.scene.object.spawn = UsdFileCfg(
-            usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/YCB/Axis_Aligned/006_mustard_bottle.usd",
+            usd_path=f"{ycb_base_path}/006_mustard_bottle.usd",
             scale=(1.0, 1.0, 1.0),
-            rigid_props=self.scene.object.spawn.rigid_props,  # Keep same physics props
+            rigid_props=self.scene.object.spawn.rigid_props,
         )
 
 
