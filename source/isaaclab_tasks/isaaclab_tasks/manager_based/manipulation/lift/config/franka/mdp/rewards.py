@@ -12,6 +12,29 @@ if TYPE_CHECKING:
 
 
 ##
+# Action penalty functions (matching Kuka Allegro's clamped versions)
+##
+
+
+def action_l2_clamped(env: ManagerBasedRLEnv) -> torch.Tensor:
+    """Penalize the actions using L2 squared kernel with clamping.
+
+    This matches Kuka Allegro's implementation to prevent exploding penalties
+    during early random exploration.
+    """
+    return torch.sum(torch.square(env.action_manager.action), dim=1).clamp(-1000, 1000)
+
+
+def action_rate_l2_clamped(env: ManagerBasedRLEnv) -> torch.Tensor:
+    """Penalize the rate of change of the actions using L2 squared kernel with clamping.
+
+    This matches Kuka Allegro's implementation to prevent exploding penalties
+    during early random exploration.
+    """
+    return torch.sum(torch.square(env.action_manager.action - env.action_manager.prev_action), dim=1).clamp(-1000, 1000)
+
+
+##
 # obs functions
 ##
 
@@ -439,3 +462,124 @@ def object_orientation_penalty(
     penalty = torch.clamp(tilt_angle - threshold, min=0.0)
 
     return -penalty
+
+
+def object_goal_distance_gated(
+    env: ManagerBasedRLEnv,
+    std: float,
+    minimal_height: float,
+    command_name: str,
+    gate_threshold: float = 0.1,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
+) -> torch.Tensor:
+    """Reward for tracking goal position, GATED by proximity to object.
+
+    Similar to standard object_goal_distance, but only gives reward when
+    fingertips are close to the object. This prevents "air tracking" behavior
+    where the agent moves toward the goal without actually grasping.
+
+    This mimics Kuka Allegro's contact-gated rewards without requiring contact sensors.
+
+    Args:
+        env: The RL environment.
+        std: Standard deviation for the tanh kernel.
+        minimal_height: Minimum object height to receive reward.
+        command_name: Name of the pose command.
+        gate_threshold: Maximum distance (m) from object to enable reward.
+        robot_cfg: Configuration for the robot entity.
+        object_cfg: Configuration for the object entity.
+
+    Returns:
+        Reward tensor of shape (num_envs,).
+    """
+    from isaaclab.utils.math import combine_frame_transforms
+
+    robot: Articulation = env.scene[robot_cfg.name]
+    object: RigidObject = env.scene[object_cfg.name]
+    command = env.command_manager.get_command(command_name)
+
+    # Compute the desired position in the world frame
+    des_pos_b = command[:, :3]
+    des_pos_w, _ = combine_frame_transforms(robot.data.root_pos_w, robot.data.root_quat_w, des_pos_b)
+
+    # Distance from object to goal
+    distance_to_goal = torch.norm(des_pos_w - object.data.root_pos_w, dim=1)
+
+    # Height gate: object must be lifted
+    height_gate = object.data.root_pos_w[:, 2] > minimal_height
+
+    # Proximity gate: Check if fingertips are close to object
+    fingertip_names = ["fingertip", "thumb_fingertip", "fingertip_2", "fingertip_3"]
+    object_pos_w = object.data.root_pos_w  # (num_envs, 3)
+
+    # Find minimum distance from any fingertip to object
+    min_fingertip_distance = torch.ones(env.num_envs, device=env.device) * 1e6
+    for name in fingertip_names:
+        try:
+            body_idx = robot.find_bodies(name)[0][0]
+            fingertip_pos_w = robot.data.body_pos_w[:, body_idx, :]
+            distance = torch.norm(object_pos_w - fingertip_pos_w, dim=-1)
+            min_fingertip_distance = torch.min(min_fingertip_distance, distance)
+        except:
+            pass
+
+    # Gate: Only reward when close to object (mimics contact gating)
+    proximity_gate = min_fingertip_distance < gate_threshold
+
+    # Combined gate: must be lifted AND near object
+    gate = height_gate & proximity_gate
+
+    # Compute reward
+    reward = 1 - torch.tanh(distance_to_goal / std)
+
+    # Apply gate
+    return reward * gate.float()
+
+
+def success_reward(
+    env: ManagerBasedRLEnv,
+    command_name: str,
+    pos_std: float,
+    rot_std: float | None = None,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
+) -> torch.Tensor:
+    """Reward success by comparing commanded pose to the object pose using tanh kernels on error.
+
+    This is a large bonus reward for getting the object close to the goal position.
+    Matches the Kuka Allegro success reward implementation.
+
+    Args:
+        env: The RL environment.
+        command_name: Name of the pose command.
+        pos_std: Standard deviation for position error tanh kernel.
+        rot_std: Standard deviation for rotation error tanh kernel (None for position-only tasks).
+        robot_cfg: Configuration for the robot entity.
+        object_cfg: Configuration for the object entity.
+
+    Returns:
+        Reward tensor of shape (num_envs,).
+    """
+    from isaaclab.utils.math import combine_frame_transforms, compute_pose_error
+
+    robot: Articulation = env.scene[robot_cfg.name]
+    object: RigidObject = env.scene[object_cfg.name]
+    command = env.command_manager.get_command(command_name)
+
+    # Compute desired pose in world frame
+    des_pos_w, des_quat_w = combine_frame_transforms(
+        robot.data.root_pos_w, robot.data.root_quat_w, command[:, :3], command[:, 3:7]
+    )
+
+    # Compute pose error
+    pos_err, rot_err = compute_pose_error(des_pos_w, des_quat_w, object.data.root_pos_w, object.data.root_quat_w)
+    pos_dist = torch.norm(pos_err, dim=1)
+
+    if not rot_std:
+        # Position-only task (like lift) - square helps normalize reward magnitude
+        return (1 - torch.tanh(pos_dist / pos_std)) ** 2
+
+    # Position + orientation task
+    rot_dist = torch.norm(rot_err, dim=1)
+    return (1 - torch.tanh(pos_dist / pos_std)) * (1 - torch.tanh(rot_dist / rot_std))

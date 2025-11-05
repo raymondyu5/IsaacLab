@@ -43,6 +43,10 @@ from isaaclab_assets.robots.franka_leap import FRANKA_LEAP_CFG  # isort: skip
 
 # Import custom reward and observation functions
 from .mdp import rewards as mdp_rewards
+from isaaclab_tasks.manager_based.manipulation.dexsuite.mdp.curriculums import (  # noqa: F401
+    DifficultyScheduler,
+    initial_final_interpolate_fn,
+)
 
 
 @configclass
@@ -94,9 +98,6 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         # Set the body name for the end effector (Leap hand base)
         self.commands.object_pose.body_name = "palm_lower"
-        self.commands.object_pose.ranges.pos_x = (0.5, 0.6)
-        self.commands.object_pose.ranges.pos_y = (-0.2, 0.2)
-        self.commands.object_pose.ranges.pos_z = (0.35, 0.45)
         self.commands.object_pose.debug_vis = False
 
         # Set object (DexCube for now, YCB objects via nucleus server can be swapped in)
@@ -134,6 +135,88 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+
+        # Object mass randomization: 0.5x to 2x scale
+        self.events.object_scale_mass = EventTerm(
+            func=mdp.randomize_rigid_body_mass,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("object"),
+                "mass_distribution_params": [0.5, 2.0],
+                "operation": "scale",
+            },
+        )
+
+        # Robot friction randomization: 0.5 to 1.0 static/dynamic
+        self.events.robot_physics_material = EventTerm(
+            func=mdp.randomize_rigid_body_material,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("robot", body_names=".*"),
+                "static_friction_range": [0.5, 1.0],
+                "dynamic_friction_range": [0.5, 1.0],
+                "restitution_range": [0.0, 0.0],
+                "num_buckets": 250,
+            },
+        )
+
+        # Object friction randomization: 0.5 to 1.0 static/dynamic
+        self.events.object_physics_material = EventTerm(
+            func=mdp.randomize_rigid_body_material,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("object", body_names=".*"),
+                "static_friction_range": [0.5, 1.0],
+                "dynamic_friction_range": [0.5, 1.0],
+                "restitution_range": [0.0, 0.0],
+                "num_buckets": 250,
+            },
+        )
+
+        # PD gain randomization: 0.5x to 2x scale for both stiffness and damping
+        self.events.joint_stiffness_and_damping = EventTerm(
+            func=mdp.randomize_actuator_gains,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
+                "stiffness_distribution_params": [0.5, 2.0],
+                "damping_distribution_params": [0.5, 2.0],
+                "operation": "scale",
+            },
+        )
+
+        # Joint friction randomization: 0 to 5x scale
+        self.events.joint_friction = EventTerm(
+            func=mdp.randomize_joint_parameters,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
+                "friction_distribution_params": [0.0, 5.0],
+                "operation": "scale",
+            },
+        )
+
+        # Joint position randomization: ±0.3 radians at reset
+        self.events.reset_robot_joints = EventTerm(
+            func=mdp.reset_joints_by_offset,
+            mode="reset",
+            params={
+                "position_range": [-0.3, 0.3],
+                "velocity_range": [0.0, 0.0],
+            },
+        )
+
+        # Gravity curriculum: Start with ZERO gravity to help initial learning
+        # Gradually increase to full gravity through curriculum (see below)
+        self.events.variable_gravity = EventTerm(
+            func=mdp.randomize_physics_scene_gravity,
+            mode="reset",
+            params={
+                "gravity_distribution_params": ([0.0, 0.0, 0.0], [0.0, 0.0, 0.0]),  # Start at ZERO gravity
+                "operation": "abs",
+            },
+        )
+
         marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
         marker_cfg.prim_path = "/Visuals/FrameTransformer"
@@ -161,58 +244,80 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         # )
 
 
-        self.rewards.reaching_object.weight = 3.0
+        self.rewards.action_rate = RewTerm(
+            func=mdp_rewards.action_rate_l2_clamped,
+            weight=-0.005,
+        )
+        self.rewards.joint_vel = RewTerm(
+            func=mdp_rewards.action_l2_clamped,
+            weight=-0.005,
+        )
 
-        self.rewards.fingertips_to_object = RewTerm(
+        self.rewards.reaching_object = None
+        self.rewards.object_goal_tracking = None
+        self.rewards.object_goal_tracking_fine_grained = None
+        self.rewards.lifting_object = None
+
+        self.rewards.fingers_to_object = RewTerm(
             func=mdp_rewards.fingertips_to_object_distance,
-            weight=2.5,
-            params={"std": 0.1},
+            weight=1.0, 
+            params={"std": 0.4},
         )
 
-        self.rewards.fingertips_grasp_posture = RewTerm(
-            func=mdp_rewards.fingertips_object_grasp_reward,
-            weight=1.5,
-            params={"min_distance": 0.02, "max_distance": 0.08},
+        self.rewards.position_tracking = RewTerm(
+            func=mdp_rewards.object_goal_distance_gated,
+            weight=2.0,
+            params={
+                "std": 0.2,
+                "minimal_height": 0.04,
+                "command_name": "object_pose",
+                "gate_threshold": 0.10,
+            },
         )
 
-        self.rewards.lifting_object.weight = 15.0
-        self.rewards.object_goal_tracking.weight = 16.0
-        self.rewards.object_goal_tracking_fine_grained.weight = 5.0
-
-        self.rewards.action_rate.weight = -1e-4
-        self.rewards.joint_vel.weight = -1e-4
-
-
-        self.rewards.object_spinning_penalty = RewTerm(
-            func=mdp_rewards.object_angular_velocity_penalty,
-            weight=0.0,  # Start at 0 - will be ramped by curriculum
-            params={"threshold": 2.0},  # Penalize angular vel > 2 rad/s
+        self.rewards.success = RewTerm(
+            func=mdp_rewards.success_reward,
+            weight=10.0,
+            params={
+                "pos_std": 0.1,
+                "rot_std": None,
+                "command_name": "object_pose",
+            },
         )
 
-        self.rewards.object_orientation_penalty = RewTerm(
-            func=mdp_rewards.object_orientation_penalty,
-            weight=0.0,  # Start at 0 - will be ramped by curriculum
-            params={"threshold": 0.5},
+        self.curriculum.action_rate = None
+        self.curriculum.joint_vel = None
+
+        self.curriculum.adr = CurrTerm(
+            func=DifficultyScheduler,
+            params={
+                "init_difficulty": 0,
+                "min_difficulty": 0,
+                "max_difficulty": 10,
+                "pos_tol": 0.05,
+                "rot_tol": None,
+            },
         )
 
-        self.curriculum.spinning_penalty = CurrTerm(
-            func=mdp.modify_reward_weight,
-            params={"term_name": "object_spinning_penalty", "weight": 1.5, "num_steps": 5000}  # Gentle, activate at 5k
+        self.curriculum.gravity_adr = CurrTerm(
+            func=mdp.modify_term_cfg,
+            params={
+                "address": "events.variable_gravity.params.gravity_distribution_params",
+                "modify_fn": initial_final_interpolate_fn,
+                "modify_params": {
+                    "initial_value": ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+                    "final_value": ((0.0, 0.0, -9.81), (0.0, 0.0, -9.81)),
+                    "difficulty_term_str": "adr",
+                },
+            },
         )
 
-        self.curriculum.orientation_penalty = CurrTerm(
-            func=mdp.modify_reward_weight,
-            params={"term_name": "object_orientation_penalty", "weight": 2.0, "num_steps": 8000}  # Gentle, activate at 8k
+        self.observations.policy.object_orientation = ObsTerm(
+            func=mdp.object_quat_b,
         )
-
-        self.curriculum.action_rate.params["weight"] = -0.01
-        self.curriculum.action_rate.params["num_steps"] = 25000
-
-        self.curriculum.joint_vel.params["weight"] = -0.01
-        self.curriculum.joint_vel.params["num_steps"] = 25000
 
         self.observations.policy.target_object_position = ObsTerm(
-            func=mdp_rewards.target_object_position_only,
+            func=mdp.generated_commands,
             params={"command_name": "object_pose"},
         )
 

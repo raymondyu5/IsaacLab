@@ -27,3 +27,25 @@ def object_position_in_robot_root_frame(
     object_pos_w = object.data.root_pos_w[:, :3]
     object_pos_b, _ = subtract_frame_transforms(robot.data.root_pos_w, robot.data.root_quat_w, object_pos_w)
     return object_pos_b
+
+
+def object_quat_b(
+    env: ManagerBasedRLEnv,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
+) -> torch.Tensor:
+    """Object orientation quaternion in the robot's root frame.
+
+    Args:
+        env: The environment.
+        robot_cfg: Scene entity for the robot (reference frame). Defaults to ``SceneEntityCfg("robot")``.
+        object_cfg: Scene entity for the object. Defaults to ``SceneEntityCfg("object")``.
+
+    Returns:
+        Tensor of shape ``(num_envs, 4)``: object quaternion ``(w, x, y, z)`` in the robot root frame.
+    """
+    from isaaclab.utils.math import quat_mul, quat_inv
+
+    robot: RigidObject = env.scene[robot_cfg.name]
+    object: RigidObject = env.scene[object_cfg.name]
+    return quat_mul(quat_inv(robot.data.root_quat_w), object.data.root_quat_w)
