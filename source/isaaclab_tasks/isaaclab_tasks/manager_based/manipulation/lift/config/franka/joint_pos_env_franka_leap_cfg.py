@@ -34,12 +34,15 @@ from isaaclab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg
 from isaaclab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
-from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm
+from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm, RewardTermCfg as RewTerm, ObservationTermCfg as ObsTerm, CurriculumTermCfg as CurrTerm
 
 from isaaclab_tasks.manager_based.manipulation.lift import mdp
 from isaaclab_tasks.manager_based.manipulation.lift.lift_env_cfg import LiftEnvCfg
 from isaaclab.markers.config import FRAME_MARKER_CFG  # isort: skip
 from isaaclab_assets.robots.franka_leap import FRANKA_LEAP_CFG  # isort: skip
+
+# Import custom reward and observation functions
+from .mdp import rewards as mdp_rewards
 
 
 @configclass
@@ -89,19 +92,17 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             use_default_offset=False,
         )
 
-        # Disable random goal commands - we just want to lift the object straight up
         # Set the body name for the end effector (Leap hand base)
         self.commands.object_pose.body_name = "palm_lower"
-        # Set goal to be directly above object starting position
-        self.commands.object_pose.ranges.pos_x = (0.5, 0.5)
-        self.commands.object_pose.ranges.pos_y = (0.0, 0.0)
-        self.commands.object_pose.ranges.pos_z = (0.4, 0.4)
+        self.commands.object_pose.ranges.pos_x = (0.5, 0.6)
+        self.commands.object_pose.ranges.pos_y = (-0.2, 0.2)
+        self.commands.object_pose.ranges.pos_z = (0.35, 0.45)
         self.commands.object_pose.debug_vis = False
 
         # Set object (DexCube for now, YCB objects via nucleus server can be swapped in)
         self.scene.object = RigidObjectCfg(
             prim_path="{ENV_REGEX_NS}/Object",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.0, 0.15], rot=[1, 0, 0, 0]),
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.0, 0.10], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
                 usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
                 scale=(0.8, 0.8, 0.8),
@@ -121,8 +122,8 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             mode="reset",
             params={
                 "pose_range": {
-                    "x": (-0.10, 0.10),
-                    "y": (-0.20, 0.20),
+                    "x": (-0.1, 0.1),
+                    "y": (-0.25, 0.25),
                     "z": (0.0, 0.0),
                     "roll": (0.0, 0.0),
                     "pitch": (0.0, 0.0),
@@ -159,11 +160,61 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         #     filter_prim_paths_expr=["{ENV_REGEX_NS}/Object"],
         # )
 
-        # Simplify rewards for simple lift task (just lift object straight up)
-        # Increase weight on lifting reward, decrease weight on goal tracking
-        self.rewards.lifting_object.weight = 50.0
-        self.rewards.object_goal_tracking.weight = 5.0
-        self.rewards.object_goal_tracking_fine_grained.weight = 10.0
+
+        self.rewards.reaching_object.weight = 3.0
+
+        self.rewards.fingertips_to_object = RewTerm(
+            func=mdp_rewards.fingertips_to_object_distance,
+            weight=2.5,
+            params={"std": 0.1},
+        )
+
+        self.rewards.fingertips_grasp_posture = RewTerm(
+            func=mdp_rewards.fingertips_object_grasp_reward,
+            weight=1.5,
+            params={"min_distance": 0.02, "max_distance": 0.08},
+        )
+
+        self.rewards.lifting_object.weight = 15.0
+        self.rewards.object_goal_tracking.weight = 16.0
+        self.rewards.object_goal_tracking_fine_grained.weight = 5.0
+
+        self.rewards.action_rate.weight = -1e-4
+        self.rewards.joint_vel.weight = -1e-4
+
+
+        self.rewards.object_spinning_penalty = RewTerm(
+            func=mdp_rewards.object_angular_velocity_penalty,
+            weight=0.0,  # Start at 0 - will be ramped by curriculum
+            params={"threshold": 2.0},  # Penalize angular vel > 2 rad/s
+        )
+
+        self.rewards.object_orientation_penalty = RewTerm(
+            func=mdp_rewards.object_orientation_penalty,
+            weight=0.0,  # Start at 0 - will be ramped by curriculum
+            params={"threshold": 0.5},
+        )
+
+        self.curriculum.spinning_penalty = CurrTerm(
+            func=mdp.modify_reward_weight,
+            params={"term_name": "object_spinning_penalty", "weight": 1.5, "num_steps": 5000}  # Gentle, activate at 5k
+        )
+
+        self.curriculum.orientation_penalty = CurrTerm(
+            func=mdp.modify_reward_weight,
+            params={"term_name": "object_orientation_penalty", "weight": 2.0, "num_steps": 8000}  # Gentle, activate at 8k
+        )
+
+        self.curriculum.action_rate.params["weight"] = -0.01
+        self.curriculum.action_rate.params["num_steps"] = 25000
+
+        self.curriculum.joint_vel.params["weight"] = -0.01
+        self.curriculum.joint_vel.params["num_steps"] = 25000
+
+        self.observations.policy.target_object_position = ObsTerm(
+            func=mdp_rewards.target_object_position_only,
+            params={"command_name": "object_pose"},
+        )
 
 
 @configclass

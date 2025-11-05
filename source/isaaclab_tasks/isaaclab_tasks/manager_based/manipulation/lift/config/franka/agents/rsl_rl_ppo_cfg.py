@@ -11,7 +11,7 @@ from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, R
 @configclass
 class LiftCubePPORunnerCfg(RslRlOnPolicyRunnerCfg):
     num_steps_per_env = 24
-    max_iterations = 1500
+    max_iterations = 2500  # Extended training: 60k total steps (24 steps/env × 2500 iterations)
     save_interval = 50
     experiment_name = "franka_lift"
     policy = RslRlPpoActorCriticCfg(

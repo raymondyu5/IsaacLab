@@ -13,7 +13,7 @@ FRANKA_LEAP_CFG = ArticulationCfg(
         usd_path=f"source/assets/robot/franka_leap/franka_right_leap.usd",
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
-            disable_gravity=True,  # entong used
+            disable_gravity=False,
             max_depenetration_velocity=5.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
@@ -42,20 +42,19 @@ FRANKA_LEAP_CFG = ArticulationCfg(
         },
     ),
     actuators={
-        # Franka arm actuators
         "panda_shoulder": ImplicitActuatorCfg(
             joint_names_expr=["panda_joint[1-4]"],
             effort_limit=87.0,
-            velocity_limit=1.875,  # entong used
-            stiffness=400.0,  # entong used
-            damping=80.0,     # entong used
+            velocity_limit=2.175,
+            stiffness=200.0,
+            damping=20.0,
         ),
         "panda_forearm": ImplicitActuatorCfg(
             joint_names_expr=["panda_joint[5-7]"],
-            effort_limit=40.0,  # entong used
-            velocity_limit=2.31,  # entong used
-            stiffness=400.0,  # entong used
-            damping=80.0,     # entong used
+            effort_limit=12.0,
+            velocity_limit=2.61,
+            stiffness=200.0,
+            damping=20.0,
         ),
         # Leap hand actuators
         "leap_hand": ImplicitActuatorCfg(
