@@ -34,7 +34,7 @@ from isaaclab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg
 from isaaclab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
-from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm, RewardTermCfg as RewTerm, ObservationTermCfg as ObsTerm, CurriculumTermCfg as CurrTerm
+from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm, RewardTermCfg as RewTerm, ObservationTermCfg as ObsTerm, CurriculumTermCfg as CurrTerm, TerminationTermCfg as DoneTerm
 
 from isaaclab_tasks.manager_based.manipulation.lift import mdp
 from isaaclab_tasks.manager_based.manipulation.lift.lift_env_cfg import LiftEnvCfg
@@ -43,9 +43,14 @@ from isaaclab_assets.robots.franka_leap import FRANKA_LEAP_CFG  # isort: skip
 
 # Import custom reward and observation functions
 from .mdp import rewards as mdp_rewards
+
 from isaaclab_tasks.manager_based.manipulation.dexsuite.mdp.curriculums import (  # noqa: F401
     DifficultyScheduler,
     initial_final_interpolate_fn,
+)
+from isaaclab_tasks.manager_based.manipulation.dexsuite.mdp.terminations import (  # noqa: F401
+    out_of_bound,
+    abnormal_robot_state,
 )
 
 
@@ -85,14 +90,14 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.actions.arm_action = mdp.JointPositionActionCfg(
             asset_name="robot",
             joint_names=["panda_joint.*"],
-            scale=0.5,
+            scale=0.1,
             use_default_offset=True,
         )
 
         self.actions.gripper_action = mdp.JointPositionActionCfg(
             asset_name="robot",
             joint_names=["j[0-9]+"],
-            scale=1.0,
+            scale=0.1,
             use_default_offset=False,
         )
 
@@ -244,11 +249,14 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         # )
 
 
-        self.rewards.action_rate = RewTerm(
+        self.rewards.action_rate = None
+        self.rewards.action_rate_l2 = RewTerm(
             func=mdp_rewards.action_rate_l2_clamped,
             weight=-0.005,
         )
-        self.rewards.joint_vel = RewTerm(
+
+        self.rewards.joint_vel = None
+        self.rewards.action_l2 = RewTerm(
             func=mdp_rewards.action_l2_clamped,
             weight=-0.005,
         )
@@ -259,9 +267,13 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.rewards.lifting_object = None
 
         self.rewards.fingers_to_object = RewTerm(
-            func=mdp_rewards.fingertips_to_object_distance,
-            weight=1.0, 
-            params={"std": 0.4},
+            func=mdp_rewards.object_ee_distance,
+            weight=1.0,
+            params={
+                "std": 0.4, 
+                "robot_cfg": SceneEntityCfg("robot", body_names=[".*fingertip.*"]),
+                "object_cfg": SceneEntityCfg("object"),
+            },
         )
 
         self.rewards.position_tracking = RewTerm(
@@ -284,6 +296,24 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
                 "command_name": "object_pose",
             },
         )
+
+        self.rewards.early_termination = RewTerm(
+            func=mdp.is_terminated_term,
+            weight=-1.0,  # Match Kuka Allegro
+            params={"term_keys": "abnormal_robot"},
+        )
+
+        self.terminations.object_out_of_bound = DoneTerm(
+            func=out_of_bound,
+            params={
+                "in_bound_range": {"x": (-0.5, 1.5), "y": (-1.0, 1.0), "z": (0.0, 2.0)},
+                "asset_cfg": SceneEntityCfg("object"),
+            },
+        )
+
+        self.terminations.abnormal_robot = DoneTerm(func=abnormal_robot_state)
+
+        self.terminations.object_dropping = None
 
         self.curriculum.action_rate = None
         self.curriculum.joint_vel = None

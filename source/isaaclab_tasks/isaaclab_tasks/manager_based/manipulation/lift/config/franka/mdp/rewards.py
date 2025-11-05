@@ -34,6 +34,48 @@ def action_rate_l2_clamped(env: ManagerBasedRLEnv) -> torch.Tensor:
     return torch.sum(torch.square(env.action_manager.action - env.action_manager.prev_action), dim=1).clamp(-1000, 1000)
 
 
+
+def object_ee_distance(
+    env: ManagerBasedRLEnv,
+    std: float,
+    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Reward reaching the object using a tanh-kernel on end-effector distance.
+
+    This matches Kuka Allegro's implementation. The reward is close to 1 when the
+    maximum distance between the object and any end-effector body (fingertip) is small.
+
+    Uses the WORST (maximum) fingertip distance, encouraging all fingers to reach object.
+
+    Args:
+        env: The RL environment.
+        std: Standard deviation for the tanh kernel.
+        object_cfg: Configuration for the object entity.
+        robot_cfg: Configuration for the robot entity (must have body_ids set).
+
+    Returns:
+        Reward tensor of shape (num_envs,).
+    """
+    robot: Articulation = env.scene[robot_cfg.name]
+    object: RigidObject = env.scene[object_cfg.name]
+
+    # Get positions of all fingertip bodies specified in body_ids
+    # Shape: (num_envs, num_bodies, 3)
+    robot_body_pos = robot.data.body_pos_w[:, robot_cfg.body_ids]
+    object_pos = object.data.root_pos_w  # Shape: (num_envs, 3)
+
+    # Compute distance from each body to object
+    # object_pos[:, None, :] broadcasts to (num_envs, 1, 3)
+    # Distance shape: (num_envs, num_bodies)
+    distances = torch.norm(robot_body_pos - object_pos[:, None, :], dim=-1)
+
+    # Use MAXIMUM distance (worst finger) - this encourages ALL fingers to reach
+    max_distance = distances.max(dim=-1).values  # Shape: (num_envs,)
+
+    return 1 - torch.tanh(max_distance / std)
+
+
 ##
 # obs functions
 ##
