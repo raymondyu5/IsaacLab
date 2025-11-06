@@ -241,13 +241,13 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.rewards.action_rate = None
         self.rewards.action_rate_l2 = RewTerm(
             func=mdp_rewards.action_rate_l2_clamped,
-            weight=-0.005,
+            weight=-0.05,
         )
 
         self.rewards.joint_vel = None
         self.rewards.action_l2 = RewTerm(
             func=mdp_rewards.action_l2_clamped,
-            weight=-0.005,
+            weight=-0.05,
         )
 
         self.rewards.reaching_object = None
