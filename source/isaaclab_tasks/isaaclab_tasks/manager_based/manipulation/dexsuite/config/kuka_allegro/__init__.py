@@ -15,6 +15,19 @@ from . import agents
 # Register Gym environments.
 ##
 
+
+## Frank Leap Environments
+gym.register(
+    id="Isaac-Dexsuite-Franka-Leap-Lift-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.dexsuite_franka_leap_env_cfg:DexsuiteFrankaLeapLiftEnvCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:DexsuiteFrankaLeapPPORunnerCfg",
+    },
+)
+
 # State Observation
 gym.register(
     id="Isaac-Dexsuite-Kuka-Allegro-Reorient-v0",

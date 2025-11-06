@@ -9,12 +9,12 @@ from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, R
 
 
 @configclass
-class DexsuiteKukaAllegroPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+class DexsuitePPORunnerCfg(RslRlOnPolicyRunnerCfg):
     num_steps_per_env = 32
     obs_groups = {"policy": ["policy", "proprio", "perception"], "critic": ["policy", "proprio", "perception"]}
     max_iterations = 15000
     save_interval = 250
-    experiment_name = "dexsuite_kuka_allegro"
+    experiment_name = "dexsuite_ppo"
     policy = RslRlPpoActorCriticCfg(
         init_noise_std=1.0,
         actor_obs_normalization=True,
@@ -37,3 +37,11 @@ class DexsuiteKukaAllegroPPORunnerCfg(RslRlOnPolicyRunnerCfg):
         desired_kl=0.01,
         max_grad_norm=1.0,
     )
+
+@configclass
+class DexsuiteKukaAllegroPPORunnerCfg(DexsuitePPORunnerCfg):
+    experiment_name = "dexsuite_kuka_allegro"
+
+@configclass
+class DexsuiteFrankaLeapPPORunnerCfg(DexsuitePPORunnerCfg):
+    experiment_name = "dexsuite_franka_leap"

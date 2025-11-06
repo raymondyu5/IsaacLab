@@ -32,8 +32,8 @@ parser.add_argument(
 )
 parser.add_argument("--export_io_descriptors", action="store_true", default=False, help="Export IO descriptors.")
 parser.add_argument("--wandb", action="store_true", default=False, help="Enable Weights & Biases logging.")
-parser.add_argument("--wandb_project", type=str, default="isaaclab-rsl-rl", help="Weights & Biases project name.")
-parser.add_argument("--wandb_entity", type=str, default=None, help="Weights & Biases entity (team) name.")
+parser.add_argument("--wandb_project", type=str, default="frankaleap", help="Weights & Biases project name.")
+parser.add_argument("--wandb_entity", type=str, default="willhu003", help="Weights & Biases entity (team) name.")
 # append RSL-RL cli arguments
 cli_args.add_rsl_rl_args(parser)
 # append AppLauncher cli args

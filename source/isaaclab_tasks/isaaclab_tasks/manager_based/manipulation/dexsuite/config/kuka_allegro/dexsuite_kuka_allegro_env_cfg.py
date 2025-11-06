@@ -5,6 +5,7 @@
 
 from isaaclab_assets.robots import KUKA_ALLEGRO_CFG, KUKA_ALLEGRO_HIGH_PD_CFG
 
+
 from isaaclab.controllers.differential_ik_cfg import DifferentialIKControllerCfg
 from isaaclab.envs.mdp.actions.actions_cfg import DifferentialInverseKinematicsActionCfg
 from isaaclab.managers import ObservationTermCfg as ObsTerm
@@ -21,6 +22,7 @@ from ... import mdp
 class KukaAllegroRelJointPosActionCfg:
     """Original joint position action for both arm and hand (legacy)."""
     action = mdp.RelativeJointPositionActionCfg(asset_name="robot", joint_names=[".*"], scale=0.1)
+
 
 
 @configclass

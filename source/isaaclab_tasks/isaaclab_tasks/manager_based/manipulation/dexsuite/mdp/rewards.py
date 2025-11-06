@@ -28,6 +28,16 @@ def action_l2_clamped(env: ManagerBasedRLEnv) -> torch.Tensor:
     return torch.sum(torch.square(env.action_manager.action), dim=1).clamp(-1000, 1000)
 
 
+def joint_vel_l2_clamped(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """Penalize joint velocities on the articulation using L2 squared kernel.
+
+    NOTE: Only the joints configured in :attr:`asset_cfg.joint_ids` will have their joint velocities contribute to the term.
+    """
+    asset = env.scene[asset_cfg.name]
+    return torch.sum(torch.square(asset.data.joint_vel[:, asset_cfg.joint_ids]), dim=1).clamp(-1000, 1000)
+    
+
+
 def object_ee_distance(
     env: ManagerBasedRLEnv,
     std: float,
@@ -46,13 +56,18 @@ def object_ee_distance(
     return 1 - torch.tanh(object_ee_distance / std)
 
 
-def contacts(env: ManagerBasedRLEnv, threshold: float) -> torch.Tensor:
+def contacts(env: ManagerBasedRLEnv, threshold: float,
+    thumb_contact_sensor_name: str = "thumb_link_3_object_s",
+    index_contact_sensor_name: str = "index_link_3_object_s",
+    middle_contact_sensor_name: str = "middle_link_3_object_s",
+    ring_contact_sensor_name: str = "ring_link_3_object_s",
+) -> torch.Tensor:
     """Penalize undesired contacts as the number of violations that are above a threshold."""
 
-    thumb_contact_sensor: ContactSensor = env.scene.sensors["thumb_link_3_object_s"]
-    index_contact_sensor: ContactSensor = env.scene.sensors["index_link_3_object_s"]
-    middle_contact_sensor: ContactSensor = env.scene.sensors["middle_link_3_object_s"]
-    ring_contact_sensor: ContactSensor = env.scene.sensors["ring_link_3_object_s"]
+    thumb_contact_sensor: ContactSensor = env.scene.sensors[thumb_contact_sensor_name]
+    index_contact_sensor: ContactSensor = env.scene.sensors[index_contact_sensor_name]
+    middle_contact_sensor: ContactSensor = env.scene.sensors[middle_contact_sensor_name]
+    ring_contact_sensor: ContactSensor = env.scene.sensors[ring_contact_sensor_name]
     # check if contact force is above threshold
     thumb_contact = thumb_contact_sensor.data.force_matrix_w.view(env.num_envs, 3)
     index_contact = index_contact_sensor.data.force_matrix_w.view(env.num_envs, 3)
@@ -96,7 +111,11 @@ def success_reward(
 
 
 def position_command_error_tanh(
-    env: ManagerBasedRLEnv, std: float, command_name: str, asset_cfg: SceneEntityCfg, align_asset_cfg: SceneEntityCfg
+    env: ManagerBasedRLEnv, std: float, command_name: str, asset_cfg: SceneEntityCfg, align_asset_cfg: SceneEntityCfg,
+    thumb_contact_sensor_name: str = "thumb_link_3_object_s",
+    index_contact_sensor_name: str = "index_link_3_object_s",
+    middle_contact_sensor_name: str = "middle_link_3_object_s",
+    ring_contact_sensor_name: str = "ring_link_3_object_s",
 ) -> torch.Tensor:
     """Reward tracking of commanded position using tanh kernel, gated by contact presence."""
 
@@ -107,11 +126,15 @@ def position_command_error_tanh(
     des_pos_b = command[:, :3]
     des_pos_w, _ = combine_frame_transforms(asset.data.root_pos_w, asset.data.root_quat_w, des_pos_b)
     distance = torch.norm(object.data.root_pos_w - des_pos_w, dim=1)
-    return (1 - torch.tanh(distance / std)) * contacts(env, 1.0).float()
+    return (1 - torch.tanh(distance / std)) * contacts(env, 1.0, thumb_contact_sensor_name, index_contact_sensor_name, middle_contact_sensor_name, ring_contact_sensor_name).float()
 
 
 def orientation_command_error_tanh(
-    env: ManagerBasedRLEnv, std: float, command_name: str, asset_cfg: SceneEntityCfg, align_asset_cfg: SceneEntityCfg
+    env: ManagerBasedRLEnv, std: float, command_name: str, asset_cfg: SceneEntityCfg, align_asset_cfg: SceneEntityCfg,
+    thumb_contact_sensor_name: str = "thumb_link_3_object_s",
+    index_contact_sensor_name: str = "index_link_3_object_s",
+    middle_contact_sensor_name: str = "middle_link_3_object_s",
+    ring_contact_sensor_name: str = "ring_link_3_object_s",
 ) -> torch.Tensor:
     """Reward tracking of commanded orientation using tanh kernel, gated by contact presence."""
 
@@ -123,4 +146,4 @@ def orientation_command_error_tanh(
     des_quat_w = math_utils.quat_mul(asset.data.root_state_w[:, 3:7], des_quat_b)
     quat_distance = math_utils.quat_error_magnitude(object.data.root_quat_w, des_quat_w)
 
-    return (1 - torch.tanh(quat_distance / std)) * contacts(env, 1.0).float()
+    return (1 - torch.tanh(quat_distance / std)) * contacts(env, 1.0, thumb_contact_sensor_name, index_contact_sensor_name, middle_contact_sensor_name, ring_contact_sensor_name).float()

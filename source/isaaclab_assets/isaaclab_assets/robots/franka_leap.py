@@ -7,6 +7,7 @@ dexterous manipulation tasks.
 import isaaclab.sim as sim_utils
 from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
+import numpy as np
 
 FRANKA_LEAP_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
@@ -18,23 +19,24 @@ FRANKA_LEAP_CFG = ArticulationCfg(
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
             enabled_self_collisions=False,
-            solver_position_iteration_count=1,  # entong used
-            solver_velocity_iteration_count=0,
+            solver_position_iteration_count=32,
+            solver_velocity_iteration_count=1,
+            sleep_threshold=0.005,
+            stabilization_threshold=0.0005,
         ),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.0),
         rot=(1.0, 0.0, 0.0, 0.0),
         joint_pos={
-            # Franka arm joints (7 DOF)
-            "panda_joint1": 0.0,
-            "panda_joint2": -0.569,
-            "panda_joint3": 0.0,
-            "panda_joint4": -2.810,
-            "panda_joint5": 0.0,
-            "panda_joint6": 3.037,
-            "panda_joint7": 0.741,
-            # Leap hand joints (16 DOF) - all start at 0
+            "panda_joint1": 0.31, 
+            "panda_joint2": 0.004,
+            "panda_joint3": -0.31,
+            "panda_joint4": -2.05,
+            "panda_joint5": 0.001,
+            "panda_joint6": 2.05,
+            "panda_joint7": 0.78,
+            # Leap hand joints - all at 0 (open hand)
             "j0": 0.0, "j1": 0.0, "j2": 0.0, "j3": 0.0,
             "j4": 0.0, "j5": 0.0, "j6": 0.0, "j7": 0.0,
             "j8": 0.0, "j9": 0.0, "j10": 0.0, "j11": 0.0,

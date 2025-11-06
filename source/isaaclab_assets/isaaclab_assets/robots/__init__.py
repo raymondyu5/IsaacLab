@@ -15,6 +15,7 @@ from .cartpole import *
 from .fourier import *
 from .franka import *
 from .franka_leap import *
+from .franka_leap_mod_gains import *
 from .free_leap_hand import *
 from .galbot import *
 from .leap_hand import *
