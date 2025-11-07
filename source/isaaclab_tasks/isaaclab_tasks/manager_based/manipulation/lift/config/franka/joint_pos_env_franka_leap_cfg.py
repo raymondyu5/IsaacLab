@@ -241,13 +241,13 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.rewards.action_rate = None
         self.rewards.action_rate_l2 = RewTerm(
             func=mdp_rewards.action_rate_l2_clamped,
-            weight=-0.05,
+            weight=-0.0001,
         )
 
         self.rewards.joint_vel = None
         self.rewards.action_l2 = RewTerm(
             func=mdp_rewards.action_l2_clamped,
-            weight=-0.05,
+            weight=-0.0001,
         )
 
         self.rewards.reaching_object = None
@@ -257,7 +257,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.fingers_to_object = RewTerm(
             func=mdp_rewards.object_ee_distance,
-            weight=1.0,
+            weight=2.0,
             params={
                 "std": 0.4,
                 "asset_cfg": SceneEntityCfg("robot", body_names=["palm_lower", ".*fingertip.*"]),
@@ -288,8 +288,18 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.good_finger_contact = RewTerm(
             func=mdp_rewards.leap_hand_contacts,
-            weight=0.5,
+            weight=3.0,
             params={"threshold": 1.0},
+        )
+
+        self.rewards.fingertips_approach_when_near = RewTerm(
+            func=mdp_rewards.fingertips_approach_object_when_near,
+            weight=1.5,
+            params={
+                "palm_distance_threshold": 0.15,
+                "std": 0.05,
+                "robot_cfg": SceneEntityCfg("robot", body_names=["palm_lower", "fingertip", "thumb_fingertip", "fingertip_2", "fingertip_3"]),
+            },
         )
 
         self.rewards.early_termination = RewTerm(
@@ -308,7 +318,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.terminations.abnormal_robot = DoneTerm(
             func=mdp_terminations.abnormal_robot_state_relaxed,
-            params={"velocity_multiplier": 3.0},
+            params={"velocity_multiplier": 4.0},
         )
 
         self.terminations.object_dropping = None
@@ -394,6 +404,8 @@ class FrankaLeapCubeLiftEnvCfg_PLAY(FrankaLeapCubeLiftEnvCfg):
         self.scene.num_envs = 50
         self.scene.env_spacing = 2.5
         self.observations.policy.enable_corruption = False
+        # Set difficulty to max to enable full gravity and all domain randomization
+        self.curriculum.adr.params["init_difficulty"] = self.curriculum.adr.params["max_difficulty"]
 
 
 YCB_OBJECTS_ISAAC_NUCLEUS = {
