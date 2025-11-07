@@ -1,61 +1,78 @@
-"""Franka + Leap Hand cube lifting environment configuration.
+"""Franka + Leap Hand lifting environment with DexSuite-style objects and pointcloud observations.
+
+This configuration matches the Kuka Allegro DexSuite setup with:
+- 16 different object types (cuboids, spheres, capsules, cones)
+- Comprehensive domain randomization (scale, mass, friction, joint parameters)
+- Pointcloud observations (64 points per object)
+- Object pose reset randomization
 
 Robot Configuration:
     - Franka arm joints: panda_joint1 through panda_joint7 (7 DOF)
     - Leap hand joints: j0 through j15 (16 DOF)
     - Total DOF: 23
 
-Reset Poses from Entong's env:
-    - Franka arm: [0.31, 0.004, -0.31, -2.05, 0.001, 2.05, 0.78]
-      (These are alternative reset poses from the original config)
-
 Contact Sensor Link Names (Leap Hand fingertips):
     - fingertip       (index finger)
     - thumb_fingertip (thumb)
     - fingertip_2     (middle finger)
     - fingertip_3     (ring finger)
-    - palm_lower      (palm base)
 
 End-Effector:
     - Primary body: palm_lower (Leap hand base)
-    - Alternative reference: panda_link7 (Franka wrist)
-
-Available YCB objects from original config:
-    - bleach_cleanser, mustard_bottle, master_chef_can
-    - tomato_soup_can, mug, potted_meat_can
-    - bowl, sugar_box, banana, foam_brick, gelatin_box
-    - pudding_box, tuna_fish_can, large_marker, extra_large_clamp
 """
 
 from isaaclab.assets import RigidObjectCfg
 from isaaclab.sensors import FrameTransformerCfg, ContactSensorCfg
 from isaaclab.sensors.frame_transformer.frame_transformer_cfg import OffsetCfg
-from isaaclab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg
-from isaaclab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
+from isaaclab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg, CollisionPropertiesCfg, MassPropertiesCfg
+from isaaclab.sim import spawners as sim_utils
+from isaaclab.sim import CuboidCfg, SphereCfg, CapsuleCfg, ConeCfg, RigidBodyMaterialCfg
 from isaaclab.utils import configclass
-from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
-from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm, RewardTermCfg as RewTerm, ObservationTermCfg as ObsTerm, CurriculumTermCfg as CurrTerm, TerminationTermCfg as DoneTerm
+from isaaclab.managers import SceneEntityCfg, EventTermCfg as EventTerm, RewardTermCfg as RewTerm, ObservationTermCfg as ObsTerm, CurriculumTermCfg as CurrTerm, TerminationTermCfg as DoneTerm, ObservationGroupCfg as ObsGroup
 
 from isaaclab_tasks.manager_based.manipulation.lift import mdp
 from isaaclab_tasks.manager_based.manipulation.lift.lift_env_cfg import LiftEnvCfg
-from isaaclab.markers.config import FRAME_MARKER_CFG  # isort: skip
-from isaaclab_assets.robots.franka_leap import FRANKA_LEAP_CFG  # isort: skip
+from isaaclab.markers.config import FRAME_MARKER_CFG
+from isaaclab_assets.robots.franka_leap import FRANKA_LEAP_CFG
 
 # Import custom MDP functions
 from .mdp import observations as mdp_observations
 from .mdp import rewards as mdp_rewards
 from .mdp import terminations as mdp_terminations
 
+# Import DexSuite curriculum and terminations
 from isaaclab_tasks.manager_based.manipulation.dexsuite.mdp.curriculums import (
     DifficultyScheduler,
     initial_final_interpolate_fn,
 )
 from isaaclab_tasks.manager_based.manipulation.dexsuite.mdp.terminations import out_of_bound
+from isaaclab_tasks.manager_based.manipulation.dexsuite import mdp as dexsuite_mdp
+from isaaclab.utils.noise import NoiseCfg
+from isaaclab.utils.noise import UniformNoiseCfg as Unoise
 
 
 @configclass
-class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
-    """Configuration for Franka Panda with Leap Hand lifting a cube."""
+class PerceptionObsCfg(ObsGroup):
+    """Perception observations with pointcloud."""
+
+    object_point_cloud = ObsTerm(
+        func=dexsuite_mdp.object_point_cloud_b,
+        noise=Unoise(n_min=-0.0, n_max=0.0),
+        clip=(-2.0, 2.0),
+        params={"num_points": 64, "flatten": True},
+    )
+
+    def __post_init__(self):
+        self.enable_corruption = True
+        self.concatenate_dim = 0
+        self.concatenate_terms = True
+        self.flatten_history_dim = True
+        self.history_length = 5
+
+
+@configclass
+class FrankaLeapDexsuiteLiftEnvCfg(LiftEnvCfg):
+    """Configuration for Franka Panda with Leap Hand lifting DexSuite objects with pointcloud observations."""
 
     def __post_init__(self):
         super().__post_init__()
@@ -65,6 +82,10 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.viewer.eye = (1.2, 0.8, 0.6)
         self.viewer.lookat = (0.5, 0.0, 0.2)
 
+        # Disable scene replication for USD-level randomization (object scale)
+        self.scene.replicate_physics = False
+
+        # Configure robot
         self.scene.robot = FRANKA_LEAP_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot",
             init_state=FRANKA_LEAP_CFG.init_state.replace(
@@ -91,6 +112,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             ),
         )
 
+        # Configure actions
         self.actions.arm_action = mdp.RelativeJointPositionActionCfg(
             asset_name="robot",
             joint_names=["panda_joint.*"],
@@ -106,48 +128,59 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.commands.object_pose.body_name = "palm_lower"
         self.commands.object_pose.debug_vis = False
 
+        # Configure object with 16 different geometries (same as Kuka Allegro DexSuite)
         self.scene.object = RigidObjectCfg(
             prim_path="{ENV_REGEX_NS}/Object",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.0, 0.10], rot=[1, 0, 0, 0]),
-            spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-                scale=(0.8, 0.8, 0.8),
+            spawn=sim_utils.MultiAssetSpawnerCfg(
+                assets_cfg=[
+                    # 6 Cuboids with varying dimensions
+                    CuboidCfg(size=(0.05, 0.1, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CuboidCfg(size=(0.05, 0.05, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CuboidCfg(size=(0.025, 0.1, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CuboidCfg(size=(0.025, 0.05, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CuboidCfg(size=(0.025, 0.025, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CuboidCfg(size=(0.01, 0.1, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    # 2 Spheres
+                    SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    SphereCfg(radius=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    # 6 Capsules
+                    CapsuleCfg(radius=0.04, height=0.025, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CapsuleCfg(radius=0.04, height=0.01, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CapsuleCfg(radius=0.04, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CapsuleCfg(radius=0.025, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CapsuleCfg(radius=0.025, height=0.2, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    CapsuleCfg(radius=0.01, height=0.2, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    # 2 Cones
+                    ConeCfg(radius=0.05, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                    ConeCfg(radius=0.025, height=0.1, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+                ],
+                random_choice=False,  # Deterministic selection based on env_id
                 rigid_props=RigidBodyPropertiesCfg(
                     solver_position_iteration_count=16,
                     solver_velocity_iteration_count=0,
                     disable_gravity=False,
                 ),
+                collision_props=CollisionPropertiesCfg(),
+                mass_props=MassPropertiesCfg(mass=0.2),
             ),
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.0, 0.10], rot=[1, 0, 0, 0]),
         )
 
-        self.events.reset_object_position = EventTerm(
-            func=mdp.reset_root_state_uniform,
-            mode="reset",
+        # ============================================
+        # RANDOMIZATION EVENTS (matching Kuka Allegro)
+        # ============================================
+
+        # Pre-startup: Object scale randomization
+        self.events.randomize_object_scale = EventTerm(
+            func=mdp.randomize_rigid_body_scale,
+            mode="prestartup",
             params={
-                "pose_range": {
-                    "x": (-0.1, 0.1),
-                    "y": (-0.25, 0.25),
-                    "z": (0.0, 0.0),
-                    "roll": (-3.14, 3.14),  # Full rotation randomization
-                    "pitch": (-3.14, 3.14),  # Full rotation randomization
-                    "yaw": (-3.14, 3.14),
-                },
-                "velocity_range": {},
+                "scale_range": (0.75, 1.5),
                 "asset_cfg": SceneEntityCfg("object"),
             },
         )
 
-
-        self.events.object_scale_mass = EventTerm(
-            func=mdp.randomize_rigid_body_mass,
-            mode="startup",
-            params={
-                "asset_cfg": SceneEntityCfg("object"),
-                "mass_distribution_params": [0.5, 2.0],
-                "operation": "scale",
-            },
-        )
-
+        # Startup: Robot physics material randomization
         self.events.robot_physics_material = EventTerm(
             func=mdp.randomize_rigid_body_material,
             mode="startup",
@@ -160,6 +193,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # Startup: Object physics material randomization
         self.events.object_physics_material = EventTerm(
             func=mdp.randomize_rigid_body_material,
             mode="startup",
@@ -172,6 +206,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # Startup: Joint stiffness and damping randomization
         self.events.joint_stiffness_and_damping = EventTerm(
             func=mdp.randomize_actuator_gains,
             mode="startup",
@@ -183,6 +218,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # Startup: Joint friction randomization
         self.events.joint_friction = EventTerm(
             func=mdp.randomize_joint_parameters,
             mode="startup",
@@ -193,6 +229,36 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # Startup: Object mass randomization
+        self.events.object_scale_mass = EventTerm(
+            func=mdp.randomize_rigid_body_mass,
+            mode="startup",
+            params={
+                "asset_cfg": SceneEntityCfg("object"),
+                "mass_distribution_params": [0.2, 2.0],
+                "operation": "scale",
+            },
+        )
+
+        # Reset: Object position and rotation randomization
+        self.events.reset_object_position = EventTerm(
+            func=mdp.reset_root_state_uniform,
+            mode="reset",
+            params={
+                "pose_range": {
+                    "x": (-0.2, 0.2),
+                    "y": (-0.2, 0.2),
+                    "z": (0.0, 0.02),
+                    "roll": (-3.14, 3.14),
+                    "pitch": (-3.14, 3.14),
+                    "yaw": (-3.14, 3.14),
+                },
+                "velocity_range": {},
+                "asset_cfg": SceneEntityCfg("object"),
+            },
+        )
+
+        # Reset: Robot joints randomization
         self.events.reset_robot_joints = EventTerm(
             func=mdp.reset_joints_by_offset,
             mode="reset",
@@ -202,6 +268,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # Reset: Variable gravity (curriculum-scheduled)
         self.events.variable_gravity = EventTerm(
             func=mdp.randomize_physics_scene_gravity,
             mode="reset",
@@ -211,6 +278,11 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
+        # ============================================
+        # SENSORS
+        # ============================================
+
+        # End-effector frame transformer
         marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
         marker_cfg.prim_path = "/Visuals/FrameTransformer"
@@ -227,6 +299,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             ],
         )
 
+        # Contact sensors for fingertips
         finger_tip_patterns = [
             ("fingertip_object_s", "{ENV_REGEX_NS}/Robot/right_hand/fingertip"),
             ("thumb_fingertip_object_s", "{ENV_REGEX_NS}/Robot/right_hand/thumb_fingertip"),
@@ -244,7 +317,45 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
                 ),
             )
 
+        # ============================================
+        # OBSERVATIONS
+        # ============================================
 
+        # Add pointcloud observation group
+        self.observations.perception = PerceptionObsCfg()
+
+        # Update policy observations to match DexSuite style
+        self.observations.policy.object_orientation = ObsTerm(
+            func=dexsuite_mdp.object_quat_b,
+        )
+
+        self.observations.policy.target_object_position = ObsTerm(
+            func=mdp.generated_commands,
+            params={"command_name": "object_pose"},
+        )
+
+        self.observations.policy.contact = ObsTerm(
+            func=mdp_observations.fingers_contact_force_b_flattened,
+            params={
+                "contact_sensor_names": [
+                    "fingertip_object_s",
+                    "thumb_fingertip_object_s",
+                    "fingertip_2_object_s",
+                    "fingertip_3_object_s",
+                ],
+            },
+            clip=(-20.0, 20.0),
+        )
+
+        # Set history length for policy observations
+        self.observations.policy.history_length = 5
+        self.observations.policy.enable_corruption = True
+
+        # ============================================
+        # REWARDS
+        # ============================================
+
+        # Replace default rewards with DexSuite-style rewards
         self.rewards.action_rate = None
         self.rewards.action_rate_l2 = RewTerm(
             func=mdp_rewards.action_rate_l2_clamped,
@@ -267,7 +378,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             weight=1.0,
             params={
                 "std": 0.4,
-                "asset_cfg": SceneEntityCfg("robot", body_names=["palm_lower", ".*fingertip.*"]), # palm actually helps learning
+                "asset_cfg": SceneEntityCfg("robot", body_names=["palm_lower", ".*fingertip.*"]),
                 "object_cfg": SceneEntityCfg("object"),
             },
         )
@@ -298,16 +409,14 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             weight=0.5,
             params={"threshold": 1.0},
         )
-        
-        # doesn't rlly do anything atm tbh, just need to train longer to get good behaviors
-        # Add power grasp approach reward - encourages straight-down approach when object is low
+
         self.rewards.power_grasp_approach = RewTerm(
             func=mdp_rewards.power_grasp_approach,
-            weight=1.0,  # Start with moderate weight
+            weight=1.0,
             params={
-                "z_threshold": 0.15,  # Activate when object is below 15cm (on table with gravity)
-                "approach_distance": 0.2,  # Within 20cm of object
-                "std": 0.05,  # Requires tight XY alignment for high reward
+                "z_threshold": 0.15,
+                "approach_distance": 0.2,
+                "std": 0.05,
             },
         )
 
@@ -327,6 +436,10 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             params={"term_keys": "abnormal_robot"},
         )
 
+        # ============================================
+        # TERMINATIONS
+        # ============================================
+
         self.terminations.object_out_of_bound = DoneTerm(
             func=out_of_bound,
             params={
@@ -341,6 +454,10 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         )
 
         self.terminations.object_dropping = None
+
+        # ============================================
+        # CURRICULUM
+        # ============================================
 
         self.curriculum.action_rate = None
         self.curriculum.joint_vel = None
@@ -369,76 +486,21 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
             },
         )
 
-        self.observations.policy.object_orientation = ObsTerm(
-            func=mdp.object_quat_b,
-        )
-
-        self.observations.policy.target_object_position = ObsTerm(
-            func=mdp.generated_commands,
-            params={"command_name": "object_pose"},
-        )
-
-        self.observations.policy.contact = ObsTerm(
-            func=mdp_observations.fingers_contact_force_b_flattened,
-            params={
-                "contact_sensor_names": [
-                    "fingertip_object_s",
-                    "thumb_fingertip_object_s",
-                    "fingertip_2_object_s",
-                    "fingertip_3_object_s",
-                ],
-            },
-            clip=(-20.0, 20.0),
-        )
-
 
 @configclass
-class FrankaLeapYCBLiftEnvCfg(FrankaLeapCubeLiftEnvCfg):
-    """Configuration for Franka+Leap lifting YCB mustard bottle from Isaac Sim nucleus server.
-
-    Uses mustard bottle as the primary test object matching rfs-master's setup.
-
-    Note: For multiple objects, rfs-master spawns all objects in the scene and assigns
-    them round-robin to environments. MultiAssetSpawnerCfg doesn't work well with YCB USDs.
-    """
+class FrankaLeapDexsuiteLiftEnvCfg_PLAY(FrankaLeapDexsuiteLiftEnvCfg):
+    """Play configuration for Franka+Leap DexSuite lifting (fewer envs, no randomization)."""
 
     def __post_init__(self):
         super().__post_init__()
 
-        ycb_base_path = f"{ISAAC_NUCLEUS_DIR}/Props/YCB/Axis_Aligned"
-
-        self.scene.object.spawn = UsdFileCfg(
-            usd_path=f"{ycb_base_path}/006_mustard_bottle.usd",
-            scale=(1.0, 1.0, 1.0),
-            rigid_props=self.scene.object.spawn.rigid_props,
-        )
-
-
-@configclass
-class FrankaLeapCubeLiftEnvCfg_PLAY(FrankaLeapCubeLiftEnvCfg):
-    """Play configuration for Franka+Leap cube lifting (fewer envs, no randomization)."""
-
-    def __post_init__(self):
-        super().__post_init__()
         self.scene.num_envs = 50
         self.scene.env_spacing = 2.5
+
         self.observations.policy.enable_corruption = False
-        # Set difficulty to max to enable full gravity and all domain randomization
+        self.observations.perception.enable_corruption = False
+
+        # Set difficulty to max to enable full gravity
         self.curriculum.adr.params["init_difficulty"] = self.curriculum.adr.params["max_difficulty"]
 
-
-YCB_OBJECTS_ISAAC_NUCLEUS = {
-    "002_master_chef_can": "002_master_chef_can.usd",
-    "003_cracker_box": "003_cracker_box.usd",
-    "004_sugar_box": "004_sugar_box.usd",
-    "005_tomato_soup_can": "005_tomato_soup_can.usd",
-    "006_mustard_bottle": "006_mustard_bottle.usd",
-    "007_tuna_fish_can": "007_tuna_fish_can.usd",
-    "008_pudding_box": "008_pudding_box.usd",
-    "009_gelatin_box": "009_gelatin_box.usd",
-    "010_potted_meat_can": "010_potted_meat_can.usd",
-    "011_banana": "011_banana.usd",
-    "024_bowl": "024_bowl.usd",
-    "025_mug": "025_mug.usd",
-    "061_foam_brick": "061_foam_brick.usd",
-}
+        # self.events.reset_robot_joints.params["position_range"] = [0.0, 0.0]

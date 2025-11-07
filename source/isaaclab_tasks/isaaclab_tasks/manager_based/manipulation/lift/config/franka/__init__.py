@@ -117,3 +117,55 @@ gym.register(
     },
     disable_env_checker=True,
 )
+
+##
+# Franka + Leap Hand with DexSuite Objects (16 types) and Pointcloud Observations
+##
+
+gym.register(
+    id="Isaac-Lift-Franka-Leap-Dexsuite-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.joint_pos_env_franka_leap_dexsuite_cfg:FrankaLeapDexsuiteLiftEnvCfg",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
+
+gym.register(
+    id="Isaac-Lift-Franka-Leap-Dexsuite-Play-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.joint_pos_env_franka_leap_dexsuite_cfg:FrankaLeapDexsuiteLiftEnvCfg_PLAY",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
+
+##
+# Franka + Leap Hand Pinch Grasp (Thumb + Index Only)
+##
+
+gym.register(
+    id="Isaac-Lift-Cube-Franka-Leap-Pinch-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.joint_pos_env_franka_leap_pinch_cfg:FrankaLeapPinchEnvCfg",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
+
+gym.register(
+    id="Isaac-Lift-Cube-Franka-Leap-Pinch-Play-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.joint_pos_env_franka_leap_pinch_cfg:FrankaLeapPinchEnvCfg_PLAY",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
