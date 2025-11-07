@@ -82,6 +82,13 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
                     "j12": 0.0, "j13": 0.0, "j14": 0.0, "j15": 0.0,
                 },
             ),
+            spawn=FRANKA_LEAP_CFG.spawn.replace(
+                articulation_props=FRANKA_LEAP_CFG.spawn.articulation_props.replace(
+                    enabled_self_collisions=True,
+                    solver_position_iteration_count=16,
+                    solver_velocity_iteration_count=1,
+                ),
+            ),
         )
 
         self.actions.arm_action = mdp.RelativeJointPositionActionCfg(
@@ -121,8 +128,8 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
                     "x": (-0.1, 0.1),
                     "y": (-0.25, 0.25),
                     "z": (0.0, 0.0),
-                    "roll": (0.0, 0.0),
-                    "pitch": (0.0, 0.0),
+                    "roll": (-3.14, 3.14),  # Full rotation randomization
+                    "pitch": (-3.14, 3.14),  # Full rotation randomization
                     "yaw": (-3.14, 3.14),
                 },
                 "velocity_range": {},
@@ -241,13 +248,13 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
         self.rewards.action_rate = None
         self.rewards.action_rate_l2 = RewTerm(
             func=mdp_rewards.action_rate_l2_clamped,
-            weight=-0.0001,
+            weight=-0.005,
         )
 
         self.rewards.joint_vel = None
         self.rewards.action_l2 = RewTerm(
             func=mdp_rewards.action_l2_clamped,
-            weight=-0.0001,
+            weight=-0.005,
         )
 
         self.rewards.reaching_object = None
@@ -257,10 +264,10 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.fingers_to_object = RewTerm(
             func=mdp_rewards.object_ee_distance,
-            weight=2.0,
+            weight=1.0,
             params={
                 "std": 0.4,
-                "asset_cfg": SceneEntityCfg("robot", body_names=["palm_lower", ".*fingertip.*"]),
+                "asset_cfg": SceneEntityCfg("robot", body_names=[".*fingertip.*"]),  # Only fingertips, not palm
                 "object_cfg": SceneEntityCfg("object"),
             },
         )
@@ -288,7 +295,7 @@ class FrankaLeapCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.good_finger_contact = RewTerm(
             func=mdp_rewards.leap_hand_contacts,
-            weight=3.0,
+            weight=0.5,
             params={"threshold": 1.0},
         )
 
