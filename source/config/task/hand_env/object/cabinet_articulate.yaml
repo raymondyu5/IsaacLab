@@ -1,0 +1,24 @@
+params:
+  ArticulationObject:
+   drawer_long:
+    name: drawer_long
+    path: "source/assets/cabinet/drawer_long/articulation.usd"
+    scale: [1.0, 1.0, 1.0]
+    pos: [0.5, 0.0, 0.0]
+    rot:
+      axis: [2]
+      angles: [-1.57]
+
+    pose_range:
+      x: [0.5, 0.8] #[-0.10, 0.10]
+      y: [-0.20, 0.20] #[-0.10, 0.02]
+      z: [-0.0, 0.0] #[-0.02, 0.13]
+      yaw: [-0.2, 0.2]
+    
+
+
+    disable_gravity: True
+    enabled_self_collisions: False
+    joints:
+      joint_0: 0.0
+  

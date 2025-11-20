@@ -1,0 +1,3618 @@
+params:
+  RigidObject:
+    object_0:
+      path: source/assets/shapenet/mug/mug_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06287811696529388
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_1:
+      path: source/assets/shapenet/mug/mug_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08298031985759735
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_2:
+      path: source/assets/shapenet/mug/mug_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.051051948219537735
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_3:
+      path: source/assets/shapenet/mug/mug_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05650798976421356
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_4:
+      path: source/assets/shapenet/mug/mug_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03435679152607918
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_5:
+      path: source/assets/shapenet/mug/mug_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08324526995420456
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_6:
+      path: source/assets/shapenet/mug/mug_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04605204984545708
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_7:
+      path: source/assets/shapenet/mug/mug_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05467962846159935
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_8:
+      path: source/assets/shapenet/mug/mug_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06741376221179962
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_9:
+      path: source/assets/shapenet/mug/mug_19/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04933388903737068
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_10:
+      path: source/assets/shapenet/mug/mug_18/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05565011128783226
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_11:
+      path: source/assets/shapenet/mug/mug_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06607446074485779
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_12:
+      path: source/assets/shapenet/mug/mug_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.049873851239681244
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_13:
+      path: source/assets/shapenet/mug/mug_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06371620297431946
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_14:
+      path: source/assets/shapenet/mug/mug_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05361064895987511
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_15:
+      path: source/assets/shapenet/mug/mug_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06797056645154953
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_16:
+      path: source/assets/shapenet/mug/mug_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08527229726314545
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_17:
+      path: source/assets/shapenet/mug/mug_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06380847096443176
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_18:
+      path: source/assets/shapenet/mug/mug_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05987083166837692
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_19:
+      path: source/assets/shapenet/mug/mug_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07412367314100266
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_20:
+      path: source/assets/shapenet/tower/tower_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07689753919839859
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_21:
+      path: source/assets/shapenet/tower/tower_18/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08669385313987732
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_22:
+      path: source/assets/shapenet/tower/tower_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06054927036166191
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_23:
+      path: source/assets/shapenet/tower/tower_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09415479004383087
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_24:
+      path: source/assets/shapenet/tower/tower_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.056589748710393906
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_25:
+      path: source/assets/shapenet/tower/tower_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08565577864646912
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_26:
+      path: source/assets/shapenet/tower/tower_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08952167630195618
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_27:
+      path: source/assets/shapenet/tower/tower_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09111882001161575
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_28:
+      path: source/assets/shapenet/tower/tower_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06202185899019241
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_29:
+      path: source/assets/shapenet/tower/tower_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05577728897333145
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_30:
+      path: source/assets/shapenet/tower/tower_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05398948863148689
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_31:
+      path: source/assets/shapenet/tower/tower_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08906356990337372
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_32:
+      path: source/assets/shapenet/tower/tower_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07446140795946121
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_33:
+      path: source/assets/shapenet/tower/tower_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06451523303985596
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_34:
+      path: source/assets/shapenet/tower/tower_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08784706145524979
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_35:
+      path: source/assets/shapenet/tower/tower_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06770960241556168
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_36:
+      path: source/assets/shapenet/tower/tower_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06808868795633316
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_37:
+      path: source/assets/shapenet/tower/tower_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09702672809362411
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_38:
+      path: source/assets/shapenet/tower/tower_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06421305239200592
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_39:
+      path: source/assets/shapenet/telephone/telephone_19/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09990718215703964
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_40:
+      path: source/assets/shapenet/telephone/telephone_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.052684009075164795
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_41:
+      path: source/assets/shapenet/telephone/telephone_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07081364840269089
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_42:
+      path: source/assets/shapenet/telephone/telephone_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0752696618437767
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_43:
+      path: source/assets/shapenet/telephone/telephone_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09065078943967819
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_44:
+      path: source/assets/shapenet/telephone/telephone_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08620589226484299
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_45:
+      path: source/assets/shapenet/telephone/telephone_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06283637136220932
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_46:
+      path: source/assets/shapenet/telephone/telephone_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09653954207897186
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_47:
+      path: source/assets/shapenet/telephone/telephone_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06208482012152672
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_48:
+      path: source/assets/shapenet/telephone/telephone_18/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08879867941141129
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_49:
+      path: source/assets/shapenet/telephone/telephone_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08414056152105331
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_50:
+      path: source/assets/shapenet/telephone/telephone_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06095122918486595
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_51:
+      path: source/assets/shapenet/telephone/telephone_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06832479685544968
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_52:
+      path: source/assets/shapenet/telephone/telephone_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08745688945055008
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_53:
+      path: source/assets/shapenet/telephone/telephone_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09597820788621902
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_54:
+      path: source/assets/shapenet/telephone/telephone_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07747075706720352
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_55:
+      path: source/assets/shapenet/telephone/telephone_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05769696086645126
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_56:
+      path: source/assets/shapenet/telephone/telephone_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06309638172388077
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_57:
+      path: source/assets/shapenet/telephone/telephone_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09676730632781982
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_58:
+      path: source/assets/shapenet/telephone/telephone_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07408200204372406
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_59:
+      path: source/assets/shapenet/train/train_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.044926561415195465
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_60:
+      path: source/assets/shapenet/train/train_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047612179070711136
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_61:
+      path: source/assets/shapenet/train/train_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.026658210903406143
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_62:
+      path: source/assets/shapenet/train/train_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.019816340878605843
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_63:
+      path: source/assets/shapenet/train/train_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016991689801216125
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_64:
+      path: source/assets/shapenet/train/train_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016799500212073326
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_65:
+      path: source/assets/shapenet/train/train_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02776741050183773
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_66:
+      path: source/assets/shapenet/train/train_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06338997930288315
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_67:
+      path: source/assets/shapenet/train/train_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.030217720195651054
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_68:
+      path: source/assets/shapenet/train/train_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06064075976610184
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_69:
+      path: source/assets/shapenet/train/train_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01470142975449562
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_70:
+      path: source/assets/shapenet/train/train_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.025834860280156136
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_71:
+      path: source/assets/shapenet/train/train_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016533110290765762
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_72:
+      path: source/assets/shapenet/train/train_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03226492926478386
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_73:
+      path: source/assets/shapenet/train/train_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06770659983158112
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_74:
+      path: source/assets/shapenet/train/train_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.034035589545965195
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_75:
+      path: source/assets/shapenet/bottle/bottle_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0629376620054245
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_76:
+      path: source/assets/shapenet/bottle/bottle_19/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08601199090480804
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_77:
+      path: source/assets/shapenet/bottle/bottle_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07549328356981277
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_78:
+      path: source/assets/shapenet/bottle/bottle_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09415294975042343
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_79:
+      path: source/assets/shapenet/bottle/bottle_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05619911849498749
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_80:
+      path: source/assets/shapenet/bottle/bottle_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07753995060920715
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_81:
+      path: source/assets/shapenet/bottle/bottle_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.053386639803647995
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_82:
+      path: source/assets/shapenet/bottle/bottle_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05143088847398758
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_83:
+      path: source/assets/shapenet/bottle/bottle_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.057764749974012375
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_84:
+      path: source/assets/shapenet/bottle/bottle_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05685507133603096
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_85:
+      path: source/assets/shapenet/bottle/bottle_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08019231259822845
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_86:
+      path: source/assets/shapenet/bottle/bottle_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05701284855604172
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_87:
+      path: source/assets/shapenet/bottle/bottle_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07142361998558044
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_88:
+      path: source/assets/shapenet/bottle/bottle_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08330939710140228
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_89:
+      path: source/assets/shapenet/bottle/bottle_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07001858204603195
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_90:
+      path: source/assets/shapenet/bottle/bottle_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09298911690711975
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_91:
+      path: source/assets/shapenet/bottle/bottle_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08920080959796906
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_92:
+      path: source/assets/shapenet/bottle/bottle_18/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06268970668315887
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_93:
+      path: source/assets/shapenet/bottle/bottle_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07404971867799759
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_94:
+      path: source/assets/shapenet/bottle/bottle_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0902240201830864
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_95:
+      path: source/assets/shapenet/airplane/airplane_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02954866923391819
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_96:
+      path: source/assets/shapenet/airplane/airplane_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01964344084262848
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_97:
+      path: source/assets/shapenet/airplane/airplane_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.025893690064549446
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_98:
+      path: source/assets/shapenet/airplane/airplane_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.015107669867575169
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_99:
+      path: source/assets/shapenet/airplane/airplane_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01829122006893158
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_100:
+      path: source/assets/shapenet/airplane/airplane_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.005796140059828758
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_101:
+      path: source/assets/shapenet/airplane/airplane_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02100192941725254
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_102:
+      path: source/assets/shapenet/airplane/airplane_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.039354391396045685
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_103:
+      path: source/assets/shapenet/airplane/airplane_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.019298700615763664
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_104:
+      path: source/assets/shapenet/airplane/airplane_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.012083089910447598
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_105:
+      path: source/assets/shapenet/airplane/airplane_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.006870879791676998
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_106:
+      path: source/assets/shapenet/airplane/airplane_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.013878770172595978
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_107:
+      path: source/assets/shapenet/airplane/airplane_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02097015082836151
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_108:
+      path: source/assets/shapenet/airplane/airplane_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.010458639822900295
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_109:
+      path: source/assets/shapenet/airplane/airplane_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02105971984565258
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_110:
+      path: source/assets/shapenet/airplane/airplane_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01418348029255867
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_111:
+      path: source/assets/shapenet/airplane/airplane_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016227880492806435
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_112:
+      path: source/assets/shapenet/airplane/airplane_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.009543799795210361
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14

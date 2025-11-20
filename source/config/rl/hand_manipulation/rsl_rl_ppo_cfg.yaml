@@ -1,0 +1,4 @@
+
+_target_: isaaclab_tasks.manager_based.manipulation.inhand.config.robot.agents.rsl_rl_ppo_cfg.LeapPPORunnerCfg
+logger: wandb
+num_steps_per_env: 200

@@ -1,0 +1,24 @@
+
+palm: 
+  visual: palm/visuals/palm_lower
+  collision:  
+     path: palm/collisions
+     sub_mesh: ["mesh_0", "mesh_1", "mesh_2", "mesh_3", "mesh_4", "mesh_5", "mesh_6", "mesh_7","mesh_8","mesh_9"]
+mcp_joint:
+  visual: mcp_joint/collisions
+    collision:  
+      path: cp_joint/visuals
+      sub_mesh: ["mesh_0", "mesh_1", "mesh_2", "mesh_3", "mesh_4", "mesh_5"]
+mcp_joint_2:
+  visual:  palm/visuals/mcp_joint
+    collision:  
+      path: palm/visuals/collisions
+      sub_mesh: ["mesh_0", "mesh_1", "mesh_2", "mesh_3", "mesh_4", "mesh_5"]
+mcp_joint_3:
+  visual:  palm/visuals/mcp_joint
+    collision:  
+      path: palm/visuals/collisions
+      sub_mesh: ["mesh_0", "mesh_1", "mesh_2", "mesh_3", "mesh_4", "mesh_5"]
+
+
+['palm', 'mcp_joint', 'mcp_joint_2', 'mcp_joint_3', 'pip', 'thumb_pip', 'pip_2', 'pip_3', 'dip', 'thumb_dip', 'dip_2', 'dip_3', 'fingertip', 'thumb_fingertip', 'fingertip_2', 'fingertip_3']

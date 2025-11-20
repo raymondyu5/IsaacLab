@@ -1,0 +1,147 @@
+params:
+  
+  min_separation: 0.20
+  arm_type: "franka"
+  init_ee_pose: [0.50, 0.0, 0.3, 0, 1.0, 0.0,0.0]
+  num_arm_joints: 7
+  pick_object_list: [red_block]
+  place_object_list: [bowl01]
+  pick_object_range:
+   
+    x: [0.40, 0.65]
+    y: [-0.0, 0.20]
+
+  
+    z: [0.0, 0.0]
+    roll: [0.0, 0.0]
+    yaw: [-3.14, 3.14]
+
+    
+  place_object_range:
+   
+    x: [0.40, 0.65]
+    y: [-0.20, 0.0]
+    z: [0.0, 0.0]
+    roll: [0.0, 0.0]
+    yaw: [-3.14, 3.14]
+   
+
+
+  spawn_robot:
+    init: True
+    colorize_pc: True
+    spawn_arm: True
+
+    
+    spawn_arm_list: [
+      
+        "panda_link6",
+        "panda_link7",
+      ]
+  
+
+  RigidObject:
+
+
+
+    red_block:
+        path: "source/assets/blocks/red_block.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.025]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    bowl01:
+        path: "source/assets/ycb/dexgrasp/objects/bowl/rigid_object.usd"
+        kinematic_enabled: True
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.03]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+   
+      
+           
+
+  AssstObject:
+    
+  Camera:
+    initial: False
+    random_pose: False
+    camera_json: null #"source/config/camera/automatic_articulation/kitchen02_cabinet.json"
+
+    max_length: 0
+    segmentation_name: "instance_segmentation_fast"
+    whole_pc: True
+    seg_pc: True
+    whole_rgb: True
+    seg_rgb: True
+    whole_depth: False
+    bbox: [-2, -2.0, -0.0, 2.0, 2.0, 1.0] # [-0.20, -0.87, 0.0, 0.60, -0.5, 0.4]
+    align_robot_base: True
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      num_sampled_points: 2048
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 2048
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+     
+      camera_01:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 1.40, 0.80]
+        euler: [80.0, 0.0, -135]
+      camera_02:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.10, -0.8, 1.3]
+        euler: [45.0, 0.0, -15]
+
+      camera_03:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 0.20, 1.7]
+        euler: [40.0, 0.0, -100]

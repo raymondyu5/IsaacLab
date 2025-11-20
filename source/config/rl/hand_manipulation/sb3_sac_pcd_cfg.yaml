@@ -1,0 +1,24 @@
+# Reference: https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo.yml#L32
+seed: 42
+
+# epoch * n_steps * nenvs: 500×512*8*8
+n_timesteps: 163840000000000
+policy: 'MultiInputPolicy'
+buffer_size: 100_000
+batch_size: 256
+policy_kwargs: "dict(
+  features_extractor_class=PointNetStateExtractor,
+  features_extractor_kwargs=dict(
+  pc_key=['seg_pc'],
+  local_channels=(64, 128, 256),
+  global_channels=(256,),
+  use_bn=True,
+  state_mlp_size=(64, 64),
+  ),
+  net_arch=dict(pi=[256, 128, 64], qf=[256, 128, 64]),
+  activation_fn=nn.ReLU,
+  )"
+learning_starts: 2000
+gradient_steps: 2
+tau: 0.002
+gamma: 0.98

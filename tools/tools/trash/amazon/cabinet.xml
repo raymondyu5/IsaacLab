@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="cabinet">
+
+  <!-- ========== ASSETS (textures and materials) ========== -->
+  <asset>
+    <!-- Texture for light wood -->
+    <texture name="light_wood_tex" type="2d" file="light-wood.png" />
+
+    <!-- Material using the above texture -->
+    <material name="MatLightWood" texture="light_wood_tex"
+              specular="0.4" shininess="0.6" rgba="1 1 1 1" />
+
+    <!-- Optional red wood material -->
+    <material name="MatRedWood" specular="0.9" shininess="0.9" rgba="0.8 0.3 0.2 1.0" />
+  </asset>
+
+  <!-- ========== WORLD BODY ========== -->
+  <worldbody>
+    <body>
+      <body name="object" pos="0.3 0 0">
+
+        <!-- Drawer base -->
+        <body name="base" pos="0 0 0" quat="1 0 0 0">
+          <geom rgba="0.588 0.157 0.106 1.0" pos="-0.24 0 0.14" size="0.01 0.18 0.14" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="0.24 0 0.14"  size="0.01 0.18 0.14" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="0 0.17 0.13"  size="0.23 0.01 0.13" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="0 0 0.02"    size="0.23 0.18 0.01" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="0 0 0.27"    size="0.23 0.18 0.01" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="-0.22 -0.17 0.14" size="0.01 0.01 0.14" group="0" type="box" mass="0.05"/>
+          <geom rgba="0.588 0.157 0.106 1.0" pos="0.22 -0.17 0.14"  size="0.01 0.01 0.14" group="0" type="box" mass="0.05"/>
+
+          <!-- Drawer -->
+          <body name="drawer_link" pos="0 -0.01 0.14">
+            <joint type="slide" range="-1.0 0" axis="0 1 0" name="goal_slidey" pos="0 0 0" damping="50.0"/>
+
+            <geom rgba="0.588 0.157 0.106 1.0" pos="0 -0.16 0.015" size="0.19 0.01 0.10" group="0" type="box" mass="0.04"/>
+            <geom rgba="0.588 0.157 0.106 1.0" pos="0 0.14 0.01"   size="0.22 0.01 0.08" group="0" type="box" mass="0.04"/>
+            <geom rgba="0.588 0.157 0.106 1.0" pos="-0.18 0 0"     size="0.01 0.16 0.08" group="0" type="box" mass="0.04"/>
+            <geom rgba="0.588 0.157 0.106 1.0" pos="0.18 0 0"      size="0.01 0.16 0.08" group="0" type="box" mass="0.04"/>
+            <geom rgba="0.588 0.157 0.106 1.0" name="drawer_bottom" pos="0 0 -0.09" size="0.19 0.17 0.01" group="0" type="box" mass="0.04"/>
+
+            <!-- Handles -->
+            <geom material="MatLightWood" euler="1.571 0 0" pos="-0.1167 -0.19 0.03" size="0.01 0.03" group="0" type="capsule" mass="0.06"/>
+            <geom material="MatLightWood" euler="0 1.57 0"   pos="0 -0.22 0.03"     size="0.01 0.1167" group="0" type="capsule" mass="0.06"/>
+            <geom material="MatLightWood" euler="1.57 0 0"   pos="0.1167 -0.19 0.03" size="0.01 0.03" group="0" type="capsule" mass="0.06"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- Sites -->
+      <site name="bottom_site" pos="0 0 -0.15" rgba="0 0 0 0" size="0.005"/>
+      <site name="top_site" pos="0 0 0.15" rgba="0 0 0 0" size="0.005"/>
+      <site name="horizontal_radius_site" pos="0.3 0 0" rgba="0 0 0 0" size="0.1"/>
+    </body>
+  </worldbody>
+
+</mujoco>

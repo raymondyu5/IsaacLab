@@ -1,0 +1,27 @@
+retargeting:
+  type:  position
+  urdf_path: source/config/task/hand_env/retarget/retarget_configs/urdf/hands/leap_hand/leap_hand_right.urdf
+
+  target_joint_names: null
+  target_link_names: [ "thumb_tip_head", "index_tip_head", "middle_tip_head", "ring_tip_head", "thumb_dip", "dip", "dip_2", "dip_3" ]
+
+  target_link_human_indices: [ 4, 8, 12, 16, 2, 6, 10, 14 ]
+  add_dummy_free_joint: True
+
+  # A smaller alpha means stronger filtering, i.e. more smooth but also larger latency
+  # 1 means no filter while 0 means not moving
+  low_pass_alpha: 1
+  scaling_factor: 1
+
+   # Target refers to the retargeting target, which is the robot hand
+  # target_origin_link_names: [ "base", "base", "base", "base" ]
+  # target_task_link_names: [ "thumb_tip_head", "index_tip_head", "middle_tip_head", "ring_tip_head" ]
+  # scaling_factor: 1.2
+
+  # # Source refers to the retargeting input, which usually corresponds to the human hand
+  # # The joint indices of human hand joint which corresponds to each link in the target_link_names
+  # target_link_human_indices: [ [ 0, 0, 0, 0 ], [ 4, 8, 12, 16 ] ]
+
+  # # A smaller alpha means stronger filtering, i.e. more smooth but also larger latency
+  # low_pass_alpha: 0.2
+  

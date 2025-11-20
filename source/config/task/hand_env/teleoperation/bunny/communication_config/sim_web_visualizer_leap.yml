@@ -1,0 +1,9 @@
+communication:
+  operator_name: test_user
+  viz_type: sim_web_visualizer
+  viz_host: localhost
+  viz_port: 6000
+  viz_urdf_paths:
+    - assembly/franka_leap/franka_left_leap_hand.urdf
+    - assembly/franka_leap/franka_right_leap_hand.urdf
+  

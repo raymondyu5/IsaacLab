@@ -1,3 +1,6 @@
+# other
+ckpt/
+
 # C++
 **/cmake-build*/
 **/build*/
@@ -46,6 +49,7 @@ docker/artifacts/
 # Doc Outputs
 **/docs/_build/*
 **/generated/*
+source/assets/
 
 # Isaac-Sim packman
 _isaac_sim*

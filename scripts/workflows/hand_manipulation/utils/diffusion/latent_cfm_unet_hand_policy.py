@@ -1,0 +1,367 @@
+import os
+import hydra
+import torch
+from omegaconf import OmegaConf
+import pathlib
+from torch.utils.data import DataLoader
+import copy
+import numpy as np
+import random
+import wandb
+import tqdm
+import shutil
+import argparse
+import sys
+
+sys.path.append("submodule/diffusion_policy")
+from diffusion_policy.common.pytorch_util import dict_apply, optimizer_to
+from diffusion_policy.workspace.base_workspace import BaseWorkspace
+from diffusion_policy.policy.diffusion_unet_lowdim_policy import DiffusionUnetLowdimPolicy
+
+from diffusion_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
+from diffusion_policy.common.checkpoint_util import TopKCheckpointManager
+from diffusion_policy.common.json_logger import JsonLogger
+from diffusion_policy.model.common.lr_scheduler import get_scheduler
+from diffusers.training_utils import EMAModel
+from scripts.workflows.hand_manipulation.utils.diffusion.hand_dataset import LatentHandLowdimDataset
+from scripts.workflows.hand_manipulation.utils.diffusion.utils.latent_model_utils import LatentModelWrapper
+
+OmegaConf.register_new_resolver("eval", eval, replace=True)
+sys.path.append("submodule/benchmark_VAE/src")
+from pythae.models import AutoModel
+import yaml
+from scripts.workflows.hand_manipulation.utils.diffusion.utils.latent_model_utils import load_latent_model
+
+
+class TrainCFMUnetLowdimWorkspace(BaseWorkspace):
+    include_keys = ['global_step', 'epoch', 'latent_model']
+    exclude_keys = ['latent_model']
+
+    def __init__(self, cfg: OmegaConf, args_cli=None):
+        if args_cli is not None:
+
+            output_dir = args_cli.log_dir + f"/latent_cfm/horizon_{cfg.horizon}_nobs_{cfg.n_obs_steps}_naction_{cfg.n_action_steps}_inference_{cfg.policy.num_inference_steps}"
+        else:
+            output_dir = f"logs/trash"
+
+        os.makedirs(output_dir, exist_ok=True)
+        OmegaConf.save(cfg, os.path.join(output_dir, "config.yaml"))
+        super().__init__(cfg, output_dir=output_dir)
+
+        self.latent_model, self.latent_chunk_size, latent_dim, _ = load_latent_model(
+            args_cli.vae_path, cfg.training.device)
+
+        cfg.policy.model.input_dim = latent_dim
+
+        # load latent model
+
+        cfg.policy.latent_model_path = args_cli.vae_path
+
+        # set seed
+        seed = cfg.training.seed
+        torch.manual_seed(seed)
+        np.random.seed(seed)
+        random.seed(seed)
+        self.args_cli = args_cli
+
+        # configure model
+        self.model: DiffusionUnetLowdimPolicy
+        self.model = hydra.utils.instantiate(cfg.policy)
+
+        self.ema_model: DiffusionUnetLowdimPolicy = None
+        if cfg.training.use_ema:
+            self.ema_model = copy.deepcopy(self.model)
+
+        # configure training state
+        self.optimizer = hydra.utils.instantiate(
+            cfg.optimizer, params=self.model.parameters())
+
+        self.global_step = 0
+        self.epoch = 0
+
+    def run(self):
+        cfg = copy.deepcopy(self.cfg)
+
+        # resume training
+        if cfg.training.resume:
+            lastest_ckpt_path = self.get_checkpoint_path()
+            if lastest_ckpt_path.is_file():
+                print(f"Resuming from checkpoint {lastest_ckpt_path}")
+                self.load_checkpoint(path=lastest_ckpt_path)
+
+        # configure dataset
+
+        dataset = LatentHandLowdimDataset(h5py_path=self.args_cli.data_path,
+                                          horizon=cfg.horizon *
+                                          self.latent_chunk_size,
+                                          pad_before=cfg.n_obs_steps - 1,
+                                          pad_after=cfg.n_obs_steps - 1,
+                                          obs_key="hand_joints",
+                                          state_key="state",
+                                          action_key="action",
+                                          seed=cfg.training.seed,
+                                          latent_model=self.latent_model)
+
+        train_dataloader = DataLoader(dataset, **cfg.dataloader)
+        normalizer = dataset.get_normalizer()
+
+        # configure validation dataset
+        val_dataset = dataset.get_validation_dataset()
+        val_dataloader = DataLoader(val_dataset, **cfg.val_dataloader)
+
+        self.model.set_normalizer(normalizer)
+        if cfg.training.use_ema:
+            self.ema_model.set_normalizer(normalizer)
+
+        # configure lr scheduler
+        lr_scheduler = get_scheduler(
+            cfg.training.lr_scheduler,
+            optimizer=self.optimizer,
+            num_warmup_steps=cfg.training.lr_warmup_steps,
+            num_training_steps=(
+                len(train_dataloader) * cfg.training.num_epochs) \
+                    // cfg.training.gradient_accumulate_every,
+            # pytorch assumes stepping LRScheduler every epoch
+            # however huggingface diffusers steps it every batch
+            last_epoch=self.global_step-1
+        )
+
+        # configure ema
+        ema: EMAModel = None
+        if cfg.training.use_ema:
+            ema = hydra.utils.instantiate(cfg.ema, model=self.ema_model)
+
+        # configure logging
+
+        wandb_run = wandb.init(dir=str(self.output_dir),
+                               config=OmegaConf.to_container(cfg,
+                                                             resolve=True),
+                               **cfg.logging)
+        wandb.config.update({
+            "output_dir": self.output_dir,
+        })
+
+        # configure checkpoint
+        topk_manager = TopKCheckpointManager(save_dir=os.path.join(
+            self.output_dir, 'checkpoints'),
+                                             **cfg.checkpoint.topk)
+
+        # device transfer
+        device = torch.device(cfg.training.device)
+        self.model.to(device)
+        if self.ema_model is not None:
+            self.ema_model.to(device)
+        optimizer_to(self.optimizer, device)
+
+        # save batch for sampling
+        train_sampling_batch = None
+
+        if cfg.training.debug:
+            cfg.training.num_epochs = 2
+            cfg.training.max_train_steps = 3
+            cfg.training.max_val_steps = 3
+            cfg.training.rollout_every = 1
+            cfg.training.checkpoint_every = 1
+            cfg.training.val_every = 1
+            cfg.training.sample_every = 1
+
+        # training loop
+        best_vael_loss = float('inf')
+        log_path = os.path.join(self.output_dir, 'logs.json.txt')
+        with JsonLogger(log_path) as json_logger:
+            for local_epoch_idx in range(cfg.training.num_epochs):
+                step_log = dict()
+                # ========= train for this epoch ==========
+                train_losses = list()
+                with tqdm.tqdm(
+                        train_dataloader,
+                        desc=f"Training epoch {self.epoch}",
+                        leave=False,
+                        mininterval=cfg.training.tqdm_interval_sec) as tepoch:
+                    for batch_idx, batch in enumerate(tepoch):
+                        # device transfer
+                        batch = dict_apply(
+                            batch, lambda x: x.to(device, non_blocking=True))
+                        if train_sampling_batch is None:
+                            train_sampling_batch = batch
+
+                        # compute loss
+
+                        raw_loss = self.model.compute_loss(batch)
+                        loss = raw_loss / cfg.training.gradient_accumulate_every
+                        loss.backward()
+
+                        # step optimizer
+                        if self.global_step % cfg.training.gradient_accumulate_every == 0:
+                            self.optimizer.step()
+                            self.optimizer.zero_grad()
+                            lr_scheduler.step()
+
+                        # update ema
+                        if cfg.training.use_ema:
+                            ema.step(self.model)
+
+                        # logging
+                        raw_loss_cpu = raw_loss.item()
+                        tepoch.set_postfix(loss=raw_loss_cpu, refresh=False)
+                        train_losses.append(raw_loss_cpu)
+                        step_log = {
+                            'train_loss': raw_loss_cpu,
+                            'global_step': self.global_step,
+                            'epoch': self.epoch,
+                            'lr': lr_scheduler.get_last_lr()[0]
+                        }
+
+                        is_last_batch = (batch_idx == (len(train_dataloader) -
+                                                       1))
+                        if not is_last_batch:
+                            # log of last step is combined with validation and rollout
+                            wandb_run.log(step_log, step=self.global_step)
+                            json_logger.log(step_log)
+                            self.global_step += 1
+
+                        if (cfg.training.max_train_steps is not None) \
+                            and batch_idx >= (cfg.training.max_train_steps-1):
+                            break
+
+                # at the end of each epoch
+                # replace train_loss with epoch average
+                train_loss = np.mean(train_losses)
+                step_log['train_loss'] = train_loss
+
+                # ========= eval for this epoch ==========
+                policy = self.model
+                if cfg.training.use_ema:
+                    policy = self.ema_model
+                policy.eval()
+
+                # run validation
+                if (self.epoch % cfg.training.val_every) == 0:
+                    with torch.no_grad():
+                        val_losses = list()
+                        with tqdm.tqdm(val_dataloader,
+                                       desc=f"Validation epoch {self.epoch}",
+                                       leave=False,
+                                       mininterval=cfg.training.
+                                       tqdm_interval_sec) as tepoch:
+                            for batch_idx, batch in enumerate(tepoch):
+                                batch = dict_apply(
+                                    batch,
+                                    lambda x: x.to(device, non_blocking=True))
+                                loss = self.model.compute_loss(batch)
+                                val_losses.append(loss)
+                                if (cfg.training.max_val_steps is not None) \
+                                    and batch_idx >= (cfg.training.max_val_steps-1):
+                                    break
+                        if len(val_losses) > 0:
+                            val_loss = torch.mean(
+                                torch.tensor(val_losses)).item()
+                            # log epoch average validation loss
+                            step_log['val_loss'] = val_loss
+
+                # run diffusion sampling on a training batch
+                if (self.epoch % cfg.training.sample_every) == 0:
+                    with torch.no_grad():
+                        # sample trajectory from training set, and evaluate difference
+                        batch = train_sampling_batch
+                        obs_dict = {'obs': batch['obs']}
+                        gt_action = batch['action']
+
+                        result = policy.predict_action(obs_dict)
+                        if cfg.pred_action_steps_only:
+                            pred_action = result['action']
+                            start = cfg.n_obs_steps - 1
+                            end = start + cfg.n_action_steps
+                            gt_action = gt_action[:, start:end]
+                        else:
+                            pred_action = result['action_pred']
+
+                        mse = torch.nn.functional.mse_loss(
+                            pred_action, gt_action)
+                        # log
+                        step_log['train_action_mse_error'] = mse.item()
+                        # if best_vael_loss > mse.item():
+                        #     best_vael_loss = mse.item()
+                        #     self.save_checkpoint(path=os.path.join(
+                        #         self.output_dir, 'checkpoints',
+                        #         'best_val_loss.ckpt'))
+                        # release RAM
+                        del batch
+                        del obs_dict
+                        del gt_action
+                        del result
+                        del pred_action
+                        del mse
+
+                # checkpoint
+                if (self.epoch % cfg.training.checkpoint_every) == 0:
+                    # checkpointing
+                    if cfg.checkpoint.save_last_ckpt:
+                        self.save_checkpoint()
+                    if cfg.checkpoint.save_last_snapshot:
+                        self.save_snapshot()
+
+                    # sanitize metric names
+                    metric_dict = dict()
+                    for key, value in step_log.items():
+                        new_key = key.replace('/', '_')
+                        metric_dict[new_key] = value
+
+                    # We can't copy the last checkpoint here
+                    # since save_checkpoint uses threads.
+                    # therefore at this point the file might have been empty!
+
+                    topk_ckpt_path = topk_manager.get_ckpt_path(metric_dict)
+
+                    if topk_ckpt_path is not None:
+                        self.save_checkpoint(path=topk_ckpt_path)
+                # ========= eval end for this epoch ==========
+                policy.train()
+
+                # end of epoch
+                # log of last step is combined with validation and rollout
+                wandb_run.log(step_log, step=self.global_step)
+                json_logger.log(step_log)
+                self.global_step += 1
+                self.epoch += 1
+
+
+def main(args_cli):
+    # Manually load your YAML config file
+    config_path = args_cli.config_file  # <- put your config path here
+
+    cfg = OmegaConf.load(config_path)
+    cfg.horizon = args_cli.horizon
+    cfg.n_obs_steps = args_cli.nobs
+    cfg.n_action_steps = args_cli.naction
+    cfg.policy.num_inference_steps = args_cli.num_inference
+    cfg.policy.latent_model.latent_model_path = args_cli.vae_path
+
+    # Initialize and run workspace
+    workspace = TrainCFMUnetLowdimWorkspace(cfg, args_cli)
+    workspace.run()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--log_dir",
+        type=str,
+    )
+    parser.add_argument(
+        "--config_file",
+        type=str,
+    )
+    parser.add_argument(
+        "--data_path",
+        type=str,
+    )
+    parser.add_argument("--horizon", type=int, default=16)
+    parser.add_argument("--nobs", type=int, default=1)
+    parser.add_argument("--naction", type=int, default=8)
+    parser.add_argument("--num_inference", type=int, default=1)
+    parser.add_argument("--vae_path", type=str, default=None)
+    args_cli, hydra_args = parser.parse_known_args()
+    # Set up the hydra configuration
+    main(args_cli)

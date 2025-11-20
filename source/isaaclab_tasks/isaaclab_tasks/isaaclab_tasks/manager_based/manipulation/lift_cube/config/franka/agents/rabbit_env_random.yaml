@@ -1,0 +1,231 @@
+params:
+  Robot:
+    init: False
+    qpos:
+      {
+        "panda_joint1": 0.5071,
+        "panda_joint2": -0.5104,
+        "panda_joint3": -0.4926,
+        "panda_joint4": -2.5945,
+        "panda_joint5": -0.2663,
+        "panda_joint6": 2.1293,
+        "panda_joint7": 0.88,
+        "panda_finger_joint.*": 0.04,
+      }
+  DeformableObject:
+    deform_object:
+      path: "source/assets/Plush/usd/rabbit/usd/rabbit_deform.usd"
+      simulation_hexahedral_resolution: 32
+      vertex_velocity_damping: 0.0
+      filter_pair_path: [
+          "/World/envs/env_.*/gripper",
+          # "/World/envs/env_.*/Robot",
+          "/World/envs/env_.*/rabbit/Mesh/Mesh",
+        ]
+      scale: [1.5, 1.5, 1.5]
+      pos: [0.50, -0.0, 0.01]
+      pose_range:
+        # x: [-0.10, 0.10]
+        # y: [-0.05, 0.05]
+        # z: [0.8, 0.8]
+        # roll: [-1.7, -1.2]
+        # yaw: [-0.77, 0.77]
+      velocity_range:
+      rot:
+        axis: [0]
+        angles: [0]
+
+      random_parmas: False
+      sample_node_interval: 50
+      floating_gripper:
+        gripper_offset_xyz: [0.5, 0.0, 0.09]
+        gripper_offset: 0.08
+        static_frames: 4
+        random_orientation_range: [0.0, 0.0]
+        random_position_dir:
+          [[-0.02, 0.0, 0.0], [0.0, 0.02, 0.0], [0.0, 0.0, 0.02]]
+        gripper_actions: -1
+
+      fix_params:
+        youngs_modulus: 10000
+        dynamic_friction: 3.0
+        elasticity_damping: 0.0
+
+      semantic_tags:
+        - class: rabbit
+
+      params_range:
+        youngs_modulus: [0, 1.0]
+        elasticity_damping: [0, 1.0]
+        density: [0, 1.0]
+        dynamic_friction: [0, 1.0]
+        damping_scale: [0.0, 1.0]
+        poissons_ratio: [0, 1.0]
+
+      params:
+        youngs_modulus: [[0, 4]]
+        dynamic_friction: [[0, 1], [3, 5], [9, 12]]
+        poissons_ratio: [[0, 0.15], [0.15, 0.30], [0.30, 0.50]]
+        elasticity_damping: [[0.0, 0.15]]
+        damping_scale: [[0, 1]]
+        density: [[0, 1], [1, 10], [10, 100]]
+
+      attach_robot:
+        init: True
+        attach_object_path: "/World/envs/env_.*/gripper"
+        attach_offset: [0, 0, -0.0]
+        attact_yet: False
+        DeformableVertexOverlapOffset: 0.05
+
+      bayessim:
+        trainTrajs: 5
+        summarizerFxn: "summary_start"
+        ftune: True
+        modelClass: MDNN
+        components: 4
+        hiddenLayers: [128, 64, 32, 16]
+        lr: 1.e-4
+        realEvals: 100
+        realTrajs: 1
+        realIters: 100
+        ftuneRL: False
+
+      camera_obs:
+        segmentation_name: "instance_segmentation_fast"
+        bbox: [-0.2, -1.0, -0.0, 1.0, 1.0, 1.0]
+        max_length: 2048
+        whole_pc: True
+        seg_pc: False
+        whole_rgb: True
+        seg_rgb: False
+        segmentation_id: 3
+
+  ParticlesObject:
+
+  RigidObject:
+    gripper:
+      path: "source/assets/robot/franka/panda_hand_big.usd"
+      scale: [0.01, 0.01, 0.01]
+      pos: [0.3, 0.0, .1]
+      rot:
+        axis: [0]
+        angles: [0]
+      disable_gravity: True
+      motion: True
+      relative_pos: False
+    # gripper2:
+    #   path: "source/assets/robot/franka/panda_hand_big.usd"
+    #   scale: [0.01, 0.01, 0.01]
+    #   pos: [0.5, 0.0, .09]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+    #   disable_gravity: False
+    #   motion: False
+    #   relative_pos: False
+
+    # rigid_object:
+    #   path: "source/assets/arcode/arcode_rigid.usd"
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [0.40, -0.0, 0.01]
+    #   rot:
+    #     axis: [0]
+    #     angles: [1.57]
+    #   disable_gravity: True
+
+  AssstObject:
+    block1:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, -3.0, -2]
+      rot:
+        axis: [2]
+        angles: [1.57]
+    block2:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, 3.0, -2]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    block3:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [-4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+    block4:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+
+  Camera:
+    initial: True
+    random_pose: True
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      num_sampled_points: 2048
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 2048
+
+    random_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+      camera:
+        camera_type: "camera"
+        height: 960
+        width: 1280
+        data_types: ["rgb", "distance_to_camera"]
+        update_period: 0.03
+        eyes: [1.5, 0.0, 1.0]
+        target: [0.4, -0.0, 0.2]
+      # camera1:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types:
+      #     ["rgb", "instance_segmentation_fast", distance_to_image_plane]
+      #   update_period: 0.03
+      #   eyes: [-0.6, -0.0, 1.3000]
+      #   target: [0.6, -0.0, 0.3]
+      # camera2:
+      #   camera_type: "camera"
+      #   height: 320
+      #   width: 320
+      #   data_types:
+      #     ["rgb", "instance_segmentation_fast", distance_to_image_plane]
+      #   update_period: 0.03
+      #   eyes: [0.5, 0.9, 1.0]
+      #   target: [0.5, -0.0, 0.2]
+      # camera3:
+      #   camera_type: "camera"
+      #   height: 320
+      #   width: 320
+      #   data_types:
+      #     ["rgb", "instance_segmentation_fast", distance_to_image_plane]
+      #   update_period: 0.03
+      #   eyes: [0.5, -0.9, 1.0]
+      #   target: [0.5, -0.0, 0.2]
+      # camera4:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   pos: [0.8, 0, 1.8]
+      #   rot:
+      #     axis: [1, 0, 1]
+      #     angles: [-1.57, -1.57, -1.57]

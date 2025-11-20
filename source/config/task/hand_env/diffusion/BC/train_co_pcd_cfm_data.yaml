@@ -1,0 +1,190 @@
+defaults:
+  - _self_
+  - task: hand_pcd
+
+name: train_diffusion_unet_pcd
+_target_: scripts.workflows.hand_manipulation.utils.diffusion.train_cfm_pcd_policy.TrainCFMUnetPCDWorkspace
+
+task_name: hand_pcd
+exp_name: "default"
+
+horizon: 16
+n_obs_steps: 2
+n_action_steps: 8
+n_latency_steps: 0
+past_action_visible: False
+keypoint_visible_rate: 1.0
+obs_as_local_cond: False
+obs_as_global_cond: True
+pred_action_steps_only: False
+downsample_points: 2048
+
+real_ratio: 0.2
+
+shape_meta:
+  action:
+    shape:
+      - 22
+  obs:
+    agent_pos:
+      shape:
+        - 22
+      type: low_dim
+    seg_pc:
+      shape:
+        - 3
+        - ${downsample_points}
+      type: pcd
+
+policy:
+  _target_: scripts.workflows.hand_manipulation.utils.diffusion.policy.cfm_pcd_policy.CFMnetPCDPolicy
+  down_dims: [256, 512, 1024]
+  shape_meta: ${shape_meta}
+
+  inference_function:
+    _target_: scripts.workflows.hand_manipulation.utils.diffusion.utils.inference_utils.RK2
+
+  noise_scheduler:
+    _target_: torchcfm.ConditionalFlowMatcher
+    sigma: 0.0
+
+  horizon: ${horizon}
+
+  n_action_steps: ${eval:'${n_action_steps}+${n_latency_steps}'}
+  n_obs_steps: ${n_obs_steps}
+
+  oa_step_convention: True
+  obs_as_global_cond: ${obs_as_global_cond}
+
+  obs_encoder:
+    _target_: scripts.workflows.hand_manipulation.utils.diffusion.backbone.multi_pcd_obs_encoder.MultiPCDObsEncoder
+    shape_meta: ${shape_meta}
+    pcd_model:
+      _target_: scripts.workflows.hand_manipulation.utils.diffusion.backbone.pcd.pointnet.PointNet
+
+
+dataset:
+  _target_: scripts.workflows.hand_manipulation.utils.diffusion.dataset.real_dataset.co_hand_pcd_dataset.COHandDataset
+  real_dataset:
+    
+    data_path: None
+    horizon: ${horizon}
+    pad_before: ${eval:'${n_obs_steps}-1'}
+    pad_after: ${eval:'${n_obs_steps}-1'}
+    obs_key: [joint_positions, gripper_position] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
+    noise_key: [joint_positions, gripper_position]
+    seed: ${training.seed}
+    noise_scale:
+      joint_positions: 0.05
+      gripper_position: 0.05
+    val_ratio: 0.05
+    downsample_points: ${downsample_points}
+    pcd_noise: 0.020
+    num_demo: 25
+    noise_extrinsic: True
+    noise_extrinsic_parameter: [0.05, 0.2]
+    camera_id: [CL838420160,CL8384200N1]
+
+
+  sim_dataset:
+    
+    data_path: None
+    horizon: ${horizon}
+    pad_before:  ${eval:'${n_obs_steps}-1'}
+    pad_after:  ${eval:'${n_obs_steps}-1'}
+    obs_key : ['right_hand_joint_pos'] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
+    image_key: ["seg_pc"]
+    noise_key: [right_hand_joint_pos]
+    action_key: "action"
+    seed: ${training.seed}
+    noise_scale: 
+      right_hand_joint_pos: 0.05
+      # right_ee_pose: 0.02
+    val_ratio: 0.05
+    downsample_points: ${downsample_points}
+    pcd_noise: 0.020
+    num_demo: 25
+    noise_extrinsic: True
+    noise_extrinsic_parameter: [0.05, 0.2]
+   
+
+ema:
+  _target_: diffusion_policy.model.diffusion.ema_model.EMAModel
+  update_after_step: 0
+  inv_gamma: 1.0
+  power: 0.75
+  min_value: 0.0
+  max_value: 0.9999
+
+dataloader:
+  batch_size: 512
+  num_workers: 32
+  pin_memory: True
+  persistent_workers: False
+
+val_dataloader:
+  batch_size: 32
+  num_workers: 32
+  pin_memory: True
+  persistent_workers: False
+
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1.0e-4
+  betas: [0.95, 0.999]
+  eps: 1.0e-8
+  weight_decay: 1.0e-6
+
+training:
+  device: "cuda:0"
+  seed: 42
+  debug: False
+  resume: False
+  # optimization
+  lr_scheduler: cosine
+  lr_warmup_steps: 500
+  num_epochs: 1000
+  gradient_accumulate_every: 1
+  use_ema: True
+  # training loop control
+  # in epochs
+  rollout_every: 10
+  checkpoint_every: 50
+  val_every: 10
+  sample_every: 5
+  # steps per epoch
+  max_train_steps: null
+  max_val_steps: null
+  # misc
+  tqdm_interval_sec: 1.0
+
+logging:
+  project: diffusion_policy_debug
+  resume: False
+  mode: online
+  name: manipulation_pcd_cfm_unet
+  tags: ["diffusion", "unet", "pcd"]
+  id: null
+  group: null
+
+checkpoint:
+  topk:
+    monitor_key: train_loss
+    mode: max
+    k: 5
+    format_str: "epoch={epoch:04d}-train_loss={train_loss:.3f}.ckpt"
+  save_last_ckpt: True
+  save_last_snapshot: False
+
+multi_run:
+  run_dir: logs/
+  wandb_name_base: manipulation_cfm_unet
+
+hydra:
+  job:
+    override_dirname: ${name}
+  run:
+    dir: logs/
+  sweep:
+    dir: logs/
+    subdir: manipulation_pcd_cfm_unet

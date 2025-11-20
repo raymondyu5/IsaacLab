@@ -1,0 +1,368 @@
+import os
+import hydra
+import torch
+from omegaconf import OmegaConf
+import pathlib
+from torch.utils.data import DataLoader
+import copy
+import numpy as np
+import random
+import wandb
+import tqdm
+import shutil
+import argparse
+import sys
+
+sys.path.append("submodule/diffusion_policy")
+from diffusion_policy.common.pytorch_util import dict_apply, optimizer_to
+from diffusion_policy.workspace.base_workspace import BaseWorkspace
+from diffusion_policy.policy.diffusion_unet_lowdim_policy import DiffusionUnetLowdimPolicy
+
+from diffusion_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
+from diffusion_policy.common.checkpoint_util import TopKCheckpointManager
+from diffusion_policy.common.json_logger import JsonLogger
+from diffusion_policy.model.common.lr_scheduler import get_scheduler
+from diffusers.training_utils import EMAModel
+from scripts.workflows.hand_manipulation.utils.diffusion.dataset.hand_dataset import HandLowdimDataset
+from scripts.workflows.hand_manipulation.utils.vae.reactive_diffusion_policy.model import VAE
+
+OmegaConf.register_new_resolver("eval", eval, replace=True)
+
+
+class TrainATWorkspace(BaseWorkspace):
+    include_keys = ['global_step', 'epoch']
+
+    def __init__(self, cfg: OmegaConf, args_cli, output_dir=None):
+        if args_cli is not None:
+            if cfg.use_state:
+                output_dir = args_cli.log_dir + f"/reactive_vae_state/horizon_{cfg.horizon}_nobs_{cfg.n_obs_steps}_nlatent_{cfg.n_latent_dims}"
+            else:
+
+                output_dir = args_cli.log_dir + f"/reactive_vae/horizon_{cfg.horizon}_nobs_{cfg.n_obs_steps}_nlatent_{cfg.n_latent_dims}"
+        else:
+            output_dir = f"logs/trash"
+        os.makedirs(output_dir, exist_ok=True)
+        super().__init__(cfg, output_dir=output_dir)
+
+        # set seed
+        seed = cfg.training.seed
+        torch.manual_seed(seed)
+        np.random.seed(seed)
+        random.seed(seed)
+
+        # configure model
+        self.model: VAE
+        self.model = hydra.utils.instantiate(cfg.policy)
+
+        # configure training state
+        self.optimizer = hydra.utils.instantiate(
+            cfg.optimizer, params=self.model.optim_params)
+
+        self.global_step = 0
+        self.epoch = 0
+
+    def run(self):
+        cfg = copy.deepcopy(self.cfg)
+
+        # resume training
+        if cfg.training.resume:
+            lastest_ckpt_path = self.get_checkpoint_path()
+            if lastest_ckpt_path.is_file():
+                print(f"Resuming from checkpoint {lastest_ckpt_path}")
+                self.load_checkpoint(path=lastest_ckpt_path)
+
+        dataset = HandLowdimDataset(
+            data_path=args_cli.data_path,
+            horizon=cfg.horizon,
+            pad_before=cfg.n_obs_steps - 1,
+            pad_after=cfg.n_obs_steps - 1,
+            obs_key="hand_joints",
+            state_key="state",
+            action_key="action",
+            seed=cfg.training.seed,
+        )
+
+        train_dataloader = DataLoader(dataset, **cfg.dataloader)
+        self.normalizer = dataset.get_normalizer()
+
+        # configure validation dataset
+        val_dataset = dataset.get_validation_dataset()
+        val_dataloader = DataLoader(val_dataset, **cfg.val_dataloader)
+
+        self.model.set_normalizer(self.normalizer)
+
+        # configure lr scheduler
+        lr_scheduler = get_scheduler(
+            cfg.training.lr_scheduler,
+            optimizer=self.optimizer,
+            num_warmup_steps=cfg.training.lr_warmup_steps,
+            num_training_steps=(
+                len(train_dataloader) * cfg.training.num_epochs) \
+                    // cfg.training.gradient_accumulate_every,
+            # pytorch assumes stepping LRScheduler every epoch
+            # however huggingface diffusers steps it every batch
+            last_epoch=self.global_step - 1
+        )
+
+        # configure logging
+        wandb_run = wandb.init(dir=str(self.output_dir),
+                               config=OmegaConf.to_container(cfg,
+                                                             resolve=True),
+                               **cfg.logging)
+        wandb.config.update({
+            "output_dir": self.output_dir,
+        })
+
+        # configure checkpoint
+        topk_manager = TopKCheckpointManager(save_dir=os.path.join(
+            self.output_dir, 'checkpoints'),
+                                             **cfg.checkpoint.topk)
+
+        # device transfer
+        device = torch.device(cfg.training.device)
+        self.model.to(device)
+        self.model.reset()
+        optimizer_to(self.optimizer, device)
+
+        # save batch for sampling
+        train_sampling_batch = None
+
+        if cfg.training.debug:
+            cfg.training.num_epochs = 2
+            cfg.training.max_train_steps = 3
+            cfg.training.max_val_steps = 3
+            cfg.training.checkpoint_every = 1
+            cfg.training.val_every = 1
+
+        # training loop
+        log_path = os.path.join(self.output_dir, 'logs.json.txt')
+        with JsonLogger(log_path) as json_logger:
+            for local_epoch_idx in range(cfg.training.num_epochs):
+                step_log = dict()
+                # ========= train for this epoch ==========
+                train_losses = list()
+                with tqdm.tqdm(
+                        train_dataloader,
+                        desc=f"Training epoch {self.epoch}",
+                        leave=False,
+                        mininterval=cfg.training.tqdm_interval_sec) as tepoch:
+                    for batch_idx, batch in enumerate(tepoch):
+                        # device transfer
+                        batch = dict_apply(
+                            batch, lambda x: x.to(device, non_blocking=True))
+                        if train_sampling_batch is None:
+                            train_sampling_batch = batch
+                        # compute loss
+                        loss_metric_dict = self.model.compute_loss_and_metric(
+                            batch)
+                        raw_loss = loss_metric_dict["loss"]
+                        loss = raw_loss / cfg.training.gradient_accumulate_every
+                        loss.backward()
+
+                        # step optimizer
+                        if self.global_step % cfg.training.gradient_accumulate_every == 0:
+                            self.optimizer.step()
+                            self.optimizer.zero_grad()
+                            lr_scheduler.step()
+
+                        # logging
+                        raw_loss_cpu = raw_loss.item()
+                        tepoch.set_postfix(loss=raw_loss_cpu, refresh=False)
+                        train_losses.append(raw_loss_cpu)
+                        # metric
+                        encoder_loss = loss_metric_dict["encoder_loss"]
+                        vae_recon_loss = loss_metric_dict["vae_recon_loss"]
+                        step_log = {
+                            'train_loss': raw_loss_cpu,
+                            'global_step': self.global_step,
+                            'epoch': self.epoch,
+                            'lr': lr_scheduler.get_last_lr()[0],
+                            # metric
+                            'train_encoder_loss': encoder_loss,
+                            'train_vae_recon_loss': vae_recon_loss
+                        }
+                        if "vq_code" in loss_metric_dict:
+                            n_different_codes = len(
+                                torch.unique(loss_metric_dict["vq_code"]))
+                            n_different_combinations = len(
+                                torch.unique(loss_metric_dict["vq_code"],
+                                             dim=0))
+                            step_log.update({
+                                'train_n_different_codes':
+                                n_different_codes,
+                                'train_n_different_combinations':
+                                n_different_combinations,
+                            })
+                        if "vq_loss_state" in loss_metric_dict:
+                            vq_loss_state = loss_metric_dict["vq_loss_state"]
+                            step_log.update({
+                                'train_vq_loss_state':
+                                vq_loss_state,
+                            })
+                        if "kl_loss" in loss_metric_dict:
+                            kl_loss = loss_metric_dict["kl_loss"]
+                            step_log.update({'train_kl_loss': kl_loss})
+
+                        is_last_batch = (batch_idx == (len(train_dataloader) -
+                                                       1))
+                        if not is_last_batch:
+                            # log of last step is combined with validation and rollout
+                            wandb_run.log(step_log, step=self.global_step)
+                            json_logger.log(step_log)
+                            self.global_step += 1
+
+                        if (cfg.training.max_train_steps is not None) \
+                                and batch_idx >= (cfg.training.max_train_steps - 1):
+                            break
+
+                # at the end of each epoch
+                # replace train_loss with epoch average
+                train_loss = np.mean(train_losses)
+                step_log['train_loss'] = train_loss
+
+                # ========= eval for this epoch ==========
+                policy = self.model
+                policy.eval()
+
+                # run validation
+                if (self.epoch % cfg.training.val_every) == 0:
+                    with torch.no_grad():
+                        val_losses = list()
+                        # metric
+                        val_n_different_codes = list()
+                        val_n_different_combinations = list()
+                        val_vq_loss_state = list()
+                        val_kl_loss = list()
+                        val_encoder_loss = list()
+                        val_vae_recon_loss = list()
+                        with tqdm.tqdm(val_dataloader,
+                                       desc=f"Validation epoch {self.epoch}",
+                                       leave=False,
+                                       mininterval=cfg.training.
+                                       tqdm_interval_sec) as tepoch:
+                            for batch_idx, batch in enumerate(tepoch):
+                                batch = dict_apply(
+                                    batch,
+                                    lambda x: x.to(device, non_blocking=True))
+                                loss_metric_dict = self.model.compute_loss_and_metric(
+                                    batch)
+                                loss = loss_metric_dict["loss"]
+                                val_losses.append(loss)
+                                # metric
+                                val_encoder_loss.append(
+                                    loss_metric_dict["encoder_loss"])
+                                val_vae_recon_loss.append(
+                                    loss_metric_dict["vae_recon_loss"])
+                                if "vq_code" in loss_metric_dict:
+                                    val_n_different_codes.append(
+                                        len(
+                                            torch.unique(
+                                                loss_metric_dict["vq_code"])))
+                                    val_n_different_combinations.append(
+                                        len(
+                                            torch.unique(
+                                                loss_metric_dict["vq_code"],
+                                                dim=0)))
+                                if "vq_loss_state" in loss_metric_dict:
+                                    val_vq_loss_state.append(
+                                        loss_metric_dict["vq_loss_state"])
+                                if "kl_loss" in loss_metric_dict:
+                                    val_kl_loss.append(
+                                        loss_metric_dict["kl_loss"])
+                                if (cfg.training.max_val_steps is not None) \
+                                        and batch_idx >= (cfg.training.max_val_steps - 1):
+                                    break
+                        if len(val_losses) > 0:
+                            val_loss = torch.mean(
+                                torch.tensor(val_losses)).item()
+                            # log epoch average validation loss
+                            step_log['val_loss'] = val_loss
+                            # metric
+                            step_log['val_encoder_loss'] = np.mean(
+                                val_encoder_loss)
+                            step_log['val_vae_recon_loss'] = np.mean(
+                                val_vae_recon_loss)
+                            if len(val_n_different_codes) > 0:
+                                step_log['val_n_different_codes'] = np.mean(
+                                    val_n_different_codes)
+                                step_log[
+                                    'val_n_different_combinations'] = np.mean(
+                                        val_n_different_combinations)
+                            if len(val_vq_loss_state) > 0:
+                                step_log['val_vq_loss_state'] = np.mean(
+                                    val_vq_loss_state)
+                            if len(val_kl_loss) > 0:
+                                step_log['val_kl_loss'] = np.mean(val_kl_loss)
+
+                # checkpoint
+                if (self.epoch % cfg.training.checkpoint_every) == 0:
+                    # checkpointing
+                    if cfg.checkpoint.save_last_ckpt:
+                        self.save_checkpoint()
+                    if cfg.checkpoint.save_last_snapshot:
+                        self.save_snapshot()
+
+                    # sanitize metric names
+                    metric_dict = dict()
+                    for key, value in step_log.items():
+                        new_key = key.replace('/', '_')
+                        metric_dict[new_key] = value
+
+                    # We can't copy the last checkpoint here
+                    # since save_checkpoint uses threads.
+                    # therefore at this point the file might have been empty!
+                    topk_ckpt_path = topk_manager.get_ckpt_path(metric_dict)
+
+                    if topk_ckpt_path is not None:
+                        self.save_checkpoint(path=topk_ckpt_path)
+                    self.model.reset()
+                # ========= eval end for this epoch ==========
+                policy.train()
+
+                # end of epoch
+                # log of last step is combined with validation and rollout
+                wandb_run.log(step_log, step=self.global_step)
+                json_logger.log(step_log)
+                self.global_step += 1
+                self.epoch += 1
+
+
+def main(args_cli):
+    # Manually load your YAML config file
+    config_path = args_cli.config_file  # <- put your config path here
+
+    cfg = OmegaConf.load(config_path)
+    cfg.horizon = args_cli.horizon
+    cfg.n_obs_steps = args_cli.nobs
+
+    cfg.n_latent_dims = args_cli.n_latent_dims
+
+    # Initialize and run workspace
+    workspace = TrainATWorkspace(cfg, args_cli)
+    workspace.run()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--log_dir",
+        type=str,
+    )
+    parser.add_argument(
+        "--config_file",
+        type=str,
+    )
+    parser.add_argument(
+        "--data_path",
+        type=str,
+    )
+
+    parser.add_argument("--horizon", type=int, default=1)
+    parser.add_argument("--nobs", type=int, default=1)
+
+    parser.add_argument("--n_latent_dims", type=int, default=4)
+
+    args_cli, hydra_args = parser.parse_known_args()
+    # Set up the hydra configuration
+    main(args_cli)

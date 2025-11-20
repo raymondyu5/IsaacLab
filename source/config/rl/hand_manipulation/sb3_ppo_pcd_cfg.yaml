@@ -1,0 +1,35 @@
+# Reference: https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo.yml#L32
+seed: 42
+
+# epoch * n_steps * nenvs: 500×512*8*8
+n_timesteps: 163840000000000
+policy: "MultiInputPolicy"
+n_steps: 200
+# mini batch size: num_envs * nsteps / nminibatches 2048×512÷2048
+batch_size: 1024
+gae_lambda: 0.95
+gamma: 0.99
+n_epochs: 8
+ent_coef: 0.00
+vf_coef: 0.0001
+learning_rate: !!float 1e-5
+clip_range: 0.2
+policy_kwargs: "dict(
+  features_extractor_class=PointNetStateExtractor,
+  features_extractor_kwargs=dict(
+  pc_key=['seg_pc'],
+  local_channels=(64, 128, 256),
+  global_channels=(256,),
+  use_bn=False,
+  state_mlp_size=(64, 64),
+  ),
+  net_arch=dict(pi=[64, 64], vf=[64, 64]),
+  activation_fn=nn.ReLU,
+  )"
+target_kl: 6.0
+max_grad_norm: 1.0
+# # Uses VecNormalize class to normalize obs
+# normalize_input: True
+# # Uses VecNormalize class to normalize rew
+# normalize_value: True
+# clip_obs: 5

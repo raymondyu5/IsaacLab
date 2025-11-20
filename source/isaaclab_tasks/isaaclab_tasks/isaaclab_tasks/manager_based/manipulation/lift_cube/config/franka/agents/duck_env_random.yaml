@@ -1,0 +1,134 @@
+params:
+  Robot:
+    qpos:
+      {
+        "panda_joint1": 0.5071,
+        "panda_joint2": -0.5104,
+        "panda_joint3": -0.4926,
+        "panda_joint4": -2.5945,
+        "panda_joint5": -0.2663,
+        "panda_joint6": 2.1293,
+        "panda_joint7": 0.88,
+        "panda_finger_joint.*": 0.04,
+      }
+  DeformableObject:
+    object:
+      path: "source/assets/Plush/usd/duck/usd/duck_deform.usd"
+      simulation_hexahedral_resolution: 16
+      vertex_velocity_damping: 0.0
+      scale: [1.3, 1.3, 1.3]
+      pos: [0.8, -0.0, 0.53]
+      rot:
+        axis: [2]
+        angles: [1.57]
+      random_parmas: False
+      params:
+        dynamic_friction: [0.10, 1.0]
+        youngs_modulus: [300, 3000]
+        poissons_ratio: [0.1, 0.50]
+        elasticity_damping: [0.00, 0.08]
+        damping_scale: [0.1, 1.0]
+        density: [0.1, 1000]
+        simulation_hexahedral_resolution: [2, 64]
+        mass: [0.1, 1000]
+      attach_robot:
+        init: False
+        attach_object_path: "/World/envs/env_.*/Robot/panda_hand"
+        attach_offset: [0, 0, -0.33]
+        attact_yet: False
+
+    # deform_object2:
+    #   path: "source/assets/Plush/usd/cat/usd/cat_deform.usd"
+    #   simulation_hexahedral_resolution: 16
+    #   vertex_velocity_damping: 0.0
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [0.8, 0.20, 0.02]
+    #   rot:
+    #     axis: [2]
+    #     angles: [0]
+    #   random_parmas: False
+    #   params:
+    #     dynamic_friction: [0.10, 1.0]
+    #     youngs_modulus: [300, 3000]
+    #     poissons_ratio: [0.1, 0.50]
+    #     elasticity_damping: [0.00, 0.08]
+    #     damping_scale: [0.1, 1.0]
+    #     density: [0.1, 1000]
+    #     simulation_hexahedral_resolution: [2, 64]
+    #     mass: [0.1, 1000]
+    #   attach_robot:
+    #     init: False
+    #     attach_object_path: "/World/envs/env_.*/Robot/panda_hand"
+    #     attach_offset: [0, 0, -0.33]
+    #     attact_yet: False
+
+  RigidObject:
+    # rigid_object:
+    #   path: "source/assets/arcode/arcode_static.usd"
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [0.40, -0.0, 0.01]
+    #   rot:
+    #     axis: [0]
+    #     angles: [1.57]
+  AssstObject:
+    cat:
+      path: "source/assets/Plush/usd/cat/usd/cat_static.usd"
+      scale: [0.01, 0.01, 0.01]
+      pos: [0.5, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [1.57]
+
+  Camera:
+    initial: True
+    random_pose: False
+    random_setting:
+      origin: [0.8, -0.10, 0.0]
+      radius_range: [1.8, 2.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 1.2
+    cameras:
+      camera:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: [2.5, 0.0000, 1.2000]
+        target: [0.6, -0.0, 0.3]
+      camera1:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: [-0.9, 0.0000, 1.2000]
+        target: [0.6, -0.0, 0.3]
+      camera2:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: [0.8, 1.8, 1.2]
+        target: [0.6, -0.0, 0.3]
+      camera3:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: [0.8, -2.2, 1.2]
+        target: [0.6, -0.0, 0.3]
+      # camera4:
+      #   camera_type: "camera"
+      #   height: 480
+      #   width: 640
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   pos: [0.8, 0, 1.8]
+      #   rot:
+      #     axis: [1, 0, 1]
+      #     angles: [-1.57, -1.57, -1.57]

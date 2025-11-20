@@ -1,0 +1,653 @@
+params:
+  RigidObject:
+    pudding_box:
+      path: source/assets/ycb/dexgrasp/recenter_objects/pudding_box/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.039597999304533005
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_soup_can:
+      path: source/assets/ycb/dexgrasp/recenter_objects/tomato_soup_can/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08427520096302032
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    extra_large_clamp:
+      path: source/assets/ycb/dexgrasp/recenter_objects/extra_large_clamp/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04615600034594536
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    large_marker:
+      path: source/assets/ycb/dexgrasp/recenter_objects/large_marker/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.014165399596095085
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bleach_cleanser:
+      path: source/assets/ycb/dexgrasp/recenter_objects/bleach_cleanser/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.2052219957113266
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    mustard_bottle:
+      path: source/assets/ycb/dexgrasp/recenter_objects/mustard_bottle/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.13530999422073364
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    mug:
+      path: source/assets/ycb/dexgrasp/recenter_objects/mug/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.044075001031160355
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    scissors:
+      path: source/assets/ycb/dexgrasp/recenter_objects/scissors/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.018880000337958336
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    large_clamp:
+      path: source/assets/ycb/dexgrasp/recenter_objects/large_clamp/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03187499940395355
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tuna_fish_can:
+      path: source/assets/ycb/dexgrasp/recenter_objects/tuna_fish_can/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.024825800210237503
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    gelatin_box:
+      path: source/assets/ycb/dexgrasp/recenter_objects/gelatin_box/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04374400153756142
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl:
+      path: source/assets/ycb/dexgrasp/recenter_objects/bowl/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04172839969396591
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    master_chef_can:
+      path: source/assets/ycb/dexgrasp/recenter_objects/master_chef_can/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11131200194358826
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    potted_meat_can:
+      path: source/assets/ycb/dexgrasp/recenter_objects/potted_meat_can/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0676134005188942
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana:
+      path: source/assets/ycb/dexgrasp/recenter_objects/banana/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03154199942946434
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    foam_brick:
+      path: source/assets/ycb/dexgrasp/recenter_objects/foam_brick/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.037232398986816406
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    power_drill:
+      path: source/assets/ycb/dexgrasp/recenter_objects/power_drill/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11112499982118607
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    sugar_box:
+      path: source/assets/ycb/dexgrasp/recenter_objects/sugar_box/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.14152340590953827
+      rot:
+        axis:
+        - 0
+        angles:
+        - 0.0
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle01:
+        path: "source/assets/plush/bottle01/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.07]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    bottle02:
+        path: "source/assets/plush/bottle02/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.06]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    bottle03:
+        path: "source/assets/plush/bottle03/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.05]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    
+    bottle04:
+        path: "source/assets/plush/bottle04/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.07]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    
+    bottle05:
+        path: "source/assets/plush/bottle05/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.085]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+            
+            
+            

@@ -1,0 +1,14 @@
+params:
+    vae_type: AE
+    layer_dims: [32]
+    vae_lr: 0.01
+    batch_size: 1024
+    eval_percent: 0.95
+    epoches: 200
+    chunk_size: 4
+    use_relatve_pose: False
+    embedding_dim: 2
+    data_normalizer: null
+    use_state: False
+    encoder_name: reactive_diff_encoder_cnn
+    decoder_name: reactive_diff_decoder_rnn

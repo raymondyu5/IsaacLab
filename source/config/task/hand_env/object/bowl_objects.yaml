@@ -1,0 +1,16 @@
+params:
+    RigidObject:
+      bowl01:
+        path: "source/assets/ycb/dexgrasp/objects/bowl/rigid_object.usd"
+        kinematic_enabled: True
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.03]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]

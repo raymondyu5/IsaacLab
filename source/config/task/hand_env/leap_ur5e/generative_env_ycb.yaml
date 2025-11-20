@@ -1,0 +1,335 @@
+params:
+  arm_type: "ur5e"
+  hand_type: "leap"
+  enable_sensor: False
+  enabled_self_collisions: False
+  arm_mesh_dir: "source/assets/robot/ur5e/raw_mesh"
+  hand_mesh_dir: "source/assets/robot/leap_hand_v2/raw_mesh"
+  num_hand_joints: 16
+  num_arm_joints: 6
+  reset_joint_pose: [0.0, -1.57, 1.57, -1.57, -1.57, 3.14]
+  # reset_joint_pose: [-0.4236, -0.9748,  1.0085,  1.5355,  1.5742, -0.4274]
+  init_ee_pose: [ 4.3001e-01, -9.8064e-02,  6.0988e-01,  1.7437e-03,  9.2460e-01, -3.8094e-01,  7.2484e-04]
+  left_robot_pose: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  right_robot_pose: [0.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  viser_camera_pose: [2.0, 0.0, 1.5, 0.0, 0.0, 0.0]
+
+  post_grasp_penalty: [0.02,0.0,-0.05]
+  pre_grasp_penalty: [-0.02,0.0,0.03]
+
+  contact_sensor:
+    init: False
+    right_hand:
+      filter_prim_paths_expr: []
+      main_path: "right_hand/right_hand/"
+    
+    left_hand:
+      main_path: "left_hand/left_hand"
+      filter_prim_paths_expr: []
+    spawn_contact_list:
+      [
+          "palm_lower",
+
+          "thumb_pip",
+          "thumb_dip",
+          "thumb_fingertip",
+
+          "fingertip_3",
+          "dip_3",
+          "pip_3",
+
+          "fingertip_2",
+          "dip_2",
+          "pip_2",
+
+          "fingertip",
+          "dip",
+          "pip",
+
+      ]
+    
+  
+
+  spawn_robot:
+    init: True
+    colorize_pc: True
+    spawn_arm: True
+
+    right_hand:
+      main_path: "right_hand/right_hand/"
+    left_hand:
+      main_path: "left_hand/left_hand"
+    spawn_hand_list:
+        [
+          "palm_lower",
+          "mcp_joint",
+          "mcp_joint_2",
+          "mcp_joint_3",
+          "pip",
+          "thumb_pip",
+          "pip_2",
+          "pip_3",
+          "dip",
+          "thumb_dip",
+          "dip_2",
+          "dip_3",
+          "fingertip",
+          "thumb_fingertip",
+          "fingertip_2",
+          "fingertip_3",
+          "thumb_.*_temp_base",
+        ]
+
+    right_arm:
+      main_path: "right_hand"
+    left_arm:
+      main_path: "left_hand"
+    spawn_arm_list: [
+          "shoulder_link",
+          "upper_arm_link",
+          "forearm_link",
+          "wrist_1_link",
+          "wrist_2_link",
+          "wrist_3_link",
+        ]
+     
+
+    num_downsample_points: 512
+  grasper:
+    target_object_name: mustard_bottle
+    ee_name: hand_palm
+    init_robot_qos:
+      [
+        7.2726e-04,
+        1.7493e-01,
+        -7.2461e-04,
+        7.7518e-01,
+        2.2470e-04,
+        6.0126e-01,
+        -7.3034e-05,
+      ]
+    joint_names:
+      [
+        "joint1",
+        "joint2",
+        "joint3",
+        "joint4",
+        "joint5",
+        "joint6",
+        "joint7",
+        "j0",
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5",
+        "j6",
+        "j7",
+        "j8",
+        "j9",
+        "j10",
+        "j11",
+        "j12",
+        "j13",
+        "j14",
+        "j15",
+      ]
+  spawn_rigid_objects:
+    init: True
+    object_mesh_dir: "source/assets/ycb/dexgrasp/raw_mesh"
+    spawn_list: ["banana"]
+
+  ArticulationObject:
+
+  RigidObject:
+
+    tomato_soup_can:
+      path: "source/assets/ycb/dexgrasp/objects/tomato_soup_can/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, 0.0, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+    master_chef_can:
+      path: "source/assets/ycb/dexgrasp/objects/master_chef_can/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, 0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+    gelatin_box:
+      path: "source/assets/ycb/dexgrasp/objects/gelatin_box/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, 0.4, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+    extra_large_clamp:
+      path: "source/assets/ycb/dexgrasp/objects/extra_large_clamp/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, -0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    cracker_box:
+      path: "source/assets/ycb/dexgrasp/objects/cracker_box/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, -0.4, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    sugar_box:
+      path: "source/assets/ycb/dexgrasp/objects/sugar_box/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, -0.6, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    mustard_bottle:
+      path: "source/assets/ycb/dexgrasp/objects/mustard_bottle/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.40, 0.10, 0.05]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    tuna_fish_can:
+      path: "source/assets/ycb/dexgrasp/objects/tuna_fish_can/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.0, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    pudding_box:
+      path: "source/assets/ycb/dexgrasp/objects/pudding_box/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    potted_meat_can:
+      path: "source/assets/ycb/dexgrasp/objects/potted_meat_can/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, 0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    banana:
+      path: "source/assets/ycb/dexgrasp/objects/banana/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.35, 0.40, 0.05]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    pitcher_base:
+      path: "source/assets/ycb/dexgrasp/objects/pitcher_base/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.4, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    bleach_cleanser:
+      path: "source/assets/ycb/dexgrasp/objects/bleach_cleanser/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, 0.6, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    bowl:
+      path: "source/assets/ycb/dexgrasp/objects/bowl/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.6, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    mug:
+      path: "source/assets/ycb/dexgrasp/objects/mug/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos:  [2.50, -0.1, 0.05]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    power_drill:
+      path: "source/assets/ycb/dexgrasp/objects/power_drill/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, 0.8, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    wood_block:
+      path: "source/assets/ycb/dexgrasp/objects/wood_block/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.50, -0.2, 0.05]
+      rot:
+        axis: [1, 2]
+        angles: [1.57, 1.57]
+
+    scissors:
+      path: "source/assets/ycb/dexgrasp/objects/scissors/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, 0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    large_marker:
+      path: "source/assets/ycb/dexgrasp/objects/large_marker/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.2, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    large_clamp:
+      path: "source/assets/ycb/dexgrasp/objects/large_clamp/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, -0.4, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    foam_brick:
+      path: "source/assets/ycb/dexgrasp/objects/foam_brick/rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.2, 0.4, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+  AssstObject:
+
+  Camera:
+    initial: False
+    

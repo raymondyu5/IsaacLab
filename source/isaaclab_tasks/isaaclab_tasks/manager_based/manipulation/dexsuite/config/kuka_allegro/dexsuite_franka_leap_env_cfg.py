@@ -169,7 +169,7 @@ class FrankaLeapMixinCfg:
         )
 
         # # -- penalties
-        self.rewards.joint_vel_l2 = RewTerm(func=mdp.joint_vel_l2_clamped, weight=-2.5e-5)
+        #self.rewards.joint_vel_l2 = RewTerm(func=mdp.joint_vel_l2_clamped, weight=-2.5e-5)
         self.rewards.action_l2 = RewTerm(func=mdp.action_l2_clamped, weight=-0.0001)
         self.rewards.action_rate_l2 = RewTerm(func=mdp.action_rate_l2_clamped, weight=-0.01)
 
@@ -183,8 +183,8 @@ class DexsuiteFrankaLeapLiftEnvCfg(FrankaLeapMixinCfg, dexsuite.DexsuiteLiftEnvC
         # Use only a single easy object (medium sphere)
         from isaaclab.sim import SphereCfg, CuboidCfg, RigidBodyMaterialCfg
         self.scene.object.spawn.assets_cfg = [
-            #SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
-            CuboidCfg(size=(0.05, 0.1, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5))
+            SphereCfg(radius=0.05, physics_material=RigidBodyMaterialCfg(static_friction=0.5)),
+            #CuboidCfg(size=(0.05, 0.1, 0.1), physics_material=RigidBodyMaterialCfg(static_friction=0.5))
         ]   
 
         # Remove target pose randomization - set fixed target position
@@ -194,4 +194,11 @@ class DexsuiteFrankaLeapLiftEnvCfg(FrankaLeapMixinCfg, dexsuite.DexsuiteLiftEnvC
         self.commands.object_pose.ranges.roll = (0.0, 0.0)
         self.commands.object_pose.ranges.pitch = (0.0, 0.0)
         self.commands.object_pose.ranges.yaw = (0.0, 0.0)
+
+        self.rewards.orientation_tracking = None
+        self.commands.object_pose.position_only = True
+        if self.curriculum is not None:
+            self.rewards.success.params["rot_std"] = None  # make success reward not consider orientation
+            self.curriculum.adr.params["rot_tol"] = None  # make adr not tracking orientation
+
 

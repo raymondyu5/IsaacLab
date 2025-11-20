@@ -1,0 +1,422 @@
+params:
+  arm_type: "franka"
+  hand_type: "leap"
+  enable_sensor: False
+  enabled_self_collisions: False
+  arm_mesh_dir: "source/assets/robot/franka/raw_mesh"
+  hand_mesh_dir: "source/assets/robot/leap_hand_v2/raw_mesh"
+  num_hand_joints: 16
+  num_arm_joints: 7
+  min_separation: 0.25
+  
+  spawn_multi_assets: True
+  spawn_multi_assets_name: ycb_family
+  reward_weights: 
+      left : 2.5
+      right : 4
+ 
+ 
+  right_robot_usd: source/assets/robot/franka_leap/franka_right_leap_long_finger_sensor.usd
+  left_reset_joint_pose: [ 0.3155, -0.1024, -0.3105, -2.8869, -0.0384,  2.1890,  0.8104] #[0.0586, -0.5551, -0.3062, -3.0341,  2.8861,  2.8291, -0.7934]
+  right_reset_joint_pose: [ 3.1088299e-01,  4.0700440e-03, -3.1125304e-01, -2.0509737e+00, 1.4107295e-03,  2.0548446e+00,  7.8060406e-01]
+  ee_name: "panda_link7"
+  
+  
+
+  init_ee_pose: [0.500, -0.000,  0.500, 0.0,  9.2460e-01, -3.8094e-01,  0.0] 
+  left_robot_pose: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  right_robot_pose: [0.0, -0.0, -0.0, 1.0, 0.0, 0.0, 0.0]
+  
+
+
+  target_manipulated_object: all #[mustard_bottle,bleach_cleanser,master_chef_can,tomato_soup_can,mug,sugar_box,foam_brick,potted_meat_can]
+  left_target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
+  right_target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
+  target_manipulated_object_pose: [0.25,0.4]
+  pick_object_names: [tomato_soup_can, large_marker, bottle03, extra_large_clamp, pudding_box, mustard_bottle, tuna_fish_can, mug, potted_meat_can, bottle02, bleach_cleanser, bowl, sugar_box, master_chef_can, bottle01, banana, foam_brick, gelatin_box, bunny, cat, bottle05]
+  
+
+  default_root_state:
+
+    pos: [0.5, 0.0, 0.15]
+    rot:
+        axis: [0]
+        angles: [0]
+    pose_range:
+      x: [0.40, 0.60]
+      y: [-0.20, 0.20]
+      z: [0.0, 0.0]
+      roll: [0.0, 0.0]
+      yaw: [-3.14, 3.14]
+ 
+  
+
+
+  Task:
+    action_range: [1.0,1.5,5,0.1]
+    joint_range: [1,5,0.1]
+    horizon: 180
+
+  contact_sensor:
+    init: True
+    right_hand:
+      filter_prim_paths_expr: []
+      main_path: "right_hand/right_hand"
+
+    left_hand:
+      main_path: "left_hand/left_hand"
+      filter_prim_paths_expr: []
+    spawn_contact_list: [
+        "palm_lower",
+        # "mcp_joint",
+        # "pip",
+        # "dip",
+        "fingertip_sensor",
+        # "thumb_right_temp_base",
+        # "thumb_pip",
+        # "thumb_dip",
+        "thumb_fingertip",
+        # "mcp_joint_2",
+        # "pip_2",
+        # "dip_2",
+        "fingertip_2_sensor",
+        # "mcp_joint_3",
+        # "pip_3",
+        # "dip_3",
+        "fingertip_3_sensor",
+        
+      ]
+
+  spawn_robot:
+    init: True
+    colorize_pc: True
+    spawn_arm: True
+
+    right_hand:
+      main_path: "right_hand/right_hand"
+    left_hand:
+      main_path: "left_hand/left_hand"
+    spawn_hand_list: [
+        "palm_lower",
+        "fingertip",
+        "thumb_fingertip",
+        "fingertip_2",
+         "fingertip_3",
+        # "mcp_joint",
+        # "mcp_joint_2",
+        # "mcp_joint_3",
+        "pip",
+        # "thumb_pip",
+        "pip_2",
+        "pip_3",
+        "dip",
+        # "thumb_dip",
+        "dip_2",
+        "dip_3",
+     
+        # "thumb_.*_temp_base",
+      ]
+
+    right_arm:
+      main_path: "right_hand"
+    left_arm:
+      main_path: "left_hand"
+    spawn_arm_list: [
+        # "panda_link0",
+        # "panda_link1",
+        # "panda_link2",
+        # "panda_link3",
+        # "panda_link4",
+        # "panda_link5",
+        "panda_link6",
+        "panda_link7",
+      ]
+
+    num_downsample_points: 2048
+
+ 
+
+  ArticulationObject:
+   drawer_long:
+    name: drawer_long
+    path: "source/assets/cabinet/drawer_long/articulation.usd"
+    scale: [1.5, 1.0, 1.5]
+    pos: [0.5, 0.0, 0.0]
+    rot:
+      axis: [2]
+      angles: [-1.57]
+
+    pose_range:
+      x: [0.7, 0.9] #[-0.10, 0.10]
+      y: [-0.20, 0.20] #[-0.10, 0.02]
+      z: [-0.0, 0.0] #[-0.02, 0.13]
+      yaw: [-0.2, 0.2]
+    
+
+
+    disable_gravity: True
+    enabled_self_collisions: False
+    joints:
+      joint_0: 0.0
+      
+    
+ 
+  
+
+
+  RigidObject:
+
+
+    tomato_soup_can:
+      path: "source/assets/ycb/dexgrasp/objects/tomato_soup_can/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.8, 0.0, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+    large_marker:
+      path: "source/assets/ycb/dexgrasp/objects/large_marker/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.8, 0.2, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    bottle03:
+      path: "source/assets/plush/bottle03/rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.0, 0.4, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    extra_large_clamp:
+      path: "source/assets/ycb/dexgrasp/objects/extra_large_clamp/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.0, -0.2, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    # cracker_box:
+    #   path: "source/assets/ycb/dexgrasp/objects/cracker_box/recenter_rigid_object.usd"
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [2.6, -0.4, 0.10]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+    
+    pudding_box:
+      path: "source/assets/ycb/dexgrasp/objects/pudding_box/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.8, -0.4, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    mustard_bottle:
+      path: "source/assets/ycb/dexgrasp/objects/mustard_bottle/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.0, 0.0, -0.52]
+      rot:
+        axis: [2]
+        angles: [1.57]
+
+
+    tuna_fish_can:
+      path: "source/assets/ycb/dexgrasp/objects/tuna_fish_can/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.8, -0.2, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    mug:
+      path: "source/assets/ycb/dexgrasp/objects/mug/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.0, -0.4, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    potted_meat_can:
+      path: "source/assets/ycb/dexgrasp/objects/potted_meat_can/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.0, 0.2, -0.52]
+      rot:
+        axis: [2]
+        angles: [1.57]
+    
+    bottle02:
+      path: "source/assets/plush/bottle02/rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, 0.4, -0.52]
+      rot:
+        axis: [2]
+        angles: [1.57]
+    
+    # pitcher_base:
+    #   path: "source/assets/ycb/dexgrasp/objects/pitcher_base/recenter_rigid_object.usd"
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [2.8, -0.4, 0.10]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+    
+    bleach_cleanser:
+      path: "source/assets/ycb/dexgrasp/objects/bleach_cleanser/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, 0.0, -0.52]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    
+    bowl:
+      path: "source/assets/ycb/dexgrasp/objects/bowl/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, -0.2, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    sugar_box:
+      path: "source/assets/ycb/dexgrasp/objects/sugar_box/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, -0.4, -0.52]
+      rot:
+        axis: [2]
+        angles: [3.14]
+
+  
+    master_chef_can:
+      path: "source/assets/ycb/dexgrasp/objects/master_chef_can/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [3.2, 0.2, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+
+    
+    bottle01:
+      path: "source/assets/plush/bottle01/rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.8, 0.4, -0.52]
+      rot:
+        axis: [2]
+        angles: [1.57]
+
+    banana:
+      path: "source/assets/ycb/dexgrasp/objects/banana/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.3, 0.0, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    foam_brick:
+      path: "source/assets/ycb/dexgrasp/objects/foam_brick/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.3, 0.3, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    gelatin_box:
+      path: "source/assets/ycb/dexgrasp/objects/gelatin_box/recenter_rigid_object.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.3, -0.3, -0.52]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    bunny:
+      path: "source/assets/plush/rabbit/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1, 1, 1]
+      pos: [2.5, 0.0, -0.52]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    
+    cat:
+      path: "source/assets/plush/cat/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1, 1, 1]
+      pos: [2.5, 0.3,-0.52]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    bottle05:
+      path: "source/assets/plush/bottle06/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1, 1, 1]
+      pos: [2.5, -0.3, -0.52]
+      rot:
+        axis: [2]
+        angles: [1.57]
+
+  
+ 
+          
+          
+
+
+
+  Camera:
+    initial: False
+    random_pose: False
+    camera_json: null
+    robot_name: "right_hand"
+    
+
+
+    extract_all_pc: False
+    extract_seg_pc: False
+    extract_rgb: True
+    extrat_seg_rgb: False
+    extract_depth: False
+    pc_bbox: [-5, -5.0, -0, 5.0, 5.0, 3.0] 
+    align_robot_base: True
+    segmentation_name : "semantic_segmentation"
+    num_downsampled_points: 2048
+    random_pose_range: [0.4, -0.15, 0.15, 0.6, 0.15, 0.35, 1.7,2.0]
+    
+    phi_range_rad: [1.0, 1.4]
+
+    
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 40960
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+
+      camera_00:
+        camera_type: "tiled_camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb","distance_to_image_plane", "semantic_segmentation"] #"distance_to_image_plane", "instance_segmentation_fast"
+        update_period: 0.03
+        # eyes: [2.2, 0.0, 0.8]
+        # target: [0.4, -0.0, 0.2]
+        translate: [2.2, 0.0, 0.8]
+        quat: [0.57, 0.41, 0.41, 0.57] #[0.57, 0.41, 0.41, 0.57]
+        # euler: [70.0, 0.0, -148]
+        theta_range_rad: [-0.4, -0.1]

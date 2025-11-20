@@ -1,0 +1,21 @@
+run_name: isaac_sim_alighment # name of the project run (e.g., KonusdalenWestFault)
+load_project_path: # This field may remain empty; put the absolute filepath to a pre-existing Agisoft Metashape project here if it is to be loaded.
+project_path: "/media/lme/data4/weird/IsaacLab/logs/static_gs/cat/raw/Isaac-Lift-DeformCube-Franka-Play-v0/metatest" # path to Agisoft Metashape project directory, usually {photo_path}/metashape
+project_crs: "EPSG::32633" # 32633 is WGS1984 UTM 33N; epsg number that corresponds to the required project crs. Look here: https://epsg.io/ "EPSG::40400" for hand samples.
+subdivide_task: True # Fine-level task subdivision reduces memory by breaking processing into independent chunks that are run in series. True recommended.
+enable_overwrite: False # If set to True, overwrites project that is loaded with load_project_path parameter. Use with caution!
+addPhotos:
+  enabled: True
+  photo_path: "/media/lme/data4/weird/IsaacLab/logs/static_gs/cat/raw/Isaac-Lift-DeformCube-Franka-Play-v0/raw_imgs" # path to photo directory ("data_directory" in the standardised folder directory)  - this parameter will be moved to the addPhotos configuration section in later releases.
+  remove_photo_location_metadata: False # Removes photo location metadata
+  multispectral: False # Is this a multispectral photo set? If RGB, set to False.
+alignPhotos: # (Metashape: alignPhotos)
+  enabled: True
+  downscale: 0 # Recommended: 0. How much to coarsen the photos when searching for tie points. Corresponding settings in Metashape: 0: Highest, 1: High, 2: Medium, 3: Low, 4: Lowest
+  adaptive_fitting: True # Recommended: True. Should the camera lens model be fit at the same time as aligning photos?
+  filter_mask_tiepoints: True
+  double_alignment: True
+optimizeCameras: # (Metashape: optimizeCameras)
+  enabled: True
+  adaptive_fitting: True # Recommended: True. Should the camera lens model be fit at the same time as optimizing photos?
+  tiepoint_covariance: True
