@@ -1,0 +1,73 @@
+[submodule "submodules/3dgsconverter"]
+	path = submodules/3dgsconverter
+	url = https://github.com/francescofugazzi/3dgsconverter
+[submodule "submodule/stable-baselines3"]
+	path = submodule/stable-baselines3
+	url = git@github.com:Entongsu/stable-baselines3.git
+[submodule "submodule/openvla"]
+	path = submodule/openvla
+	url = https://github.com/Entongsu/openvla.git
+[submodule "submodule/d3rlpy"]
+	path = submodule/d3rlpy
+	url = https://github.com/Entongsu/d3rlpy.git
+[submodule "submitit-tools"]
+	path = submitit-tools
+	url = git@github.com:WEIRDLabUW/submitit-tools.git
+[submodule "submodule/robomimic_openrt"]
+	path = submodule/robomimic_openrt
+	url = https://github.com/Entongsu/robomimic_openrt.git
+[submodule "submodule/rlpd"]
+	path = submodule/rlpd
+	url = git@github.com:Entongsu/rlpd.git
+[submodule "submodule/openpi"]
+	path = submodule/openpi
+	url = https://github.com/Entongsu/openpi.git
+[submodule "submodule/BunnyVisionPro"]
+	path = submodule/BunnyVisionPro
+	url = https://github.com/Entongsu/BunnyVisionPro.git
+[submodule "submodule/bunny_teleop_server"]
+	path = submodule/bunny_teleop_server
+	url = git@github.com:Entongsu/bunny_teleop_server.git
+[submodule "submodule/third_party/dex-hand-teleop"]
+	path = submodule/third_party/dex-hand-teleop
+	url = https://github.com/yzqin/dex-hand-teleop.git
+[submodule "benchmark_VAE"]
+	path = benchmark_VAE
+	url = git@github.com:Entongsu/benchmark_VAE.git
+[submodule "submodules/benchmark_VAE"]
+	path = submodules/benchmark_VAE
+	url = git@github.com:Entongsu/benchmark_VAE.git
+[submodule "submodule/benchmark_VAE"]
+	path = submodule/benchmark_VAE
+	url = git@github.com:Entongsu/benchmark_VAE.git
+
+[submodule "submodule/diffusion_policy"]
+	path = submodule/diffusion_policy
+	url = https://github.com/Entongsu/diffusion_policy.git
+[submodule "submodule/GeoRT"]
+	path = submodule/GeoRT
+	url = https://github.com/Entongsu/GeoRT.git
+[submodule "submodule/submitit-tools"]
+	path = submodule/submitit-tools
+	url = https://github.com/Entongsu/submitit-tools.git
+[submodule "submodule/sim2real_leap"]
+	path = submodule/sim2real_leap
+	url = https://github.com/Entongsu/Sim2real_leap.git
+[submodule "submodule/ibrl"]
+	path = submodule/ibrl
+	url = git@github.com:Entongsu/ibrl.git
+[submodule "submodule/serl"]
+	path = submodule/serl
+	url = git@github.com:Entongsu/serl.git
+[submodule "submodule/mink"]
+	path = submodule/mink
+	url = https://github.com/Entongsu/mink.git
+[submodule "submodule/offline_rl"]
+	path = submodule/offline_rl
+	url = https://github.com/Entongsu/offline_rl.git
+[submodule "dinov3"]
+	path = dinov3
+	url = https://github.com/Entongsu/dinov3.git
+[submodule "submodule/dinov3"]
+	path = submodule/dinov3
+	url = https://github.com/Entongsu/dinov3.git

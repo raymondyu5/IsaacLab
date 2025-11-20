@@ -1,0 +1,52 @@
+model:
+  _target_: scripts.inverse_dynamics.lib.models.InverseDynamicsMLP
+  hidden_dims: [256, 256, 256]
+  activation: relu
+  dropout: 0.0
+  name: id_mlp
+
+data:
+  # Path to zarr episode directory
+  data_path: logs/rl_data_collection/ycb/pcd_residual_chunk/tomato_soup_can
+
+  # Observation keys to load from zarr
+  obs_keys:
+    - right_hand_joint_pos
+    - right_ee_pose
+
+  # Action key
+  action_key: actions
+
+  # Data split
+  num_episodes: 1000
+  val_ratio: 0.1
+  seed: 42
+
+  # Optional: observation noise (set to null to disable)
+  noise_keys: null
+  noise_scale: null
+
+training:
+  # Optimization
+  num_epochs: 100
+  learning_rate: 1.0e-4
+  batch_size: 256
+  weight_decay: 1.0e-6
+  grad_clip: 1.0
+
+  # LR scheduling
+  lr_scheduler: cosine
+  warmup_epochs: 10
+
+  # Training control
+  save_every_n_epochs: 10
+  early_stopping_patience: 50
+  use_mixed_precision: true
+
+  # Device
+  device: cuda:0
+
+  # Data
+  normalize_data: true
+  num_workers: 8
+  pin_memory: true

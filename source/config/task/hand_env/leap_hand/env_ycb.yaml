@@ -1,0 +1,354 @@
+params:
+  arm_type: null
+  hand_type: "leap"
+  enable_sensor: False
+  enabled_self_collisions: False
+  arm_mesh_dir: null
+  hand_mesh_dir: "source/assets/robot/leap_hand_v2/raw_mesh"
+  num_hand_joints: 16
+  num_arm_joints: 7
+  pregrasp_offset : [-0.12,-0.24, -0.03]
+  postgrasp_offset : [-0.10,-0.12, -0.03]
+  spawn_multi_assets_name : "ycb_family"
+ 
+
+  reset_joint_pose: [0.0, -0.0, 0.0, 0.0, 0.0, 0.0]
+  ee_name: palm_lower
+  
+
+  init_ee_pose: [0.0, 0.0,  0.0, 1.0,  0., 0.0,  0.]
+  left_robot_pose: [0.4, 0.2, 0.5, 1.0, 0.0, 0.0, 0.0]
+  right_robot_pose: [0.4, -0.2, 0.5, 1.0, 0.0, 0.0, 0.0]
+  viser_camera_pose: [2.0, 0.0, 1.5, 0.0, 0.0, 0.0]
+  delta_quat: [0.707, 0.0, 0.0, 0.707]
+
+  post_grasp_penalty: [0.02, 0.07, -0.06]
+  pre_grasp_penalty: [-0.02, -0.07, -0.03]
+  target_manipulated_object: "bleach_cleanser"
+  target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
+
+  Task:
+    action_range: [1.0,3.14,3]
+    horizon: 180
+
+  contact_sensor:
+    init: False
+    right_hand:
+      filter_prim_paths_expr: []
+      main_path: "right_hand"
+
+    left_hand:
+      main_path: "left_hand"
+      filter_prim_paths_expr: []
+    spawn_contact_list: [
+        # "palm_lower",
+        # "mcp_joint",
+        # "pip",
+        # "dip",
+        "fingertip",
+        # "thumb_right_temp_base",
+        # "thumb_pip",
+        # "thumb_dip",
+        "thumb_fingertip",
+        # "mcp_joint_2",
+        # "pip_2",
+        # "dip_2",
+        "fingertip_2",
+        # "mcp_joint_3",
+        # "pip_3",
+        # "dip_3",
+        "fingertip_3",
+        
+      ]
+
+  spawn_robot:
+    init: True
+    colorize_pc: True
+    spawn_arm: True
+
+    right_hand:
+      main_path: "right_hand"
+    left_hand:
+      main_path: "left_hand"
+    spawn_hand_list: [
+        "palm_lower",
+        "fingertip",
+        "thumb_fingertip",
+        "fingertip_2",
+         "fingertip_3",
+        # "mcp_joint",
+        # "mcp_joint_2",
+        # "mcp_joint_3",
+        # "pip",
+        # "thumb_pip",
+        # "pip_2",
+        # "pip_3",
+        # "dip",
+        # "thumb_dip",
+        # "dip_2",
+        # "dip_3",
+     
+        # "thumb_.*_temp_base",
+      ]
+
+
+    num_downsample_points: 2048
+ 
+  spawn_rigid_objects:
+    init: True
+    object_mesh_dir: "source/assets/ycb/dexgrasp/objects"
+    spawn_list: ["bleach_cleanser"]
+
+  ArticulationObject:
+ 
+
+  RigidObject:
+    bleach_cleanser:
+      path: "source/assets/ycb/dexgrasp/objects/bleach_cleanser/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.11]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    # wood_block:
+    #   path: "source/assets/ycb/dexgrasp/objects/wood_block/rigid_object.usd"
+    #   kinematic_enabled: False
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [.50, 0.0, 0.12]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0.0]
+    #   pose_range:
+    #       x: [-0.10, 0.10]
+    #       y: [-0.20, 0.20]
+    #       z: [0.0, 0.0]
+    #       roll: [0.0, 0.0]
+    #       yaw: [-3.14, 3.14]
+    mustard_bottle:
+      path: "source/assets/ycb/dexgrasp/objects/mustard_bottle/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.10]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+      
+    master_chef_can:
+      path: "source/assets/ycb/dexgrasp/objects/master_chef_can/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.07]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    tomato_soup_can:
+      path: "source/assets/ycb/dexgrasp/objects/tomato_soup_can/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.06]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    mug:
+      path: "source/assets/ycb/dexgrasp/objects/mug/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.05]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    
+    # cracker_box:
+    #   path: "source/assets/ycb/dexgrasp/objects/cracker_box/rigid_object.usd"
+    #   kinematic_enabled: False
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [.50, 0.0, 0.11]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0.0]
+    #   pose_range:
+    #       x: [-0.10, 0.10]
+    #       y: [-0.20, 0.20]
+    #       z: [0.0, 0.0]
+    #       roll: [0.0, 0.0]
+    #       yaw: [-3.14, 3.14]
+    sugar_box:
+      path: "source/assets/ycb/dexgrasp/objects/sugar_box/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.09]
+      rot:
+        axis: [0]
+        angles: [0.0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+
+    gelatin_box:
+      path: "source/assets/ycb/dexgrasp/objects/gelatin_box/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.05]
+      rot:
+        axis: [0]
+        angles: [1.57]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+
+    pudding_box:
+      path: "source/assets/ycb/dexgrasp/objects/pudding_box/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.04]
+      rot:
+        axis: [0]
+        angles: [1.57]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    
+    foam_brick:
+      path: "source/assets/ycb/dexgrasp/objects/foam_brick/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.06]
+      rot:
+        axis: [0]
+        angles: [1.57]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+
+          
+    potted_meat_can:
+      path: "source/assets/ycb/dexgrasp/objects/potted_meat_can/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.04]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+          
+          
+    
+   
+   
+   
+  AssstObject:
+    
+
+  Camera:
+    initial: False
+    random_pose: False
+    camera_json: null #"source/config/camera/automatic_articulation/kitchen02_cabinet.json"
+
+    max_length: 0
+    segmentation_name: "instance_segmentation_fast"
+    whole_pc: False
+    seg_pc: False
+    whole_rgb: True
+    seg_rgb: False
+    whole_depth: False
+    bbox: [-2, -2.0, -0.0, 2.0, 2.0, 1.0] # [-0.20, -0.87, 0.0, 0.60, -0.5, 0.4]
+    align_robot_base: True
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      num_sampled_points: 2048
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 2048
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+     
+      camera_01:
+        camera_type: "camera"
+        height: 128
+        width: 128
+        data_types:
+          ["rgb"]
+        update_period: 0.03
+       
+        translate: [2.1627734580348204, 0.04805512657683523, 1.0846996077555067]
+        euler: [64.62044, -2.226173e-14, 89.59971]
+      #   camera_type: "camera"
+      #   height: 480
+      #   width: 640
+      #   data_types:
+      #     ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   eyes: null #[-0.2, 1.0, 0.8]
+      #   target: null #[0.40, -0.0, 0.5]
+      #   translate: [-0.10, -0.8, 1.3]
+      #   euler: [45.0, 0.0, -15]
+
+      # camera_03:
+      #   camera_type: "camera"
+      #   height: 480
+      #   width: 640
+      #   data_types:
+      #     ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   eyes: null #[-0.2, 1.0, 0.8]
+      #   target: null #[0.40, -0.0, 0.5]
+      #   translate: [-0.60, 0.20, 1.7]
+      #   euler: [40.0, 0.0, -100]

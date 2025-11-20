@@ -1,0 +1,165 @@
+params:
+  RigidObject:
+    # duck:
+    #   path: "source/assets/plush/duck/rigid_object.usd"
+    #   kinematic_enabled: False
+    #   scale: [0.003, 0.003, 0.003]
+    #   pos: [.50, 0.0, 0.02]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+
+    bunny:
+      path: "source/assets/plush/bunny/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [0.01, 0.010, 0.01]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    small_bunny:
+      path: "source/assets/plush/bunny/small_rigid_object.usd"
+      kinematic_enabled: False
+      scale: [0.01, 0.010, 0.01]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0]
+    large_bunny:
+      path: "source/assets/plush/bunny/large_rigid_object.usd"
+      kinematic_enabled: False
+      scale: [0.01, 0.010, 0.01]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0]
+    flip_bunny:
+      path: "source/assets/plush/bunny/flip_rigid_object.usd"
+      kinematic_enabled: False
+      scale: [0.01, 0.010, 0.01]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    # sweep:
+    #   path: "source/assets/plush/sweep/rigid_object.usd"
+    #   kinematic_enabled: False
+    #   scale: [0.01, 0.01, 0.01]
+    #   pos: [.50, 0.0,  0.02]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+
+    cat:
+      path: "source/assets/plush/cat/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [0.01, 0.01, 0.01]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0]
+
+    foam_brick:
+      path: "source/assets/plush/foam_brick/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [1.57]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+
+    tuna_fish_can:
+      path: "source/assets/ycb/dexgrasp/objects/tuna_fish_can/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [0.0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+
+    potted_meat_can:
+      path: "source/assets/plush/potted_meat_can/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.08]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+    pudding_box:
+      path: "source/assets/plush/pudding_box/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.08]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+
+    bee:
+      path: "source/assets/plush/bee/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.08]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+    spider:
+      path: "source/assets/plush/spider/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.08]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+        x: [-0.10, 0.10]
+        y: [-0.20, 0.20]
+        z: [0.0, 0.0]
+        roll: [0.0, 0.0]
+        yaw: [-3.14, 3.14]
+
+    # banana:
+    #   path: "source/assets/plush/banana/banana.usd"
+    #   kinematic_enabled: False
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [.50, 0.0, 0.02]
+    #   rot:
+    #     axis: [0]
+    #     angles: [1.57]
+    #   pose_range:
+    #       x: [-0.10, 0.10]
+    #       y: [-0.20, 0.20]
+    #       z: [0.0, 0.0]
+    #       roll: [0.0, 0.0]
+    #       yaw: [-3.14, 3.14]

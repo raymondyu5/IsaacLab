@@ -1,0 +1,249 @@
+params:
+  arm_type: null
+  hand_type: "leap"
+  enable_sensor: False
+  enabled_self_collisions : False
+  arm_mesh_dir: null
+  hand_mesh_dir: "source/assets/robot/leap_hand_v2/raw_mesh"
+  num_hand_joints: 16
+  num_arm_joints: 0
+  reset_joint_pose: [0.0, -1.57, 1.57, -1.57, -1.57, 3.14]
+  left_robot_pose: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  right_robot_pose: [1.0, -0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  viser_camera_pose: [2.0, 0.0, 1.5, 0.0, 0.0, 0.0]
+
+  contact_sensor:
+    init: True
+    right_hand:
+      filter_prim_paths_expr: []
+      main_path: "right_hand/leap_right"
+      spawn_list:
+        [
+            "right_palm_lower",
+
+            "right_thumb_pip",
+            "right_thumb_dip",
+            "right_thumb_fingertip",
+
+            "right_fingertip_3",
+            "right_dip_3",
+            "right_pip_3",
+
+            "right_fingertip_2",
+            "right_dip_2",
+            "right_pip_2",
+
+            "right_fingertip",
+            "right_dip",
+            "right_pip",
+
+        ]
+    left_hand:
+      main_path: "left_hand/leap_left"
+      filter_prim_paths_expr: []
+      spawn_list:
+        [
+            "left_palm_lower",
+
+            "left_thumb_pip",
+            "left_thumb_dip",
+            "left_thumb_fingertip",
+
+            "left_fingertip_3",
+            "left_dip_3",
+            "left_pip_3",
+
+            "left_fingertip_2",
+            "left_dip_2",
+            "left_pip_2",
+
+            "left_fingertip",
+            "left_dip",
+            "left_pip",
+
+
+        ]
+  
+
+  spawn_robot:
+    init: False
+    colorize_pc: True
+    spawn_arm: True
+
+    right_hand:
+      main_path: "right_hand/right_hand/"
+      spawn_list:
+        [
+          "right_palm_lower",
+          "right_mcp_joint",
+          "right_mcp_joint_2",
+          "right_mcp_joint_3",
+          "right_pip",
+          "right_thumb_pip",
+          "right_pip_2",
+          "right_pip_3",
+          "right_dip",
+          "right_thumb_dip",
+          "right_dip_2",
+          "right_dip_3",
+          "right_fingertip",
+          "right_thumb_fingertip",
+          "right_fingertip_2",
+          "right_fingertip_3",
+          "right_thumb_right_temp_base",
+        ]
+    left_hand:
+      main_path: "left_hand/left_hand"
+      spawn_list:
+        [
+          "left_palm_lower",
+          "left_mcp_joint",
+          "left_mcp_joint_2",
+          "left_mcp_joint_3",
+          "left_pip",
+          "left_thumb_pip",
+          "left_pip_2",
+          "left_pip_3",
+          "left_dip",
+          "left_thumb_dip",
+          "left_dip_2",
+          "left_dip_3",
+          "left_fingertip",
+          "left_thumb_fingertip",
+          "left_fingertip_2",
+          "left_fingertip_3",
+          "left_thumb_left_temp_base",
+        ]
+
+  
+    num_downsample_points: 512
+  grasper:
+    target_object_name: mustard_bottle
+    ee_name: hand_palm
+    init_robot_qos:
+      [
+        7.2726e-04,
+        1.7493e-01,
+        -7.2461e-04,
+        7.7518e-01,
+        2.2470e-04,
+        6.0126e-01,
+        -7.3034e-05,
+      ]
+    joint_names:
+      [
+        "joint1",
+        "joint2",
+        "joint3",
+        "joint4",
+        "joint5",
+        "joint6",
+        "joint7",
+        "j0",
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5",
+        "j6",
+        "j7",
+        "j8",
+        "j9",
+        "j10",
+        "j11",
+        "j12",
+        "j13",
+        "j14",
+        "j15",
+      ]
+  spawn_rigid_objects:
+    init: True
+    object_mesh_dir: "source/assets/ycb/dexgrasp/objects_mesh"
+    spawn_list: ["banana"]
+
+  ArticulationObject:
+
+  RigidObject:
+   
+
+
+    rigid_objects:
+      load_from_folder: "source/assets/hocap_objects/models"
+      path: "rigid_object.usd"
+      kinematic_enabled : False
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.0, 0.0, 0.0]
+      rot:
+        axis: [0]
+        angles: [0]
+    
+    
+       
+  AssstObject:
+
+  Camera:
+    initial: False
+    random_pose: False
+    camera_json: null #"source/config/camera/automatic_articulation/kitchen02_cabinet.json"
+
+    max_length: 0
+    segmentation_name: "instance_segmentation_fast"
+    whole_pc: True
+    seg_pc: True
+    whole_rgb: True
+    seg_rgb: True
+    whole_depth: False
+    bbox: [-2, -2.0, -0.0, 2.0, 2.0, 1.0] # [-0.20, -0.87, 0.0, 0.60, -0.5, 0.4]
+    align_robot_base: True
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      num_sampled_points: 2048
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 2048
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+      camera_01:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 1.40, 0.80]
+        euler: [80.0, 0.0, -135]
+      camera_02:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.10, -0.8, 1.3]
+        euler: [45.0, 0.0, -15]
+
+      camera_03:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 0.20, 1.7]
+        euler: [40.0, 0.0, -100]

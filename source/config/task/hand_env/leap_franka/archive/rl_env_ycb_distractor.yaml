@@ -1,0 +1,284 @@
+params:
+  arm_type: "franka"
+  hand_type: "leap"
+  enable_sensor: False
+  enabled_self_collisions: False
+  arm_mesh_dir: "source/assets/robot/franka/raw_mesh"
+  hand_mesh_dir: "source/assets/robot/leap_hand_v2/raw_mesh"
+  num_hand_joints: 16
+  num_arm_joints: 7
+  pregrasp_offset : [-0.12,-0.24, -0.03]
+  postgrasp_offset : [-0.10,-0.12, -0.03]
+  spawn_multi_assets: True
+  spawn_multi_assets_name: ycb_family
+  reward_weights: 
+      left : 2.5
+      right : 4
+  distractor_name: [rabbit]
+ 
+ 
+
+  right_reset_joint_pose: [0.0586, -0.5551, -0.3062, -3.0341,  2.8861,  2.2291, -0.7934]
+  left_reset_joint_pose: [0.0586, -0.5551, -0.3062, -3.0341,  2.8861,  2.2291, -0.7934]
+  ee_name: "panda_link7"
+  
+
+  init_ee_pose: [0.2000, 0.1000,  0.3000, -0.6526,  0.2717, -0.6526,  0.2717]
+  left_robot_pose: [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+  right_robot_pose: [0.0, -0.0, -0.0, 1.0, 0.0, 0.0, 0.0]
+  viser_camera_pose: [2.0, 0.0, 1.5, 0.0, 0.0, 0.0]
+  delta_quat: [0.707, 0.0, 0.0, 0.707]
+
+  post_grasp_penalty: [0.02, 0.07, -0.06]
+  pre_grasp_penalty: [-0.02, -0.07, -0.03]
+  target_manipulated_object: all #[mustard_bottle,bleach_cleanser,master_chef_can,tomato_soup_can,mug,sugar_box,foam_brick,potted_meat_can]
+  left_target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
+  right_target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
+  target_manipulated_object_pose: 
+    pos: [0.5, 0.0, 0.45]
+    rot:
+      axis: [0]
+      angles: [0]
+    pose_range:
+      x: [-0.0, 0.15]
+      y: [-0.20, 0.20]
+      z: [-0.05, 0.10]
+      roll: [0.0, 0.0]
+      yaw: [-0.5, 0.5]
+
+
+
+  Task:
+    action_range: [1.0,3.14,5,0.1]
+    horizon: 180
+
+  contact_sensor:
+    init: True
+    right_hand:
+      filter_prim_paths_expr: []
+      main_path: "right_hand/right_hand"
+
+    left_hand:
+      main_path: "left_hand/left_hand"
+      filter_prim_paths_expr: []
+    spawn_contact_list: [
+        # "palm_lower",
+        # "mcp_joint",
+        # "pip",
+        # "dip",
+        "fingertip",
+        # "thumb_right_temp_base",
+        # "thumb_pip",
+        # "thumb_dip",
+        "thumb_fingertip",
+        # "mcp_joint_2",
+        # "pip_2",
+        # "dip_2",
+        "fingertip_2",
+        # "mcp_joint_3",
+        # "pip_3",
+        # "dip_3",
+        "fingertip_3",
+        
+      ]
+
+  spawn_robot:
+    init: True
+    colorize_pc: True
+    spawn_arm: True
+
+    right_hand:
+      main_path: "right_hand/right_hand"
+    left_hand:
+      main_path: "left_hand/left_hand"
+    spawn_hand_list: [
+        "palm_lower",
+        "fingertip",
+        "thumb_fingertip",
+        "fingertip_2",
+         "fingertip_3",
+        # "mcp_joint",
+        # "mcp_joint_2",
+        # "mcp_joint_3",
+        # "pip",
+        # "thumb_pip",
+        # "pip_2",
+        # "pip_3",
+        # "dip",
+        # "thumb_dip",
+        # "dip_2",
+        # "dip_3",
+     
+        # "thumb_.*_temp_base",
+      ]
+
+    right_arm:
+      main_path: "right_hand"
+    left_arm:
+      main_path: "left_hand"
+    spawn_arm_list: [
+        # "panda_link0",
+        # "panda_link1",
+        # "panda_link2",
+        # "panda_link3",
+        # "panda_link4",
+        # "panda_link5",
+        "panda_link6",
+        "panda_link7",
+      ]
+
+    num_downsample_points: 2048
+  grasper:
+    target_object_name: bleach_cleanser
+    ee_name: hand_palm
+    init_robot_qos:
+      [
+        7.2726e-04,
+        1.7493e-01,
+        -7.2461e-04,
+        7.7518e-01,
+        2.2470e-04,
+        6.0126e-01,
+        -7.3034e-05,
+      ]
+    joint_names:
+      [
+        "panda_joint1",
+        "panda_joint2",
+        "panda_joint3",
+        "panda_joint4",
+        "panda_joint5",
+        "panda_joint6",
+        "panda_joint7",
+        "j0",
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5",
+        "j6",
+        "j7",
+        "j8",
+        "j9",
+        "j10",
+        "j11",
+        "j12",
+        "j13",
+        "j14",
+        "j15",
+      ]
+  spawn_rigid_objects:
+    init: False
+    object_mesh_dir: "source/assets/ycb/dexgrasp/raw_mesh"
+    num_points: 256
+    spawn_list: ["bleach_cleanser"]
+
+  ArticulationObject:
+
+  RigidObject:
+
+    config_file:
+      - file: "source/config/task/hand_env/object/ycb_objects.yaml"
+        handness: right
+        name: right_hand_object
+        pos: [0.5, -0.0, 0.11]
+        scale: [1.0, 1.0, 1.0]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+      - file: "source/config/task/hand_env/object/ycb_objects.yaml"
+        handness: left
+        name: left_hand_object
+        pos: [0.5, 0.0, 0.11]
+        scale: [1.0, 1.0, 1.0]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    rabbit:
+      path: "source/assets/ycb/distractor/rabbit/rabbit.usd"
+      scale: [0.01, 0.01, 0.01]
+      pos: [0.5, -0.0, 0.02]
+      rot:
+        axis: [0]
+        angles: [1.57]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+   
+
+          
+      
+          
+          
+
+  AssstObject:
+
+  Camera:
+    initial: True
+    random_pose: False
+    camera_json: null
+    robot_name: "right_hand"
+    
+
+
+    extract_all_pc: False
+    extract_seg_pc: True
+    extract_rgb: True
+    extrat_seg_rgb: False
+    extract_depth: False
+    pc_bbox: [-5, -5.0, -0, 5.0, 5.0, 3.0] 
+    align_robot_base: True
+    segmentation_name : "semantic_segmentation"
+    num_downsampled_points: 2048
+    random_pose_range: [0.4, -0.15, 0.15, 0.6, 0.15, 0.30, 2.0,2.4]
+    theta_range_deg: [-20, 20]
+    phi_range_deg: [65, 65]
+
+    
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 40960
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+
+      camera_00:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb","distance_to_image_plane", "semantic_segmentation"] #"distance_to_image_plane", "instance_segmentation_fast"
+        update_period: 0.03
+        eyes: [2.0, 0.0, 1.1]
+        target: [0.4, -0.0, 0.2]
+        # translate: [2.2, 0.0, 0.8]
+        # quat: [0.57, 0.41, 0.41, 0.57] #[0.57, 0.41, 0.41, 0.57]
+        # euler: [70.0, 0.0, -148]
+      

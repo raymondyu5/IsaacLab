@@ -1,0 +1,185 @@
+params:
+  Robot:
+    init: False
+    qpos:
+      {
+        "panda_joint1": 0.5071,
+        "panda_joint2": -0.5104,
+        "panda_joint3": -0.4926,
+        "panda_joint4": -2.5945,
+        "panda_joint5": -0.2663,
+        "panda_joint6": 2.1293,
+        "panda_joint7": 0.88,
+        "panda_finger_joint.*": 0.04,
+      }
+  DeformableObject:
+    deform_object:
+      path: "source/assets/Tube/tube/usd/tube.usd"
+      simulation_hexahedral_resolution: 32
+      vertex_velocity_damping: 0.0
+      scale: [1.0, 1.0, 1.0]
+      pos: [0.50, -0.0, -0.005]
+      pose_range:
+        # x: [0.25, 0.35]
+        # y: [-0.05, 0.05]
+        # z: [0.8, 0.8]
+        # roll: [-1.7, -1.2]
+        # yaw: [-1.0, 1.0]
+      velocity_range:
+      rot:
+        axis: [0]
+        angles: [0]
+      random_parmas: False
+      sample_node_interval: 50
+
+      fix_params:
+        youngs_modulus: 100000
+        # poissons_ratio: 0.25
+
+      params_range:
+        youngs_modulus: [0, 1.0]
+        elasticity_damping: [0, 1.0]
+        density: [0, 0]
+
+      params:
+        # youngs_modulus: [
+        #     [500, 1000],
+        #     [1000, 10000],
+        #     # [10000, 100000],
+        #     #[1000000, 10000000],
+        #     [1000000, 10000000],
+        #     # [1000000000, 10000000000],
+
+        #   ]
+        # dynamic_friction: [[0, 1], [0, 10], [10, 100]]
+        #poissons_ratio: [[0, 0.15], [0.15, 0.30], [0.30, 0.50]]
+        # elasticity_damping: [[0.0, 0.02], [0.05, 0.1], [2.0, 3.6]]
+        #damping_scale: [[0.0, 0.0],[0.0, 0.1],[0.1, 0.3], [0.30, 0.60], [0.60, 1.0]]
+        # density: [[0, 1],[1,10],[10,100]]
+
+      attach_robot:
+        init: True
+        attach_object_path: "/World/envs/env_.*/gripper"
+        attach_offset: [0, 0, -0.0]
+        attact_yet: False
+        DeformableVertexOverlapOffset: 0.04
+
+      bayessim:
+        trainTrajs: 5
+        summarizerFxn: "summary_start"
+        ftune: True
+        modelClass: MDNN
+        components: 4
+        hiddenLayers: [128, 64, 32, 16]
+        lr: 1.e-4
+        realEvals: 100
+        realTrajs: 1
+        realIters: 100
+        ftuneRL: False
+
+  ParticlesObject:
+
+  RigidObject:
+    gripper:
+      path: "source/assets/robot/franka/panda_hand.usd"
+      scale: [0.01, 0.01, 0.01]
+      pos: [0.5, -0.0, .15]
+      rot:
+        axis: [0]
+        angles: [0]
+      disable_gravity: True
+      motion: True
+      relative_pos: False
+    # rigid_object:
+    #   path: "source/assets/arcode/arcode_rigid.usd"
+    #   scale: [1.0, 1.0, 1.0]
+    #   pos: [0.40, -0.0, 0.01]
+    #   rot:
+    #     axis: [0]
+    #     angles: [1.57]
+    #   disable_gravity: True
+
+  AssstObject:
+    block1:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, -3.0, -2]
+      rot:
+        axis: [2]
+        angles: [1.57]
+    block2:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, 3.0, -2]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    block3:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [-4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+    block4:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+
+  Camera:
+    initial: True
+    random_pose: False
+    random_setting:
+      origin: [0.8, -0.0, 0.0]
+      radius_range: [1.8, 2.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 1.4
+    cameras:
+      # camera:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   eyes: [2.1, 0.0, 1.3000]
+      #   target: [0.9, -0.0, 0.3]
+      # camera1:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   eyes: [-0.6, -0.0, 1.3000]
+      #   target: [0.6, -0.0, 0.3]
+      camera2:
+        camera_type: "camera"
+        height: 320
+        width: 320
+        data_types:
+          ["rgb", "instance_segmentation_fast", distance_to_image_plane]
+        update_period: 0.03
+        eyes: [0.4, 1.6, 1.2]
+        target: [0.4, -0.0, 0.1]
+      # camera3:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   eyes: [0.6, -1.6, 1.0]
+      #   target: [0.6, -0.0, 0.3]
+      # camera4:
+      #   camera_type: "camera"
+      #   height: 960
+      #   width: 1280
+      #   data_types: ["rgb", "instance_segmentation_fast"]
+      #   update_period: 0.03
+      #   pos: [0.8, 0, 1.8]
+      #   rot:
+      #     axis: [1, 0, 1]
+      #     angles: [-1.57, -1.57, -1.57]

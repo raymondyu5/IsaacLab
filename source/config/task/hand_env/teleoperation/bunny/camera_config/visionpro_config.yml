@@ -1,0 +1,4 @@
+cameras:
+  - visionpro:
+      type: visionpro
+      avp_ip: 10.0.0.68

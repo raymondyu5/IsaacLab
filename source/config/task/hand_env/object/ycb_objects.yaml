@@ -1,0 +1,308 @@
+params:
+    RigidObject:
+      bleach_cleanser:
+        path: "source/assets/ycb/dexgrasp/objects/bleach_cleanser/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.11]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      # wood_block:
+      #   path: "source/assets/ycb/dexgrasp/objects/wood_block/rigid_object.usd"
+      #   kinematic_enabled: False
+      #   scale: [1.0, 1.0, 1.0]
+      #   pos: [.50, 0.0, 0.12]
+      #   rot:
+      #     axis: [0]
+      #     angles: [0.0]
+      #   pose_range:
+      #       x: [-0.10, 0.10]
+      #       y: [-0.20, 0.20]
+      #       z: [0.0, 0.0]
+      #       roll: [0.0, 0.0]
+      #       yaw: [-3.14, 3.14]
+      mustard_bottle:
+        path: "source/assets/ycb/dexgrasp/objects/mustard_bottle/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.16]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+        
+      master_chef_can:
+        path: "source/assets/ycb/dexgrasp/objects/master_chef_can/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.07]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      tomato_soup_can:
+        path: "source/assets/ycb/dexgrasp/objects/tomato_soup_can/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.06]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      mug:
+        path: "source/assets/ycb/dexgrasp/objects/mug/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.05]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      
+      # cracker_box:
+      #   path: "source/assets/ycb/dexgrasp/objects/cracker_box/rigid_object.usd"
+      #   kinematic_enabled: False
+      #   scale: [1.0, 1.0, 1.0]
+      #   pos: [.50, 0.0, 0.11]
+      #   rot:
+      #     axis: [0]
+      #     angles: [0.0]
+      #   pose_range:
+      #       x: [-0.10, 0.10]
+      #       y: [-0.20, 0.20]
+      #       z: [0.0, 0.0]
+      #       roll: [0.0, 0.0]
+      #       yaw: [-3.14, 3.14]
+      sugar_box:
+        path: "source/assets/ycb/dexgrasp/objects/sugar_box/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.09]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+
+      gelatin_box:
+        path: "source/assets/ycb/dexgrasp/objects/gelatin_box/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.05]
+        rot:
+          axis: [0]
+          angles: [1.57]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      
+      scissors:
+        path: "source/assets/ycb/dexgrasp/objects/scissors/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.02]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+
+      pudding_box:
+        path: "source/assets/ycb/dexgrasp/objects/pudding_box/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.04]
+        rot:
+          axis: [0]
+          angles: [1.57]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      
+      foam_brick:
+        path: "source/assets/ycb/dexgrasp/objects/foam_brick/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.06]
+        rot:
+          axis: [0]
+          angles: [1.57]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      bowl:
+        path: "source/assets/ycb/dexgrasp/objects/bowl/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.03]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+    
+      extra_large_clamp:
+        path: "source/assets/ycb/dexgrasp/objects/extra_large_clamp/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.02]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      large_marker:
+        path: "source/assets/ycb/dexgrasp/objects/large_marker/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.06]
+        rot:
+          axis: [0]
+          angles: [1.57]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      power_drill:
+        path: "source/assets/ycb/dexgrasp/objects/power_drill/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.03]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      tuna_fish_can:
+        path:  source/assets/ycb/dexgrasp/recenter_objects/tuna_fish_can/recenter_rigid_object.usd
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.02]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      
+      large_clamp:
+        path: "source/assets/ycb/dexgrasp/objects/large_clamp/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.02]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      banana:
+        path: "source/assets/ycb/dexgrasp/objects/banana/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.02]
+        rot:
+          axis: [0]
+          angles: [0.0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+      # pitcher_base:
+      #   path: "source/assets/ycb/dexgrasp/objects/pitcher_base/rigid_object.usd"
+      #   kinematic_enabled: False
+      #   scale: [1.0, 1.0, 1.0]
+      #   pos: [.50, 0.0, 0.15]
+      #   rot:
+      #     axis: [0]
+      #     angles: [0.0]
+      #   pose_range:
+      #       x: [-0.10, 0.10]
+      #       y: [-0.20, 0.20]
+      #       z: [0.0, 0.0]
+      #       roll: [0.0, 0.0]
+      #       yaw: [-3.14, 3.14]
+            
+            
+      potted_meat_can:
+        path: "source/assets/ycb/dexgrasp/objects/potted_meat_can/rigid_object.usd"
+        kinematic_enabled: False
+        scale: [1.0, 1.0, 1.0]
+        pos: [.50, 0.0, 0.04]
+        rot:
+          axis: [0]
+          angles: [0]
+        pose_range:
+            x: [-0.10, 0.10]
+            y: [-0.20, 0.20]
+            z: [0.0, 0.0]
+            roll: [0.0, 0.0]
+            yaw: [-3.14, 3.14]
+        
+     

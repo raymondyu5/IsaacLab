@@ -1,0 +1,17 @@
+params: 
+    
+    vae_type: VAMP
+    layer_dims: [32]
+    vae_lr: 0.005
+    batch_size : 4096
+    eval_percent : 0.95
+    epoches : 200
+    use_relatve_pose : False
+    use_state: False
+    latent_dim: 4
+    data_normalizer: minmax
+    model_config:   
+        # VQVAE
+        number_components : 6
+        input_dim: [16]
+    

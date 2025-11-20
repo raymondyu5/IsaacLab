@@ -1,0 +1,8 @@
+communication:
+  operator_name: test_user
+  viz_type: sim_web_visualizer
+  viz_host: localhost
+  viz_port: 6000
+  viz_urdf_paths:
+    - assembly/ur5e_ability/ur5e_ability_left_hand.urdf
+    - assembly/ur5e_ability/ur5e_ability_right_hand.urdf

@@ -1,0 +1,21 @@
+params: 
+    
+    vae_type: HRQVAE
+    layer_dims: [32]
+    vae_lr: 0.005
+    batch_size : 4096
+    eval_percent : 0.95
+    epoches : 2000
+    use_relatve_pose : False
+    latent_dim: 1
+    data_normalizer: minmax
+    model_config:   
+        # VQVAE
+        num_embeddings: 256
+        latent_dim: 16  
+        input_dim: [16]
+        commitment_loss_factor: 0.25
+        quantization_loss_factor: 1.0
+        use_ema: True
+        decay: 0.99
+    

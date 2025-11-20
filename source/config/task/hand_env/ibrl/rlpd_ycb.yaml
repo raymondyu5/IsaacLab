@@ -1,0 +1,31 @@
+
+
+stddev_max: 0.1
+use_state: 1
+
+mix_rl_rate: 0.5
+preload_num_data: 20
+
+num_warm_up_episode: 40
+num_train_step: 200000
+
+episode_length: 160
+replay_buffer_size: 1000
+use_wb: 1
+mp_eval: 1
+log_per_step: 300
+num_eval_episode: 50
+num_critic_update: 20
+q_agent:
+  act_method: "rl"
+  state_critic:
+    num_q: 5
+    layer_norm: 1
+    hidden_dim: 1024
+  state_actor:
+    hidden_dim: 1024
+    dropout: 0
+
+# wb_exp: "ibrl_ycb"
+# wb_run: "finetune"
+# wb_group: "ibrl_ycb"

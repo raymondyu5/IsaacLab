@@ -1,0 +1,27 @@
+params: 
+    
+    vae_type: VQVAE
+    encoder_type: DERT
+    layer_dims: [32]
+    vae_lr: 0.002
+    batch_size : 512
+    eval_percent : 0.95
+    epoches : 200
+    use_relatve_pose : False
+    use_state: False
+    latent_dim: 2
+    data_normalizer: null
+    chunk_size: 10
+    encoder_name: reactive_diff_encoder_cnn #ldcp_gru
+    decoder_name: reactive_diff_decoder_rnn #simple_low_level_policy
+    model_config:   
+        # VQVAE
+        num_embeddings: 4
+        # latent_dim: 16
+        embedding_dim: 4
+        input_dim: [16]
+        commitment_loss_factor: 0.1
+        quantization_loss_factor: 2
+        use_ema: True
+        decay: 0.99
+    

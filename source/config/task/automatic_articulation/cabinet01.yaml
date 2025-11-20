@@ -1,0 +1,212 @@
+params:
+  Task:
+    seg_target_name: ["mug", "Robot"]
+    use_bounding_box: True
+    bbox_range: [-0.05, -0.05, 0.20, 0.65, 0.35, 10]
+    segment_handle: False
+    segment_handle_camera_id: 0
+    use_fps: True
+    aug_robot_mesh: False
+    target_object: mug
+    gripper_length_offset: [0.0, 0.0, -0.107, 1.0, 0.0, 0.0, 0.0]
+    randomize_camera_pose: True
+    randomize_camera_pose_range: [0.10, 0.1]
+    curobo_planner_length: 31
+    success_pick_threhold: 2
+
+    grasper:
+      isaac2m2t2_offset: [0.0, 0.0, 0.0, 0.707, 0.0, 0.0, -0.707]
+      gripper_offset: [0.0000, 0.0000, -0.10, 1.0, 0.0, 0.0, 0.0]
+      m2t2_gripper_offset: [0.0000, 0.0000, 0.02, 1.0, 0.0, 0.0, 0.0]
+      init_ee_pos: [0.40, 0.0, 0.45, 0.0, 1.0, 0.0, 0.0, 1.0]
+      grasp_angle_range: [-3.14, -3.0]
+      planner_tolerance_iter: 100
+      lift_threshold: 0.05
+      approach_horizon: 20
+      close_horizon: 7
+      lift_horizon: 15
+      lift_speed: [-0.0, 0.0, 0.015]
+    placement:
+      placement_offset: [0.15, 0.0, 0.20, 0.0, 1.0, 0.0, 0.0]
+      open_gripper_horizon: 15
+
+    cabinet_open:
+      planner_offset: [0.0, 0.0, -0.14, 1.0, 0.0, 0.0, 0.0]
+      open_offset: 0.6
+      approach_horizon: 15
+      close_horizon: 8
+      open_horizon: 80
+      open_speed: 1.0
+    cabinet_close:
+      planner_offset: [0.0, 0.0, -0.18, 1.0, 0.0, 0.0, 0.0]
+      cabinet_open_offset: [0.05, 0.0, 0.30, 0.0, 1.0, 0.0, 0.0]
+      cabinet_close_offset: [-0.10, 0.0, 0.15, 0.0, 1.0, 0.0, 0.0]
+      init_ee_pos: [0.40, 0.0, 0.45, 0.0, 1.0, 0.0, 0.0]
+      close_offset: 0.05
+      close_speed: 0.03
+      close_cabinet: 20
+      close_descend: 5
+      close_descend_speed: 0.01
+
+  ArticulationObject:
+    kitchen:
+      name: kitchen
+      path: "source/assets/kitchen/usd/cabinet01/raw_data/modified_mobility.usda"
+      scale: [0.8, 0.8, 0.8]
+      pos: [0.7, 0.2, 0.4]
+      rot:
+        axis: [0, 2]
+        angles: [1.57, -1.57]
+      disable_gravity: True
+      enabled_self_collisions: False
+
+      pose_range:
+        x: [-0.0, 0.0] #[-0.075, 0.075] #[-0.10, 0.10]
+        y: [-0.0, 0.0] #[-0.10, 0.02]
+        z: [-0.0, 0.0] #[-0.02, 0.13]
+        yaw: [-0.0, 0.0]
+
+      joints:
+        drawer_00_revolute_joint: 0.0
+        drawer_01_revolute_joint: 0.0
+
+        # drawer_prismatic_joint_0: 0.0
+        # drawer_prismatic_joint_1: 0.0
+      target_drawer: drawer_00_handle
+      target_joint_type: revolute #prismatic revolute
+      target_object: mug
+      robot_random_range:
+        drawer_00_handle:
+          pose_range:
+            x: [-0.05, 0.05] #[-0.075, 0.075] #[-0.10, 0.10]
+            y: [-0.05, 0.05] #[-0.10, 0.02]
+            z: [-0.05, 0.05] #[-0.02, 0.13]
+            yaw: [-0.0, 0.0]
+
+          ee_pos_random_range:
+            position_range: [0.0, 0.0]
+          joint_random_range:
+            position_range: [-0.0, 0.0]
+
+          offset: [0.02, 0.52, -0.30, 0.0, 0.0, 0.0, 1.0, 0.50]
+          delta_euler: [[2, 1], [0.5, -0.02]]
+          joint_name: drawer_00_revolute_joint
+
+          init_robot_pose:
+              pos: [0.35, -0.0, 0.40]
+              rot:
+                axis: [2, 1, 0]
+                angles: [1.57, -1.57, -1.57]
+
+      random_camera: True
+
+  RigidObject:
+    mug:
+      path: "source/assets/ycb/Axis_Aligned/025_mug.usd"
+      scale: [1.0, 1.0, 1.0]
+      pos: [2.6, -0.40, 0.6]
+      rot:
+        axis: [0]
+        angles: [0.0]
+      pose_range:
+        x: [-0.0, 0.08]
+        y: [0.0, 0.20] #[0.0, 0.20]
+        z: [0.0, 0.0]
+        yaw: [-2.0, 2.0]
+  AssstObject:
+    block1:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, -3.0, -2]
+      rot:
+        axis: [2]
+        angles: [1.57]
+    block2:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 8.0, 4.0]
+      pos: [0.0, 3.0, -2]
+      rot:
+        axis: [2]
+        angles: [-1.57]
+    block3:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [-4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+    block4:
+      path: "source/assets/shape/cube/cube_static.usd"
+      scale: [0.1, 6.0, 4.0]
+      pos: [4, 0.0, -2]
+      rot:
+        axis: [2]
+        angles: [0]
+
+  Camera:
+    initial: False
+    random_pose: False
+    camera_json: null #"source/config/camera/automatic_articulation/kitchen02_cabinet.json"
+
+    max_length: 0
+    segmentation_name: "instance_segmentation_fast"
+    whole_pc: True
+    seg_pc: True
+    whole_rgb: True
+    seg_rgb: True
+    whole_depth: False
+    bbox: [-2, -2.0, -0.0, 2.0, 2.0, 1.0] # [-0.20, -0.87, 0.0, 0.60, -0.5, 0.4]
+    align_robot_base: True
+
+    pointcloud_setting:
+      use_segmentation: True
+      segmentation_point_cloud_id: 3
+      num_sampled_points: 2048
+      segmentation_point_cloud: True
+      colorize_point_cloud: True
+      num_downsampled_points: 2048
+
+    random_pose_setting:
+      origin: [0.5, -0.0, 0.0]
+      radius_range: [0.8, 1.2]
+      base_rot:
+        axis: [1, 0]
+        angles: [-1.57, -1.57]
+      z_min: 0.7
+
+    cameras:
+     
+      camera_01:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 1.40, 0.80]
+        euler: [80.0, 0.0, -135]
+      camera_02:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.10, -0.8, 1.3]
+        euler: [45.0, 0.0, -15]
+
+      camera_03:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types:
+          ["rgb", "distance_to_image_plane", "instance_segmentation_fast"]
+        update_period: 0.03
+        eyes: null #[-0.2, 1.0, 0.8]
+        target: null #[0.40, -0.0, 0.5]
+        translate: [-0.60, 0.20, 1.7]
+        euler: [40.0, 0.0, -100]

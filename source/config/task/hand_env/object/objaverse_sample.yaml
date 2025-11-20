@@ -1,0 +1,4706 @@
+params:
+  RigidObject:
+    apple_0:
+      path: source/assets/objaverse/apple/apple_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0633476972579956
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_1:
+      path: source/assets/objaverse/apple/apple_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04042690247297287
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_2:
+      path: source/assets/objaverse/apple/apple_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047061581164598465
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_3:
+      path: source/assets/objaverse/apple/apple_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05077525973320007
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_4:
+      path: source/assets/objaverse/apple/apple_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05819504335522652
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_5:
+      path: source/assets/objaverse/apple/apple_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.059485726058483124
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_6:
+      path: source/assets/objaverse/apple/apple_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08784209191799164
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_7:
+      path: source/assets/objaverse/apple/apple_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0477483794093132
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_8:
+      path: source/assets/objaverse/apple/apple_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05947231873869896
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_9:
+      path: source/assets/objaverse/apple/apple_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06615626811981201
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_10:
+      path: source/assets/objaverse/apple/apple_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.022706395015120506
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    apple_11:
+      path: source/assets/objaverse/apple/apple_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04667000100016594
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_12:
+      path: source/assets/objaverse/banana/banana_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.011501947417855263
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_13:
+      path: source/assets/objaverse/banana/banana_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03290291875600815
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_14:
+      path: source/assets/objaverse/banana/banana_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06296303123235703
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_15:
+      path: source/assets/objaverse/banana/banana_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01238568127155304
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_16:
+      path: source/assets/objaverse/banana/banana_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03203870356082916
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_17:
+      path: source/assets/objaverse/banana/banana_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.015750359743833542
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_18:
+      path: source/assets/objaverse/banana/banana_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01117144338786602
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_19:
+      path: source/assets/objaverse/banana/banana_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08386170864105225
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_20:
+      path: source/assets/objaverse/banana/banana_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.033182915300130844
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_21:
+      path: source/assets/objaverse/banana/banana_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.023141728714108467
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_22:
+      path: source/assets/objaverse/banana/banana_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.020998161286115646
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    banana_23:
+      path: source/assets/objaverse/banana/banana_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0459747277200222
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_24:
+      path: source/assets/objaverse/bottle/bottle_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11311807483434677
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_25:
+      path: source/assets/objaverse/bottle/bottle_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01644892804324627
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_26:
+      path: source/assets/objaverse/bottle/bottle_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.052462562918663025
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_27:
+      path: source/assets/objaverse/bottle/bottle_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.026299327611923218
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_28:
+      path: source/assets/objaverse/bottle/bottle_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08722656220197678
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_29:
+      path: source/assets/objaverse/bottle/bottle_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.012555083259940147
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_30:
+      path: source/assets/objaverse/bottle/bottle_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05013188719749451
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_31:
+      path: source/assets/objaverse/bottle/bottle_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11780610680580139
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_32:
+      path: source/assets/objaverse/bottle/bottle_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11439045518636703
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_33:
+      path: source/assets/objaverse/bottle/bottle_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0656682476401329
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_34:
+      path: source/assets/objaverse/bottle/bottle_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0975678488612175
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_35:
+      path: source/assets/objaverse/bottle/bottle_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.054003357887268066
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_36:
+      path: source/assets/objaverse/bottle/bottle_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08957735449075699
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bottle_37:
+      path: source/assets/objaverse/bottle/bottle_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.019248750060796738
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_38:
+      path: source/assets/objaverse/bowl/bowl_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06660854816436768
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_39:
+      path: source/assets/objaverse/bowl/bowl_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.032484885305166245
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_40:
+      path: source/assets/objaverse/bowl/bowl_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.017711808905005455
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_41:
+      path: source/assets/objaverse/bowl/bowl_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03199204057455063
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_42:
+      path: source/assets/objaverse/bowl/bowl_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.022548876702785492
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_43:
+      path: source/assets/objaverse/bowl/bowl_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016051089391112328
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_44:
+      path: source/assets/objaverse/bowl/bowl_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.019893471151590347
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    bowl_45:
+      path: source/assets/objaverse/bowl/bowl_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04145349934697151
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_46:
+      path: source/assets/objaverse/cup/cup_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03954457491636276
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_47:
+      path: source/assets/objaverse/cup/cup_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0769074484705925
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_48:
+      path: source/assets/objaverse/cup/cup_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08145972341299057
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_49:
+      path: source/assets/objaverse/cup/cup_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.027340078726410866
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_50:
+      path: source/assets/objaverse/cup/cup_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03416493535041809
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_51:
+      path: source/assets/objaverse/cup/cup_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11850963532924652
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_52:
+      path: source/assets/objaverse/cup/cup_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04020867869257927
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_53:
+      path: source/assets/objaverse/cup/cup_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05544401705265045
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_54:
+      path: source/assets/objaverse/cup/cup_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03915964066982269
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_55:
+      path: source/assets/objaverse/cup/cup_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05244436860084534
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_56:
+      path: source/assets/objaverse/cup/cup_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03830057755112648
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_57:
+      path: source/assets/objaverse/cup/cup_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04034624993801117
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    cup_58:
+      path: source/assets/objaverse/cup/cup_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.056282222270965576
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_59:
+      path: source/assets/objaverse/tomato/tomato_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.013340373523533344
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_60:
+      path: source/assets/objaverse/tomato/tomato_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06055000051856041
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_61:
+      path: source/assets/objaverse/tomato/tomato_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06009215489029884
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_62:
+      path: source/assets/objaverse/tomato/tomato_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.038753122091293335
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_63:
+      path: source/assets/objaverse/tomato/tomato_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03862219303846359
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_64:
+      path: source/assets/objaverse/tomato/tomato_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06145137548446655
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_65:
+      path: source/assets/objaverse/tomato/tomato_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05115056410431862
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_66:
+      path: source/assets/objaverse/tomato/tomato_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04496735706925392
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_67:
+      path: source/assets/objaverse/tomato/tomato_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07976972311735153
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_68:
+      path: source/assets/objaverse/tomato/tomato_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03244577348232269
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_69:
+      path: source/assets/objaverse/tomato/tomato_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05099299177527428
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_70:
+      path: source/assets/objaverse/tomato/tomato_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04467067867517471
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    tomato_71:
+      path: source/assets/objaverse/tomato/tomato_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.052928376942873
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_72:
+      path: source/assets/objaverse/water_bottle/water_bottle_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06001646816730499
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_73:
+      path: source/assets/objaverse/water_bottle/water_bottle_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05244101583957672
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_74:
+      path: source/assets/objaverse/water_bottle/water_bottle_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06901917606592178
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_75:
+      path: source/assets/objaverse/water_bottle/water_bottle_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11879594624042511
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_76:
+      path: source/assets/objaverse/water_bottle/water_bottle_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05045605078339577
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_77:
+      path: source/assets/objaverse/water_bottle/water_bottle_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08939170837402344
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_78:
+      path: source/assets/objaverse/water_bottle/water_bottle_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09541469067335129
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_79:
+      path: source/assets/objaverse/water_bottle/water_bottle_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0551193505525589
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_80:
+      path: source/assets/objaverse/water_bottle/water_bottle_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1065623015165329
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_81:
+      path: source/assets/objaverse/water_bottle/water_bottle_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09877383708953857
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_82:
+      path: source/assets/objaverse/water_bottle/water_bottle_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04854027181863785
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_83:
+      path: source/assets/objaverse/water_bottle/water_bottle_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09115800261497498
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_84:
+      path: source/assets/objaverse/water_bottle/water_bottle_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06028105691075325
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_85:
+      path: source/assets/objaverse/water_bottle/water_bottle_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09145542979240417
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_86:
+      path: source/assets/objaverse/water_bottle/water_bottle_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10809528082609177
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_87:
+      path: source/assets/objaverse/water_bottle/water_bottle_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05950284004211426
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_88:
+      path: source/assets/objaverse/water_bottle/water_bottle_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09486129134893417
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    water_bottle_89:
+      path: source/assets/objaverse/water_bottle/water_bottle_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09729228913784027
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_90:
+      path: source/assets/objaverse/toy/toy_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.020006053149700165
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_91:
+      path: source/assets/objaverse/toy/toy_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.00773618882521987
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_92:
+      path: source/assets/objaverse/toy/toy_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.031226174905896187
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_93:
+      path: source/assets/objaverse/toy/toy_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.041351187974214554
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_94:
+      path: source/assets/objaverse/toy/toy_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.024137908592820168
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    toy_95:
+      path: source/assets/objaverse/toy/toy_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05715639889240265
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_96:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05329660698771477
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_97:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05909289792180061
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_98:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.026666423305869102
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_99:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04495127871632576
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_100:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.058309007436037064
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_101:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07259821891784668
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    teddy_bear_102:
+      path: source/assets/objaverse/teddy_bear/teddy_bear_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.049781765788793564
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_103:
+      path: source/assets/objaverse/basket/basket_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07972891628742218
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_104:
+      path: source/assets/objaverse/basket/basket_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01678769662976265
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_105:
+      path: source/assets/objaverse/basket/basket_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0687263086438179
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_106:
+      path: source/assets/objaverse/basket/basket_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07593074440956116
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_107:
+      path: source/assets/objaverse/basket/basket_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07000548392534256
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_108:
+      path: source/assets/objaverse/basket/basket_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.13032524287700653
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    basket_109:
+      path: source/assets/objaverse/basket/basket_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.14404669404029846
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_110:
+      path: source/assets/objaverse/strawberry/strawberry_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08501137048006058
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_111:
+      path: source/assets/objaverse/strawberry/strawberry_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047980353236198425
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_112:
+      path: source/assets/objaverse/strawberry/strawberry_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06767173856496811
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_113:
+      path: source/assets/objaverse/strawberry/strawberry_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08768955618143082
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_114:
+      path: source/assets/objaverse/strawberry/strawberry_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05576133355498314
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_115:
+      path: source/assets/objaverse/strawberry/strawberry_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07804570347070694
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    strawberry_116:
+      path: source/assets/objaverse/strawberry/strawberry_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06386015564203262
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_117:
+      path: source/assets/objaverse/rabbit/rabbit_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05211268365383148
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_118:
+      path: source/assets/objaverse/rabbit/rabbit_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08169114589691162
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_119:
+      path: source/assets/objaverse/rabbit/rabbit_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05532706901431084
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_120:
+      path: source/assets/objaverse/rabbit/rabbit_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04421423003077507
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_121:
+      path: source/assets/objaverse/rabbit/rabbit_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06342034041881561
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_122:
+      path: source/assets/objaverse/rabbit/rabbit_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08143198490142822
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_123:
+      path: source/assets/objaverse/rabbit/rabbit_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.041480857878923416
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_124:
+      path: source/assets/objaverse/rabbit/rabbit_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03166402131319046
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_125:
+      path: source/assets/objaverse/rabbit/rabbit_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07210685312747955
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_126:
+      path: source/assets/objaverse/rabbit/rabbit_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01008433848619461
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_127:
+      path: source/assets/objaverse/rabbit/rabbit_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.058133985847234726
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_128:
+      path: source/assets/objaverse/rabbit/rabbit_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04311975836753845
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    rabbit_129:
+      path: source/assets/objaverse/rabbit/rabbit_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08071456104516983
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_130:
+      path: source/assets/objaverse/soupspoon/soupspoon_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.007542804814875126
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_131:
+      path: source/assets/objaverse/soupspoon/soupspoon_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.012245049700140953
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_132:
+      path: source/assets/objaverse/soupspoon/soupspoon_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0825248658657074
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_133:
+      path: source/assets/objaverse/soupspoon/soupspoon_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.006021521985530853
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_134:
+      path: source/assets/objaverse/soupspoon/soupspoon_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004806885961443186
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_135:
+      path: source/assets/objaverse/soupspoon/soupspoon_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.003348235972225666
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_136:
+      path: source/assets/objaverse/soupspoon/soupspoon_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004503278527408838
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_137:
+      path: source/assets/objaverse/soupspoon/soupspoon_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004650217480957508
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_138:
+      path: source/assets/objaverse/soupspoon/soupspoon_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.016367079690098763
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_139:
+      path: source/assets/objaverse/soupspoon/soupspoon_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.013164623640477657
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_140:
+      path: source/assets/objaverse/soupspoon/soupspoon_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.003936082124710083
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_141:
+      path: source/assets/objaverse/soupspoon/soupspoon_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0628417432308197
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_142:
+      path: source/assets/objaverse/soupspoon/soupspoon_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004479899536818266
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_143:
+      path: source/assets/objaverse/soupspoon/soupspoon_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004305962473154068
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_144:
+      path: source/assets/objaverse/soupspoon/soupspoon_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.004872751422226429
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_145:
+      path: source/assets/objaverse/soupspoon/soupspoon_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.006825530435889959
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    soupspoon_146:
+      path: source/assets/objaverse/soupspoon/soupspoon_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03638389706611633
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14

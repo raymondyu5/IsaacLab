@@ -1,0 +1,70 @@
+model:
+  _target_: scripts.inverse_dynamics.lib.models.InverseDynamicsPointNet
+  pcd_feature_dim: 256
+  pcd_in_channels: 3
+  use_transform: false  # Set to true to use T-Net transformations
+  hidden_dims: [512, 512, 512]
+  activation: relu
+  dropout: 0.1
+  name: id_pointnet
+
+data:
+  # Path to zarr episode directory
+  data_path: logs/rl_data_collection/ycb/pcd_residual_chunk/tomato_soup_can
+
+  # Low-dimensional observation keys
+  obs_keys:
+    - right_hand_joint_pos  # 16D
+    - right_ee_pose         # 7D
+    # Total: 23D
+
+  # Pointcloud observation keys
+  image_keys:
+    - seg_pc  # Segmented pointcloud
+
+  # Action key
+  action_key: actions
+
+  # Data split
+  num_episodes: 5  # Changed from 1000 for quick pipeline verification
+  val_ratio: 0.1
+  seed: 42
+
+  # Pointcloud augmentation parameters
+  downsample_points: 2048  # Downsample to 2048 points
+  pcd_noise: 0.02          # XYZ noise ±0.02 m
+  noise_extrinsic: true    # Enable rotation/translation augmentation
+  noise_extrinsic_parameter: [0.05, 0.2]  # [translation_std (m), rotation_std (rad)]
+
+  # Low-dim observation noise (optional)
+  noise_keys:
+    - right_hand_joint_pos
+    - right_ee_pose
+  noise_scale:
+    right_hand_joint_pos: 0.05
+    right_ee_pose: 0.02
+
+training:
+  # Optimization
+  num_epochs: 100
+  learning_rate: 1.0e-4
+  batch_size: 128          # Smaller batch size due to pointcloud memory usage
+  weight_decay: 1.0e-5
+  grad_clip: 1.0
+
+  # LR scheduling
+  lr_scheduler: cosine
+  warmup_epochs: 10
+
+  # Training control
+  save_every_n_epochs: 10
+  early_stopping_patience: 50
+  use_mixed_precision: true
+
+  # Device
+  device: cuda:0
+
+  # Data
+  normalize_data: true
+  num_workers: 8
+  pin_memory: true

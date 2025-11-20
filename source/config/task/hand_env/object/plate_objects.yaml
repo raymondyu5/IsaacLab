@@ -1,0 +1,64 @@
+params:
+  RigidObject:
+
+ 
+    plate01:
+      path: "source/assets/plate/plate01/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.0]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    
+    plate02:
+      path: "source/assets/plate/plate02/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.0]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+      
+
+    plate03:
+      path: "source/assets/plate/plate03/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.0]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]
+    
+    plate04:
+      path: "source/assets/plate/plate04/rigid_object.usd"
+      kinematic_enabled: False
+      scale: [1.0, 1.0, 1.0]
+      pos: [.50, 0.0, 0.0]
+      rot:
+        axis: [0]
+        angles: [0]
+      pose_range:
+          x: [-0.10, 0.10]
+          y: [-0.20, 0.20]
+          z: [0.0, 0.0]
+          roll: [0.0, 0.0]
+          yaw: [-3.14, 3.14]

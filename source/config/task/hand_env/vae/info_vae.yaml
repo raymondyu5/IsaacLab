@@ -1,0 +1,14 @@
+params:
+    vae_type: InfoVAE
+    layer_dims: [32, 16]
+    vae_lr: 0.01
+    batch_size: 1024
+    eval_percent: 0.9
+    epoches: 200
+    use_relatve_pose: False
+    use_state: False
+    latent_dim: 4
+    data_normalizer: null
+    chunk_size: 10
+    encoder_name: ldcp_gru
+    decoder_name: simple_low_level_policy

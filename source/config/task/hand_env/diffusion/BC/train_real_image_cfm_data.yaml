@@ -1,0 +1,177 @@
+defaults:
+  - _self_
+  - task: hand_image
+
+name: train_diffusion_unet_image
+_target_: scripts.workflows.hand_manipulation.utils.diffusion.train_cfm_image_policy.TrainCFMUnetImageWorkspace
+
+task_name: hand_image
+exp_name: "default"
+
+horizon: 16
+n_obs_steps: 2
+n_action_steps: 8
+n_latency_steps: 0
+past_action_visible: False
+keypoint_visible_rate: 1.0
+obs_as_local_cond: False
+obs_as_global_cond: True
+pred_action_steps_only: False
+resize_shape: [256, 256]
+
+shape_meta:
+  action:
+    shape:
+      - 22
+  obs:
+    agent_pos:
+      shape:
+        - 22
+      type: low_dim
+    image:
+      shape:
+        - 3
+        - ${resize_shape.0}
+        - ${resize_shape.1}
+      type: rgb
+    # rgb_1:
+    #   shape:
+    #   - 3
+    #   - ${resize_shape.0}
+    #   - ${resize_shape.1}
+    #   type: rgb
+
+policy:
+  _target_: scripts.workflows.hand_manipulation.utils.diffusion.policy.cfm_image_policy.CFMnetImagePolicy
+  shape_meta: ${shape_meta}
+
+  inference_function:
+    _target_: scripts.workflows.hand_manipulation.utils.diffusion.utils.inference_utils.RK2
+
+  noise_scheduler:
+    _target_: torchcfm.ConditionalFlowMatcher
+    sigma: 0.0
+
+  horizon: ${horizon}
+
+  n_action_steps: ${eval:'${n_action_steps}+${n_latency_steps}'}
+  n_obs_steps: ${n_obs_steps}
+
+  oa_step_convention: True
+  obs_as_global_cond: ${obs_as_global_cond}
+
+  obs_encoder:
+    _target_: diffusion_policy.model.vision.multi_image_obs_encoder.MultiImageObsEncoder
+    shape_meta: ${shape_meta}
+    rgb_model:
+      _target_: diffusion_policy.model.vision.model_getter.get_resnet
+      name: resnet18
+      weights: null
+    resize_shape: null #${resize_shape}
+    crop_shape: null
+    random_crop: True
+    use_group_norm: True
+    share_rgb_model: False
+    imagenet_norm: True
+
+dataset:
+  _target_: scripts.workflows.hand_manipulation.utils.diffusion.dataset.real_dataset.real_hand_image_dataset.RealHandImageDataset
+  data_path: None
+  load_list: None
+  horizon: ${horizon}
+  pad_before: ${eval:'${n_obs_steps}-1'}
+  pad_after: ${eval:'${n_obs_steps}-1'}
+  obs_key: [joint_positions] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
+  noise_key: [right_hand_joint_pos]
+  seed: ${training.seed}
+  resize_shape: ${resize_shape}
+  crop_region: null
+  noise_scale: 0.05
+  val_ratio: 0.05
+
+  add_randomizer: True
+
+  num_demo: 10
+
+ema:
+  _target_: diffusion_policy.model.diffusion.ema_model.EMAModel
+  update_after_step: 0
+  inv_gamma: 1.0
+  power: 0.75
+  min_value: 0.0
+  max_value: 0.9999
+
+dataloader:
+  batch_size: 512
+  num_workers: 32
+  shuffle: True
+  pin_memory: True
+  persistent_workers: False
+
+val_dataloader:
+  batch_size: 8
+  num_workers: 32
+  shuffle: False
+  pin_memory: True
+  persistent_workers: False
+
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1.0e-4
+  betas: [0.95, 0.999]
+  eps: 1.0e-8
+  weight_decay: 1.0e-6
+
+training:
+  device: "cuda:0"
+  seed: 42
+  debug: False
+  resume: False
+  # optimization
+  lr_scheduler: cosine
+  lr_warmup_steps: 500
+  num_epochs: 1000
+  gradient_accumulate_every: 1
+  use_ema: True
+  # training loop control
+  # in epochs
+  rollout_every: 10
+  checkpoint_every: 10
+  val_every: 10
+  sample_every: 5
+  # steps per epoch
+  max_train_steps: null
+  max_val_steps: null
+  # misc
+  tqdm_interval_sec: 1.0
+
+logging:
+  project: diffusion_policy_debug
+  resume: False
+  mode: online
+  name: manipulation_image_cfm_unet
+  tags: ["diffusion", "unet", "image"]
+  id: null
+  group: null
+
+checkpoint:
+  topk:
+    monitor_key: train_loss
+    mode: max
+    k: 5
+    format_str: "epoch={epoch:04d}-train_loss={train_loss:.3f}.ckpt"
+  save_last_ckpt: True
+  save_last_snapshot: False
+
+multi_run:
+  run_dir: logs/
+  wandb_name_base: manipulation_cfm_unet
+
+hydra:
+  job:
+    override_dirname: ${name}
+  run:
+    dir: logs/
+  sweep:
+    dir: logs/
+    subdir: manipulation_image_cfm_unet

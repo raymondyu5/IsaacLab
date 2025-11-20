@@ -1,0 +1,5250 @@
+params:
+  RigidObject:
+    object_0:
+      path: source/assets/objaverse/bottle_cup/object_0/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1231655701994896
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_1:
+      path: source/assets/objaverse/bottle_cup/object_1/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03282812237739563
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_2:
+      path: source/assets/objaverse/bottle_cup/object_2/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.050052642822265625
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_3:
+      path: source/assets/objaverse/bottle_cup/object_3/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0776059702038765
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_4:
+      path: source/assets/objaverse/bottle_cup/object_4/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1074240654706955
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_5:
+      path: source/assets/objaverse/bottle_cup/object_5/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06005410850048065
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_6:
+      path: source/assets/objaverse/bottle_cup/object_6/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.055655237287282944
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_7:
+      path: source/assets/objaverse/bottle_cup/object_7/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.12281521409749985
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_8:
+      path: source/assets/objaverse/bottle_cup/object_8/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0950559452176094
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_9:
+      path: source/assets/objaverse/bottle_cup/object_9/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.050172608345746994
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_10:
+      path: source/assets/objaverse/bottle_cup/object_10/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.12340893596410751
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_11:
+      path: source/assets/objaverse/bottle_cup/object_11/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09512140601873398
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_12:
+      path: source/assets/objaverse/bottle_cup/object_12/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07912098616361618
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_13:
+      path: source/assets/objaverse/bottle_cup/object_13/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047842349857091904
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_14:
+      path: source/assets/objaverse/bottle_cup/object_14/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05479840934276581
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_15:
+      path: source/assets/objaverse/bottle_cup/object_15/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08267311751842499
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_16:
+      path: source/assets/objaverse/bottle_cup/object_16/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07671920210123062
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_17:
+      path: source/assets/objaverse/bottle_cup/object_17/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03494919463992119
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_18:
+      path: source/assets/objaverse/bottle_cup/object_18/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06308954209089279
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_19:
+      path: source/assets/objaverse/bottle_cup/object_19/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09067849814891815
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_20:
+      path: source/assets/objaverse/bottle_cup/object_20/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11531361937522888
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_21:
+      path: source/assets/objaverse/bottle_cup/object_21/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05999999865889549
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_22:
+      path: source/assets/objaverse/bottle_cup/object_22/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.036045171320438385
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_23:
+      path: source/assets/objaverse/bottle_cup/object_23/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04026024416089058
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_24:
+      path: source/assets/objaverse/bottle_cup/object_24/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.052792973816394806
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_25:
+      path: source/assets/objaverse/bottle_cup/object_25/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05999999865889549
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_26:
+      path: source/assets/objaverse/bottle_cup/object_26/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09554330259561539
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_27:
+      path: source/assets/objaverse/bottle_cup/object_27/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0503537617623806
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_28:
+      path: source/assets/objaverse/bottle_cup/object_28/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06066333130002022
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_29:
+      path: source/assets/objaverse/bottle_cup/object_29/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07788404077291489
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_30:
+      path: source/assets/objaverse/bottle_cup/object_30/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.01762237772345543
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_31:
+      path: source/assets/objaverse/bottle_cup/object_31/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04482026770710945
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_32:
+      path: source/assets/objaverse/bottle_cup/object_32/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11979991942644119
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_33:
+      path: source/assets/objaverse/bottle_cup/object_33/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11853957176208496
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_34:
+      path: source/assets/objaverse/bottle_cup/object_34/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03993535786867142
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_35:
+      path: source/assets/objaverse/bottle_cup/object_35/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11020104587078094
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_36:
+      path: source/assets/objaverse/bottle_cup/object_36/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10509990900754929
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_37:
+      path: source/assets/objaverse/bottle_cup/object_37/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08501438796520233
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_38:
+      path: source/assets/objaverse/bottle_cup/object_38/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0682155191898346
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_39:
+      path: source/assets/objaverse/bottle_cup/object_39/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05417391657829285
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_40:
+      path: source/assets/objaverse/bottle_cup/object_40/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09064934402704239
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_41:
+      path: source/assets/objaverse/bottle_cup/object_41/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.101026751101017
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_42:
+      path: source/assets/objaverse/bottle_cup/object_42/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07729404419660568
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_43:
+      path: source/assets/objaverse/bottle_cup/object_43/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09732819348573685
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_44:
+      path: source/assets/objaverse/bottle_cup/object_44/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.044150374829769135
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_45:
+      path: source/assets/objaverse/bottle_cup/object_45/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05207362398505211
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_46:
+      path: source/assets/objaverse/bottle_cup/object_46/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08802732825279236
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_47:
+      path: source/assets/objaverse/bottle_cup/object_47/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09168684482574463
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_48:
+      path: source/assets/objaverse/bottle_cup/object_48/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09937180578708649
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_49:
+      path: source/assets/objaverse/bottle_cup/object_49/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08365286141633987
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_50:
+      path: source/assets/objaverse/bottle_cup/object_50/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10930326581001282
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_51:
+      path: source/assets/objaverse/bottle_cup/object_51/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07393333315849304
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_52:
+      path: source/assets/objaverse/bottle_cup/object_52/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06359372287988663
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_53:
+      path: source/assets/objaverse/bottle_cup/object_53/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0880969911813736
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_54:
+      path: source/assets/objaverse/bottle_cup/object_54/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09609244763851166
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_55:
+      path: source/assets/objaverse/bottle_cup/object_55/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05727681517601013
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_56:
+      path: source/assets/objaverse/bottle_cup/object_56/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047968789935112
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_57:
+      path: source/assets/objaverse/bottle_cup/object_57/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10492294281721115
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_58:
+      path: source/assets/objaverse/bottle_cup/object_58/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09057619422674179
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_59:
+      path: source/assets/objaverse/bottle_cup/object_59/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0916605219244957
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_60:
+      path: source/assets/objaverse/bottle_cup/object_60/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11849154531955719
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_61:
+      path: source/assets/objaverse/bottle_cup/object_61/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1021936684846878
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_62:
+      path: source/assets/objaverse/bottle_cup/object_62/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.032717011868953705
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_63:
+      path: source/assets/objaverse/bottle_cup/object_63/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07593673467636108
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_64:
+      path: source/assets/objaverse/bottle_cup/object_64/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06160178780555725
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_65:
+      path: source/assets/objaverse/bottle_cup/object_65/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0838683694601059
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_66:
+      path: source/assets/objaverse/bottle_cup/object_66/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.047226402908563614
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_67:
+      path: source/assets/objaverse/bottle_cup/object_67/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07979219406843185
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_68:
+      path: source/assets/objaverse/bottle_cup/object_68/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09116806089878082
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_69:
+      path: source/assets/objaverse/bottle_cup/object_69/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.048737384378910065
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_70:
+      path: source/assets/objaverse/bottle_cup/object_70/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11854395270347595
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_71:
+      path: source/assets/objaverse/bottle_cup/object_71/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0013554362813010812
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_72:
+      path: source/assets/objaverse/bottle_cup/object_72/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08956798911094666
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_73:
+      path: source/assets/objaverse/bottle_cup/object_73/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04532063752412796
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_74:
+      path: source/assets/objaverse/bottle_cup/object_74/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08993163704872131
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_75:
+      path: source/assets/objaverse/bottle_cup/object_75/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09634899348020554
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_76:
+      path: source/assets/objaverse/bottle_cup/object_76/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.049791015684604645
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_77:
+      path: source/assets/objaverse/bottle_cup/object_77/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04890219122171402
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_78:
+      path: source/assets/objaverse/bottle_cup/object_78/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04166071489453316
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_79:
+      path: source/assets/objaverse/bottle_cup/object_79/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.038094885647296906
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_80:
+      path: source/assets/objaverse/bottle_cup/object_80/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09025806188583374
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_81:
+      path: source/assets/objaverse/bottle_cup/object_81/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02739611268043518
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_82:
+      path: source/assets/objaverse/bottle_cup/object_82/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03093523159623146
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_83:
+      path: source/assets/objaverse/bottle_cup/object_83/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1244102194905281
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_84:
+      path: source/assets/objaverse/bottle_cup/object_84/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0958828404545784
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_85:
+      path: source/assets/objaverse/bottle_cup/object_85/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.023855090141296387
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_86:
+      path: source/assets/objaverse/bottle_cup/object_86/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03762461617588997
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_87:
+      path: source/assets/objaverse/bottle_cup/object_87/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.023012524470686913
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_88:
+      path: source/assets/objaverse/bottle_cup/object_88/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0925048366189003
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_89:
+      path: source/assets/objaverse/bottle_cup/object_89/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11687162518501282
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_90:
+      path: source/assets/objaverse/bottle_cup/object_90/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10980693995952606
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_91:
+      path: source/assets/objaverse/bottle_cup/object_91/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10249505192041397
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_92:
+      path: source/assets/objaverse/bottle_cup/object_92/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08340141922235489
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_93:
+      path: source/assets/objaverse/bottle_cup/object_93/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03018902987241745
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_94:
+      path: source/assets/objaverse/bottle_cup/object_94/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06150663271546364
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_95:
+      path: source/assets/objaverse/bottle_cup/object_95/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.040995679795742035
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_96:
+      path: source/assets/objaverse/bottle_cup/object_96/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04465934634208679
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_97:
+      path: source/assets/objaverse/bottle_cup/object_97/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11467774212360382
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_98:
+      path: source/assets/objaverse/bottle_cup/object_98/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05692431330680847
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_99:
+      path: source/assets/objaverse/bottle_cup/object_99/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10684920847415924
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_100:
+      path: source/assets/objaverse/bottle_cup/object_100/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.031199580058455467
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_101:
+      path: source/assets/objaverse/bottle_cup/object_101/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04890219122171402
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_102:
+      path: source/assets/objaverse/bottle_cup/object_102/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06224239990115166
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_103:
+      path: source/assets/objaverse/bottle_cup/object_103/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04593190923333168
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_104:
+      path: source/assets/objaverse/bottle_cup/object_104/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04456252604722977
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_105:
+      path: source/assets/objaverse/bottle_cup/object_105/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11168298125267029
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_106:
+      path: source/assets/objaverse/bottle_cup/object_106/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07791599631309509
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_107:
+      path: source/assets/objaverse/bottle_cup/object_107/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1094965934753418
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_108:
+      path: source/assets/objaverse/bottle_cup/object_108/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0705568864941597
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_109:
+      path: source/assets/objaverse/bottle_cup/object_109/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08648962527513504
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_110:
+      path: source/assets/objaverse/bottle_cup/object_110/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05235769972205162
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_111:
+      path: source/assets/objaverse/bottle_cup/object_111/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08516799658536911
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_112:
+      path: source/assets/objaverse/bottle_cup/object_112/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08121693879365921
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_113:
+      path: source/assets/objaverse/bottle_cup/object_113/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06888135522603989
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_114:
+      path: source/assets/objaverse/bottle_cup/object_114/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03620538488030434
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_115:
+      path: source/assets/objaverse/bottle_cup/object_115/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08824340254068375
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_116:
+      path: source/assets/objaverse/bottle_cup/object_116/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04864247143268585
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_117:
+      path: source/assets/objaverse/bottle_cup/object_117/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10578421503305435
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_118:
+      path: source/assets/objaverse/bottle_cup/object_118/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.1205793023109436
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_119:
+      path: source/assets/objaverse/bottle_cup/object_119/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11791790276765823
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_120:
+      path: source/assets/objaverse/bottle_cup/object_120/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.12095269560813904
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_121:
+      path: source/assets/objaverse/bottle_cup/object_121/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0776297003030777
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_122:
+      path: source/assets/objaverse/bottle_cup/object_122/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10779020190238953
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_123:
+      path: source/assets/objaverse/bottle_cup/object_123/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09360361099243164
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_124:
+      path: source/assets/objaverse/bottle_cup/object_124/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10866577178239822
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_125:
+      path: source/assets/objaverse/bottle_cup/object_125/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04490366950631142
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_126:
+      path: source/assets/objaverse/bottle_cup/object_126/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.03970174118876457
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_127:
+      path: source/assets/objaverse/bottle_cup/object_127/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05293397605419159
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_128:
+      path: source/assets/objaverse/bottle_cup/object_128/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.036035533994436264
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_129:
+      path: source/assets/objaverse/bottle_cup/object_129/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0416124202311039
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_130:
+      path: source/assets/objaverse/bottle_cup/object_130/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.060048699378967285
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_131:
+      path: source/assets/objaverse/bottle_cup/object_131/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08772747218608856
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_132:
+      path: source/assets/objaverse/bottle_cup/object_132/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08399999886751175
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_133:
+      path: source/assets/objaverse/bottle_cup/object_133/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07718239724636078
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_134:
+      path: source/assets/objaverse/bottle_cup/object_134/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11384015530347824
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_135:
+      path: source/assets/objaverse/bottle_cup/object_135/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09241876751184464
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_136:
+      path: source/assets/objaverse/bottle_cup/object_136/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.035966042429208755
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_137:
+      path: source/assets/objaverse/bottle_cup/object_137/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09007268399000168
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_138:
+      path: source/assets/objaverse/bottle_cup/object_138/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.035891421139240265
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_139:
+      path: source/assets/objaverse/bottle_cup/object_139/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11898558586835861
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_140:
+      path: source/assets/objaverse/bottle_cup/object_140/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.06653157621622086
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_141:
+      path: source/assets/objaverse/bottle_cup/object_141/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.09869638085365295
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_142:
+      path: source/assets/objaverse/bottle_cup/object_142/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08664575964212418
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_143:
+      path: source/assets/objaverse/bottle_cup/object_143/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11882705986499786
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_144:
+      path: source/assets/objaverse/bottle_cup/object_144/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.044600218534469604
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_145:
+      path: source/assets/objaverse/bottle_cup/object_145/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08033528923988342
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_146:
+      path: source/assets/objaverse/bottle_cup/object_146/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0835346132516861
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_147:
+      path: source/assets/objaverse/bottle_cup/object_147/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11571585386991501
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_148:
+      path: source/assets/objaverse/bottle_cup/object_148/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08068268746137619
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_149:
+      path: source/assets/objaverse/bottle_cup/object_149/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11715079843997955
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_150:
+      path: source/assets/objaverse/bottle_cup/object_150/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08183877915143967
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_151:
+      path: source/assets/objaverse/bottle_cup/object_151/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.07948429137468338
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_152:
+      path: source/assets/objaverse/bottle_cup/object_152/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.05330575257539749
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_153:
+      path: source/assets/objaverse/bottle_cup/object_153/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.11832746863365173
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_154:
+      path: source/assets/objaverse/bottle_cup/object_154/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.12198150902986526
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_155:
+      path: source/assets/objaverse/bottle_cup/object_155/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02683243714272976
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_156:
+      path: source/assets/objaverse/bottle_cup/object_156/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.055263977497816086
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_157:
+      path: source/assets/objaverse/bottle_cup/object_157/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.02417001500725746
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_158:
+      path: source/assets/objaverse/bottle_cup/object_158/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08860394358634949
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_159:
+      path: source/assets/objaverse/bottle_cup/object_159/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.08096525818109512
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_160:
+      path: source/assets/objaverse/bottle_cup/object_160/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10906680673360825
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_161:
+      path: source/assets/objaverse/bottle_cup/object_161/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.0935240387916565
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_162:
+      path: source/assets/objaverse/bottle_cup/object_162/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.040090661495923996
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14
+    object_163:
+      path: source/assets/objaverse/bottle_cup/object_163/rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.10123027861118317
+      rot:
+        axis:
+        - 0
+        angles:
+        - 1.57
+      pose_range:
+        x:
+        - -0.1
+        - 0.1
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - -3.14
+        - 3.14

@@ -1,0 +1,77 @@
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+pip install torch_geometric
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+pip install open3d
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+cd ..
+ls
+cd 
+ls
+cd Documents/
+ls
+cd ki
+cd Kit/
+ls
+cd ..
+cd /root/
+ls
+vim 
+sudo apt install vim
+cd /workspace/isaaclab/
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+pip install easyhid
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+pip install pyg_lib torch_scatter torch_sparse torch_cluster torch_spline_conv -f https://data.pyg.org/whl/torch-2.7.0+cu128.html
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+pip install pymeshlab
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+cd source/
+ls
+cd assets/
+ls
+cd /workspace/isaaclab/source/assets/ycb/dexgrasp/objects
+ls
+cd /workspace/isaaclab/source/assets/ycb/dexgrasp/objects/tomato_soup_can
+ls
+cd /workspace/I
+cd /workspace/isaaclab/
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+clear
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+clear
+rm -rf _isaac_sim
+cd ..
+git clone ./docker/container.py start
+git clone https://github.com/isaac-sim/IsaacSim.git
+cd IsaacSim/
+./build.sh 
+clea
+clear
+cd _build/linux-x86_64/
+l
+cd release/
+ls
+[wd
+pwd
+cd /workspace/IsaacSim/
+clear
+cd ..
+cd isaaclab/
+ln -s /workspace/IsaacSim/_build/linux-x86_64/release _isaac_sim
+./isaaclab.sh -p scripts/workflows/hand_manipulation/zero_agent.py --task Isaac-Hand-Robot-Place-IK-Rel-v0 --num_envs 1 --log_dir logs/data_0705/retarget_visionpro_data/rl_data/ --config_file source/config/task/hand_env/leap_franka/teleoperation/place_ycb.yaml  --add_right_hand --enable_cameras 
+./isaaclab.sh 
+./isaaclab.sh -i
+exit
+ls
+cd ..
+ls
+clear
+cd isaaclab/
+exit

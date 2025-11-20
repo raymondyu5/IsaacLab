@@ -1,0 +1,144 @@
+defaults:
+  - task: train_vae
+  
+  - at: hand_manipualtio 
+  - _self_
+
+name: train_vae
+_target_: scripts.workflows.hand_manipulation.utils.vae.reactive_diffusion_policy.train_at_workspace.TrainATWorkspace
+
+shape_meta: &shape_meta
+  # acceptable types: rgb, low_dim
+  obs:
+    state:
+      shape: [16]
+      type: low_dim
+  extended_obs: # for the AT RNN decoder of the latent diffusion policy
+    state:
+      shape: [16]
+      type: low_dim
+    
+  action:
+    shape: [16] 
+task_name: hand_manipualtion
+
+exp_name: "default"
+use_state: True
+horizon: 8
+n_obs_steps: 2
+n_action_steps: 8
+n_latency_steps: 0
+n_latent_dims: 4
+mlp_layer_num: 1
+use_conv_encoder: True
+state_dim: 16
+conv_latent_dims: 32
+conv_layer_num: 1
+use_rnn_decoder: False
+rnn_latent_dims: 32
+rnn_layer_num: 1
+kl_multiplier: 1e-6 # keep it small for non-strict regularization
+n_embed: 16
+# ==============
+use_vq: False
+vqvae_groups: 4
+eval: false
+act_scale: 1
+dataset_obs_temporal_downsample_ratio: 2
+dataset_obs_steps: ${eval:'${n_obs_steps}*${dataset_obs_temporal_downsample_ratio}'} # for latent diffusion policy with 24fps
+
+
+
+
+policy:
+  _target_: scripts.workflows.hand_manipulation.utils.vae.reactive_diffusion_policy.model_state.VAE
+  shape_meta: ${shape_meta}
+  horizon: ${horizon}
+  n_latent_dims: ${n_latent_dims}
+  mlp_layer_num: ${mlp_layer_num}
+  use_conv_encoder: ${use_conv_encoder}
+  conv_latent_dims: ${conv_latent_dims}
+  conv_layer_num: ${conv_layer_num}
+  use_rnn_decoder: ${use_rnn_decoder}
+  rnn_latent_dims: ${rnn_latent_dims}
+  rnn_layer_num: ${rnn_layer_num}
+  kl_multiplier: ${kl_multiplier}
+  n_embed: ${n_embed}
+  # ==============
+  use_vq: ${use_vq}
+  vqvae_groups: ${vqvae_groups}
+  eval: ${eval}
+  act_scale: ${act_scale}
+  state_dim: ${state_dim}
+
+dataloader:
+  batch_size: 64
+  num_workers: 4
+  shuffle: True
+  pin_memory: True
+  persistent_workers: True
+
+val_dataloader:
+  batch_size: 64
+  num_workers: 4
+  shuffle: False
+  pin_memory: True
+  persistent_workers: True
+
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+
+training:
+  device: "cuda:0"
+  seed: 42
+  debug: False
+  resume: False
+  # optimization
+  lr_scheduler: cosine
+  lr_warmup_steps: 100
+  num_epochs: 601
+  gradient_accumulate_every: 1
+  # EMA destroys performance when used with BatchNorm
+  # replace BatchNorm with GroupNorm.
+  use_ema: False
+  freeze_encoder: False
+  # training loop control
+  # in epochs
+  rollout_every: -1 # dummy
+  checkpoint_every: 10
+  val_every: 1
+  sample_every: -1 # dummy
+  # steps per epoch
+  max_train_steps: null
+  max_val_steps: null
+  # misc
+  tqdm_interval_sec: 1.0
+
+logging:
+  project: reactive_diffusion_policy_hand
+  resume: False
+  mode: online
+  name: hand_manipulation_vae
+  tags: ["hand_manipulation", "vae", "reactive_diffusion_policy"]
+  id: null
+  group: null
+
+checkpoint:
+  topk:
+    monitor_key: train_loss
+    mode: min
+    k: 1
+    format_str: 'epoch={epoch:04d}-train_loss={train_loss:.6f}.ckpt'
+  save_last_ckpt: True
+  save_last_snapshot: False
+
+hydra:
+  job:
+    override_dirname: ${name}
+  run:
+    dir: logs/
+  sweep:
+    dir: logs/
+    subdir: reactive_diffusion_policy_hand

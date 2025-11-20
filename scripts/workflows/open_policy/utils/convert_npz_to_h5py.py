@@ -1,0 +1,206 @@
+from tools.visualization_utils import *
+
+from isaaclab.app import AppLauncher
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+# import open3d as o3d
+from scripts.workflows.utils.parse_setting import save_params_to_yaml, parser
+import pickle
+import json
+
+parser.add_argument("--use_failure",
+                    action="store_true",
+                    default=False,
+                    help="Disable fabric and use USD I/O operations.")
+parser.add_argument(
+    "--use_time",
+    action="store_true",
+    default=False,
+)
+
+AppLauncher.add_app_launcher_args(parser)
+# parse the arguments
+args_cli = parser.parse_args()
+
+# # # launch omniverse app
+
+from scripts.workflows.utils.robomimc_collector import RobomimicDataCollector, sample_train_test
+import json
+import h5py
+import os
+import shutil
+import numpy as np
+from scripts.workflows.utils.parse_setting import save_params_to_yaml, parser
+from scripts.workflows.utils.client.openvla_client import resize_image
+
+args_cli = parser.parse_args()
+import torch
+
+
+def convert_to_serializable(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()  # Convert NumPy arrays to lists
+    if isinstance(obj, np.float32) or isinstance(obj, np.float64):
+        return float(obj)  # Convert NumPy floats to Python floats
+    if isinstance(obj, np.int32) or isinstance(obj, np.int64):
+        return int(obj)  # Convert NumPy ints to Python ints
+    return obj
+
+
+class Converter:
+
+    def __init__(
+        self,
+        args_cli,
+        filter_keys,
+        noramilize_action=False,
+    ):
+        self.args_cli = args_cli
+        self.load_path = args_cli.log_dir + "/" + args_cli.load_path
+        self.save_path = args_cli.log_dir + "/" + args_cli.save_path
+
+        self.end_name = args_cli.end_name
+        self.add_noise = args_cli.noise_pc
+        self.filter_keys = filter_keys
+
+        if self.add_noise:
+            self.noise_level = 2.0
+            self.noise_name = "_noise"
+        else:
+            self.noise_level = 0
+            self.noise_name = ""
+
+        if "IK" not in args_cli.task:
+            self.end_name += "_joint_pos"
+            # self.noise_name += "_joint_pos"
+        self.noramilize_action = noramilize_action
+
+        self.init_collector_interface()
+
+    def init_collectors(self, num_demos, filename):
+
+        collector_interface = RobomimicDataCollector(
+            self.args_cli.task, os.path.dirname(self.save_path), filename,
+            num_demos)
+        collector_interface.reset()
+
+        return collector_interface
+
+    def init_collector_interface(self):
+
+        self.collector_interface = self.init_collectors(
+            self.args_cli.num_demos,
+            filename=self.save_path.split("/")[-1] + self.end_name +
+            self.noise_name)
+
+    def filter_obs_buffer(self, obs_buffer, index, obs_name="obs"):
+
+        if "policy" in obs_buffer[index]:
+            obs = obs_buffer[index]["policy"]
+        else:
+            obs = obs_buffer[index]
+
+        for key, value in obs.items():
+            if key in self.filter_keys:
+                continue
+
+            if key == "gs_image":
+
+                value = resize_image(value[0, 0].cpu().numpy(),
+                                     (224, 224))[None]
+
+            self.collector_interface.add(f"{obs_name}/{key}",
+                                         value[self.success_or_not])
+
+    def convert(self):
+
+        self.env_config = np.load(f"{self.load_path}/env_setting.npy",
+                                  allow_pickle=True)
+
+        config = self.env_config.item()
+
+        # Use the `default` parameter of json.dumps to handle non-serializable objects
+        json_string = json.dumps(config,
+                                 default=convert_to_serializable,
+                                 indent=4)
+        self.collector_interface._h5_data_group.attrs[
+            "env_setting"] = json_string
+
+        for file in os.listdir(f"{self.load_path}{self.end_name}"):
+            if file.endswith(".npz"):
+                data = torch.load(os.path.join(
+                    f"{self.load_path}{self.end_name}", file),
+                                  pickle_module=pickle)
+
+                if not self.args_cli.use_failure:
+                    if "success_or_not" in data["obs"][-1]["policy"].keys():
+                        self.success_or_not = data["obs"][-1]["policy"][
+                            "success_or_not"].reshape(-1)
+                    else:
+                        success_or_not = data["rewards"][-1] > 10
+                else:
+                    self.success_or_not = torch.tensor(
+                        [True] *
+                        data["obs"][-1]["policy"]["joint_pos"].shape[0], )
+
+                obs_buffer = data["obs"]
+                actions_buffer = data["actions"]
+
+                rewards_buffer = data["rewards"]
+                does_buffer = data["dones"]
+
+                print("trajectories length: ", len(obs_buffer))
+
+                for index in range(len(obs_buffer)):
+
+                    self.filter_obs_buffer(obs_buffer, index, obs_name="obs")
+                    # if "next_obs" in data.keys():
+                    #     self.filter_obs_buffer(data["next_obs"],
+                    #                            index,
+                    #                            obs_name="next_obs")
+                    rewards = rewards_buffer[index]
+                    dones = does_buffer[index]
+                    if index == len(obs_buffer) - 1:
+                        dones[:] = torch.tensor([True], device='cuda:0')
+                    else:
+                        dones[:] = torch.tensor([False], device='cuda:0')
+
+                    self.collector_interface.add(
+                        "actions",
+                        actions_buffer[index][[self.success_or_not]])
+
+                    self.collector_interface.add(
+                        "rewards", rewards[[self.success_or_not]])
+
+                    self.collector_interface.add("dones",
+                                                 dones[[self.success_or_not]])
+
+                    reset_env_ids = dones[[
+                        self.success_or_not
+                    ]].nonzero(as_tuple=False).squeeze(-1)
+
+                    # if args_cli.use_time:
+                    #     self.collector_interface.add(
+                    #         f"obs/timestep",
+                    #         torch.tensor([[index]], device='cuda:0'))
+                    #     if "next_obs" in data.keys():
+                    #         self.collector_interface.add(
+                    #             f"next_obs/timestep",
+                    #             torch.tensor([[index + 1]], device='cuda:0'))
+
+                    self.collector_interface.flush(reset_env_ids)
+                    torch.cuda.empty_cache()
+        file_name = self.save_path.split("/")[-1]
+
+        sample_train_test(
+            h5py.File(
+                os.path.dirname(self.save_path) + f"/{file_name}" +
+                self.end_name + self.noise_name + ".hdf5", 'r+'))
+
+        return False
+
+
+Converter(args_cli,
+          filter_keys=["segmentation", "seg_rgb", "id2lables", "seg_pc"],
+          noramilize_action=True).convert()

@@ -1,0 +1,80 @@
+params:
+  Robot:
+    qpos:
+      {
+        "panda_joint1": 0.5071,
+        "panda_joint2": -0.5104,
+        "panda_joint3": -0.4926,
+        "panda_joint4": -2.5945,
+        "panda_joint5": -0.2663,
+        "panda_joint6": 2.1293,
+        "panda_joint7": 0.88,
+        "panda_finger_joint.*": 0.04,
+      }
+  DeformableObject:
+    deform_object:
+      path: "source/assets/Tube/tube/usd/tube.usd"
+      simulation_hexahedral_resolution: 30
+      vertex_velocity_damping: 0.5
+      scale: [1.0, 1.0, 1.0]
+      pos: [0.6, 0.0, 0.01]
+      rot:
+        axis: [2]
+        angles: [1.57]
+      random_parmas: False
+      params:
+        dynamic_friction: [0.10, 1.0]
+        youngs_modulus: [3000000, 3000000000]
+        poissons_ratio: [0.1, 0.50]
+        elasticity_damping: [0.00, 20]
+        damping_scale: [0.1, 1.0]
+        simulation_hexahedral_resolution: [2, 64]
+        mass: [0.1, 1000]
+      attach_robot:
+        init: False
+        attach_object_path: "/World/envs/env_.*/Robot/panda_hand"
+        attach_offset: [0, 0, -0.33]
+        attact_yet: False
+
+  RigidObject:
+    # rigid_object:
+    #   path: "source/assets/Tube/breaker/usd/beaker_500ml.usd"
+    #   scale: [0.2, 0.2, 1.0]
+    #   pos: [0.5, 0.2, 0.085]
+    #   rot:
+    #     axis: [0]
+    #     angles: [0]
+
+  Camera:
+    initial: False
+    cameras:
+      camera:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "distance_to_image_plane"]
+        update_period: 0.03
+        pos: [0.9, -2.2, 1.4]
+        rot:
+          axis: [1, 0, 2, 0]
+          angles: [-1.57, -1.57, -1.57, -0.55]
+      camera1:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "distance_to_image_plane"]
+        update_period: 0.03
+        pos: [0.9, 2.2, 1.4]
+        rot:
+          axis: [1, 0, 2, 0]
+          angles: [-1.57, -1.57, 1.57, 0.55]
+      camera2:
+        camera_type: "camera"
+        height: 480
+        width: 640
+        data_types: ["rgb", "distance_to_image_plane"]
+        update_period: 0.03
+        pos: [3.0, 0, 1.2]
+        rot:
+          axis: [1, 0, 1]
+          angles: [-1.57, -1.57, -0.55]
