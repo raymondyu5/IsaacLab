@@ -27,10 +27,12 @@ import isaaclab_tasks.manager_based.manipulation.inhand.mdp as mdp
 from scripts.workflows.utils.config_setting import set_from_config
 from isaaclab.sim.spawners import GroundPlaneCfg, UsdFileCfg
 from isaaclab.markers import VisualizationMarkersCfg, VisualizationMarkers
+import os
 ##
 # Scene definition
 ##
 
+ISAAC_ADDL_ASSETS_DIR = os.environ.get("ISAAC_ADDL_ASSETS_DIR", "/workspace/assets")
 
 @configclass
 class InHandObjectSceneCfg(InteractiveSceneCfg):
@@ -44,7 +46,7 @@ class InHandObjectSceneCfg(InteractiveSceneCfg):
         init_state=AssetBaseCfg.InitialStateCfg(pos=[0.3, -0.0, -0.0],
                                                 rot=[0.707, 0, 0, 0.707]),
         spawn=UsdFileCfg(
-            usd_path="/workspace/assets/table/table_instanceable.usd",
+            usd_path=os.path.join(ISAAC_ADDL_ASSETS_DIR, "table", "table_instanceable.usd"),
             scale=[1.0, 1.0, 1.0]),
     )
 

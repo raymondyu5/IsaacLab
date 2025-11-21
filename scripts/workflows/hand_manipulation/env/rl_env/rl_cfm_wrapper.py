@@ -5,7 +5,6 @@ import torch
 import numpy as np
 
 import matplotlib.pyplot as plt
-from scripts.workflows.hand_manipulation.env.teleop_env.motion_planner_env import ArmMotionPlannerEnv
 import sys
 
 sys.path.append("submodule/benchmark_VAE/src")

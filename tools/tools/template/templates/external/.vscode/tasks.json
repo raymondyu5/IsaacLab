@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "setup_python_env",
+            "type": "shell",
+            "linux": {
+                "command": "${input:isaac_path}/python.sh ${workspaceFolder}/.vscode/tools/setup_vscode.py --isaac_path ${input:isaac_path}"
+            },
+            "windows": {
+                "command": "${input:isaac_path}/python.bat ${workspaceFolder}/.vscode/tools/setup_vscode.py --isaac_path ${input:isaac_path}"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "isaac_path",
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "description": "Absolute path to the current Isaac Sim installation. Can be skipped if Isaac Sim installed from pip.",
+=======
+            "description": "Absolute path to the current Isaac Sim installation. If you installed IsaacSim from pip, the import of it failed. Please make sure you run the task with the correct python environment. As fallback, you can directly execute the python script by running: ``python.sh <path-to-your-project>/.vscode/tools/setup_vscode.py``",
+>>>>>>> 21bcb476b27ceedccccd63afef6bbd822adc2b2b
+=======
+            "description": "Absolute path to the current Isaac Sim installation. If you installed IsaacSim from pip, the import of it failed. Please make sure you run the task with the correct python environment. As fallback, you can directly execute the python script by running: ``python.sh <path-to-your-project>/.vscode/tools/setup_vscode.py``",
+>>>>>>> 6f59b88ff6f3b15b63d534cc2165190b213b691f
+=======
+            "description": "Absolute path to the current Isaac Sim installation. If you installed IsaacSim from pip, the import of it failed. Please make sure you run the task with the correct python environment. As fallback, you can directly execute the python script by running: ``python.sh <path-to-your-project>/.vscode/tools/setup_vscode.py``",
+>>>>>>> ec38e601e0544f1ae07a75b2db023fedfab6a1bc
+{% if platform == "win32" %}
+            "default": "C:/isaacsim",
+{% else %}
+            "default": "${HOME}/isaacsim",
+{% endif %}
+            "type": "promptString"
+        },
+    ]
+}

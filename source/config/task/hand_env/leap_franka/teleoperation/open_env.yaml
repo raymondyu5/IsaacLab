@@ -34,7 +34,6 @@ params:
   right_target_manipulated_object_pose: [0.60, 0.10, 0.40, 1.0, 0.0, 0.0, 0.0]
   target_manipulated_object_pose: [0.25,0.4]
   pick_object_names: [tomato_soup_can, large_marker, bottle03, extra_large_clamp, pudding_box, mustard_bottle, tuna_fish_can, mug, potted_meat_can, bottle02, bleach_cleanser, bowl, sugar_box, master_chef_can, bottle01, banana, foam_brick, gelatin_box, bunny, cat, bottle05]
-  
 
   default_root_state:
 
