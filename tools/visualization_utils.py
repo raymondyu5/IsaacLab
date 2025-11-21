@@ -307,11 +307,20 @@ def visualize_pcd(pc_list,
         pc_copy.translate(translation)
         vis.add_geometry(pc_copy)
 
-    # Load render settings and viewpoint
-    vis.get_render_option().load_from_json('tools/render_option.json')
-    param = o3d.io.read_pinhole_camera_parameters('tools/view_point.json')
-    vis.get_view_control().convert_from_pinhole_camera_parameters(
-        param, allow_arbitrary=True)
+    # Load render settings and viewpoint (optional, for better visualization)
+    render_option = vis.get_render_option()
+    if render_option is not None:
+        render_option_path = 'tools/render_option.json'
+        if os.path.exists(render_option_path):
+            render_option.load_from_json(render_option_path)
+    
+    view_point_path = 'tools/view_point.json'
+    if os.path.exists(view_point_path):
+        param = o3d.io.read_pinhole_camera_parameters(view_point_path)
+        view_control = vis.get_view_control()
+        if view_control is not None:
+            view_control.convert_from_pinhole_camera_parameters(
+                param, allow_arbitrary=True)
 
     # Render or display
     if video_writer is not None or render:
@@ -319,12 +328,14 @@ def visualize_pcd(pc_list,
         image = (np.asarray(image_float_buffer) * 255).astype(
             np.uint8)[:, :, [2, 1, 0]]
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        vis.destroy_window()
         if video_writer is not None:
             video_writer.append_data(image)
         else:
             return image
     else:
         vis.run()
+        vis.destroy_window()
 
 
 def vis_pc(pc,
