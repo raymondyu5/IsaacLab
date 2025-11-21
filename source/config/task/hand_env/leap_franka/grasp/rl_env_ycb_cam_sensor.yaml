@@ -52,7 +52,7 @@ params:
   Task:
     action_range: [0.8,1.5,5,0.1]
     joint_range: [1,5,0.1]
-    horizon: 180
+    horizon: 80
 
   contact_sensor:
     init: True
@@ -248,7 +248,7 @@ params:
 
   Camera:
     initial: True
-    random_pose: False
+    random_pose: True 
     camera_json: null
     robot_name: "right_hand"
     focal_length_range: [22, 26]

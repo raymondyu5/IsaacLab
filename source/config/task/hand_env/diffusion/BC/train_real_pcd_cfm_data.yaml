@@ -67,7 +67,7 @@ dataset:
   pad_before: ${eval:'${n_obs_steps}-1'}
   pad_after: ${eval:'${n_obs_steps}-1'}
   obs_key: [joint_positions, gripper_position] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
-  camera_id: [CL8384200N1]
+  camera_id: [CL838420160]
 
   noise_key: [joint_positions, gripper_position]
   seed: ${training.seed}

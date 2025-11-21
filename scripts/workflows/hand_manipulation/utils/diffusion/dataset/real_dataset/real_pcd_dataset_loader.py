@@ -96,10 +96,20 @@ class RealPCDDatasetLoader:
             episode_npy = os.path.join(self.data_path, path_key, path_key + ".npy")
             is_flat_structure = os.path.exists(episode_npy)
 
+            if not is_flat_structure:
+                # Check if it's a nested structure (has episode subdirectories)
+                nested_episodes = [f for f in os.listdir(self.data_path + "/" + path_key)
+                                   if os.path.isdir(os.path.join(self.data_path, path_key, f))
+                                   and f.startswith("episode_")]
+                if not nested_episodes:
+                    print(f"Skipping {path_key}: no episode .npy file and not a nested structure")
+                    continue
+
             if is_flat_structure:
                 # Flat structure: data_path/episode_X/episode_X.npy
                 npy_path = episode_npy
                 if not os.path.exists(npy_path):
+                    print(f"Skipping {path_key}: episode .npy file not found")
                     continue
                 print(f"{path_key}")
 
@@ -107,6 +117,27 @@ class RealPCDDatasetLoader:
                 env_info = np.load(npy_path, allow_pickle=True).item()
                 state_info = env_info['obs']
                 action_info = np.array(env_info['actions'])
+                num_steps = len(action_info)
+
+                # Validate PCD files exist BEFORE loading any data
+                skip_episode = False
+                for _, cam_id in enumerate(self.camera_id):
+                    pcd_list = sorted([
+                        os.path.join(self.data_path, path_key, f)
+                        for f in os.listdir(os.path.join(self.data_path, path_key))
+                        if f.endswith(".npy") and path_key not in f
+                        and cam_id in f
+                    ])
+
+                    if len(pcd_list) != num_steps:
+                        print(f"⚠️  Skipping {path_key}: PCD count {len(pcd_list)} != action count {num_steps} for camera {cam_id}")
+                        skip_episode = True
+                        break
+
+                if skip_episode:
+                    continue
+
+                # Now safe to load observations
                 obs_buffer["action"].append(copy.deepcopy(action_info))
 
                 # low level obs
@@ -132,10 +163,6 @@ class RealPCDDatasetLoader:
                         and cam_id in f
                     ])
 
-                    num_steps = len(action_info)
-
-                    assert len(pcd_list) == num_steps, f"PCD count {len(pcd_list)} != action count {num_steps} for {path_key}"
-
                     for pcd_path in pcd_list:
 
                         proccessed_pcd = np.array(np.load(pcd_path)).astype(
@@ -145,7 +172,7 @@ class RealPCDDatasetLoader:
                         np.random.shuffle(shuffled_indices)
 
                         shuffle_pcd_value = (proccessed_pcd[
-                            shuffled_indices[:self.downsample_points * 10], :])
+                            shuffled_indices[:self.downsample_points * 4], :])
 
                         obs_buffer["seg_pc"].append(shuffle_pcd_value)
 
@@ -219,7 +246,7 @@ class RealPCDDatasetLoader:
                             np.random.shuffle(shuffled_indices)
 
                             shuffle_pcd_value = (proccessed_pcd[
-                                shuffled_indices[:self.downsample_points * 10], :])
+                                shuffled_indices[:self.downsample_points * 4], :])
 
                             obs_buffer["seg_pc"].append(shuffle_pcd_value)
 
@@ -249,11 +276,20 @@ class RealPCDDatasetLoader:
                 self.root['data']['action'] = action_buffer
                 self.action_dim = action_buffer.shape[-1]
                 assert action_buffer.shape[0] == episode_count
+            elif key == "seg_pc":
+                # Point clouds need to be stacked, not concatenated
+                # Shape: [timesteps, num_points, 3]
+                obs_data = np.stack(obs_buffer[key], axis=0)
+
+                assert obs_data.shape[0] == episode_count
+
+                self.root['data'][key] = obs_data
             else:
+                # Regular observations are appended per-timestep as 1D arrays
+                # Use stack to create [timesteps, D] shape
+                obs_data = np.stack(obs_buffer[key], axis=0)
 
-                obs_data = np.array(obs_buffer[key])
-
-                assert len(obs_data) == episode_count
+                assert obs_data.shape[0] == episode_count
 
                 self.root['data'][key] = obs_data
 

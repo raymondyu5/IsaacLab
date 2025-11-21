@@ -52,6 +52,7 @@ class CollectRLWrapper:
         self.hand_side = hand_side
         self.total_success = 0
         self.task = "place" if "Place" in args_cli.task else "grasp"
+        self.horizon = self.env_config["params"]["Task"]["horizon"]
 
         if self.args_cli.save_path is not None:
             filter_keys = [
@@ -141,7 +142,7 @@ class CollectRLWrapper:
             setattr(self.wrapper, "last_obs", next_obs)
         start_time = time.time()
 
-        for i in range(160):
+        for i in range(self.horizon):
 
             last_obs = copy.deepcopy(next_obs)
 
