@@ -54,6 +54,8 @@ class CollectRLWrapper:
         self.task = "place" if "Place" in args_cli.task else "grasp"
         self.horizon = self.env_config["params"]["Task"]["horizon"]
 
+        self.horizon = self.env_config["params"]["Task"]["horizon"]
+
         if self.args_cli.save_path is not None:
             filter_keys = [
                 "segmentation", "seg_rgb", 'extrinsic_params',
@@ -134,6 +136,7 @@ class CollectRLWrapper:
     #     return next_obs
 
     def collect_data(self, agent):
+
 
         next_obs, _ = self.wrapper.reset()
 

@@ -70,3 +70,7 @@ tools/auto_articulation/asset
 scripts/workflows/hand_manipulation/utils/manopth
 scripts/workflows/hand_manipulation/utils/hand_detector/extra_data
 openxr/
+
+ckpt/
+
+*.vscode*

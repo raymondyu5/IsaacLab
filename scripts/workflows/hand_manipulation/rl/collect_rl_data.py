@@ -6,8 +6,14 @@
 """Launch Isaac Sim Simulator first."""
 
 from isaaclab.app import AppLauncher
-from scripts.workflows.utils.parse_setting import save_params_to_yaml
+import os
+CUR_DIR = os.path.dirname(os.path.abspath(__file__))
+ISAAC_BASE_DIR = os.path.join(CUR_DIR, "../../../../")
 
+import sys
+sys.path.append(ISAAC_BASE_DIR) # isaac lab base dir
+
+from scripts.workflows.utils.parse_setting import save_params_to_yaml
 from scripts.sb3.rl_algo_wrapper import rl_parser
 
 import argparse
@@ -16,9 +22,8 @@ import numpy as np
 import os
 import random
 from datetime import datetime
-import sys
 
-sys.path.append("submodule/stable-baselines3")
+sys.path.append(os.path.join(ISAAC_BASE_DIR, "submodule", "stable-baselines3"))
 from stable_baselines3 import PPO
 from scripts.sb3.sac import SAC
 
