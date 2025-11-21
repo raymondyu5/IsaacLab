@@ -648,6 +648,43 @@ params:
             z: [0.0, 0.0]
             roll: [0.0, 0.0]
             yaw: [-3.14, 3.14]
-            
-            
-            
+
+    bourbon:
+      path: source/assets/ycb/dexgrasp/recenter_objects/bourbon/recenter_rigid_object.usd
+      kinematic_enabled: false
+      scale:
+      - 1.0
+      - 1.0
+      - 1.0
+      pos:
+      - 0.5
+      - 0.0
+      - 0.04072
+      rot:
+        axis:
+        - 2  # Z-axis rotation
+        angles:
+        - 1.57  # 90 degrees in radians
+      pose_range:
+        x:
+        - -0.2
+        - 0.2
+        y:
+        - -0.2
+        - 0.2
+        z:
+        - 0.0
+        - 0.0
+        roll:
+        - 0.0
+        - 0.0
+        yaw:
+        - 0.0
+        - 0.0  # No yaw randomization - fixed at 90°
+        pitch:
+        - 0.0
+        - 0.0
+
+
+
+

@@ -80,6 +80,8 @@ class MultiRootStateCfg():
         ]) * adr_factor
         self.pose_range = copy.deepcopy(self.default_pose_range)
 
+        self.discrete_yaw_choices = object_config.get("discrete_yaw_choices", None)
+
         self.velocity_range = object_config.get("velocity_range", {})
         self.init_scale = False
 
@@ -147,6 +149,17 @@ class MultiRootStateCfg():
                                                  ranges[:, 1],
                                                  (len(env_ids), 6),
                                                  device=asset.device)
+
+
+        if self.discrete_yaw_choices is not None:
+            discrete_yaws = self.discrete_yaw_choices
+            random_indices = torch.randint(0, len(discrete_yaws), (len(env_ids),), device=asset.device)
+            discrete_yaw_tensor = torch.tensor(discrete_yaws, device=asset.device)
+            base_yaws = discrete_yaw_tensor[random_indices]
+
+            noise_range = 0.0873  # 5 degrees in radians
+            noise = torch.rand(len(env_ids), device=asset.device) * (2 * noise_range) - noise_range
+            rand_samples[:, 5] = base_yaws + noise
 
         positions = root_states[:, 0:3] + env.scene.env_origins[
             env_ids] + rand_samples[:, 0:3]

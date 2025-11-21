@@ -147,7 +147,7 @@ class RealPCDDatasetLoader:
                         shuffle_pcd_value = (proccessed_pcd[
                             shuffled_indices[:self.downsample_points * 10], :])
 
-                        obs_buffer["seg_pc"].append(shuffle_pcd_value.tolist())
+                        obs_buffer["seg_pc"].append(shuffle_pcd_value)
 
                     episode_ends.append(
                         copy.deepcopy(num_steps + episode_count))
@@ -221,7 +221,7 @@ class RealPCDDatasetLoader:
                             shuffle_pcd_value = (proccessed_pcd[
                                 shuffled_indices[:self.downsample_points * 10], :])
 
-                            obs_buffer["seg_pc"].append(shuffle_pcd_value.tolist())
+                            obs_buffer["seg_pc"].append(shuffle_pcd_value)
 
                         episode_ends.append(
                             copy.deepcopy(num_steps + episode_count))

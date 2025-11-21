@@ -188,12 +188,13 @@ params:
         rot:
           axis: [0]
           angles: [0.0]
+        discrete_yaw_choices: [-1.57, 1.57]  # Discrete choices: -90° or +90°
         pose_range:
           x: [-0.05, 0.10]
           y: [-0.20, 0.20]
           z: [0.0, 0.0]
           roll: [0.0, 0.0]
-          yaw: [-1.0, 1.0]
+          yaw: [0.0, 0.0]
       - file: "source/config/task/hand_env/object/recenter_ycb.yaml"
         handness: left
         name: left_hand_object
