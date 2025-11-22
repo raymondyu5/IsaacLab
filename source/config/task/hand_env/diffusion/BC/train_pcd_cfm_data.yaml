@@ -20,6 +20,7 @@ pred_action_steps_only: False
 downsample_points: 2048
 n_obs_stack: 1  # num of obs timesteps to stack for proprio, 1 is no stacking
 n_past_actions: 0 # 0 = no past actions 
+_max_temporal_length: ${eval:'max(${n_obs_steps}, ${n_obs_stack}, ${n_past_actions})'} 
 
 shape_meta:
   action:
@@ -68,8 +69,8 @@ dataset:
   _target_: scripts.workflows.hand_manipulation.utils.diffusion.dataset.pickandplace_pcd_dataset.PickandPlacePCDDataset
   data_path: None
   horizon: ${horizon}
-  pad_before: ${eval:'${n_obs_steps}-1'}
-  pad_after: ${eval:'${n_obs_steps}-1'}
+  pad_before: ${eval:'${_max_temporal_length}-1'}
+  pad_after: ${eval:'${_max_temporal_length}-1'}
   obs_key: ["right_hand_joint_pos", "right_ee_pose"] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
   image_key: ["seg_pc"]
   noise_key: [right_hand_joint_pos, right_ee_pose]

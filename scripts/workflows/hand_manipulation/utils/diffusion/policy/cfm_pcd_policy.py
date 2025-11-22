@@ -109,14 +109,13 @@ class CFMnetPCDPolicy(BaseImagePolicy):
             num_inference_steps = noise_scheduler.config.num_train_timesteps
         self.num_inference_steps = num_inference_steps
 
-    def _process_observations_with_stacking(self, nobs, batch_size, n_steps_to_use):
+    def _process_observations_with_stacking(self, nobs, batch_size):
         """
         Process observations with optional stacking for proprio and past actions.
 
         Args:
             nobs: normalized observations dict with keys: 'agent_pos', 'seg_pc', 'past_action'
             batch_size: batch size
-            n_steps_to_use: number of timesteps to extract (n_obs_steps basically)
 
         Returns:
             global_cond: [B, feature_dim] if obs_as_global_cond
@@ -142,8 +141,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         # Stack proprio observations over n_obs_stack timesteps
         proprio_features = []
         if 'agent_pos' in nobs:
-            # Extract up to n_obs_stack timesteps of proprio
-            n_stack = min(self.n_obs_stack, n_steps_to_use, nobs['agent_pos'].shape[1])
+            n_stack = min(self.n_obs_stack, nobs['agent_pos'].shape[1])
             stacked_proprio = nobs['agent_pos'][:, :n_stack, :]  # [B, n_stack, D_proprio]
             stacked_proprio = stacked_proprio.reshape(batch_size, -1)  # [B, n_stack * D_proprio]
             proprio_features.append(stacked_proprio)
@@ -151,8 +149,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         # Extract past actions
         past_action_features = []
         if self.n_past_actions > 0 and 'past_action' in nobs:
-            # Extract past n_past_actions actions
-            n_past = min(self.n_past_actions, n_steps_to_use)
+            n_past = min(self.n_past_actions, nobs['past_action'].shape[1])
             if n_past > 0:
                 past_actions = nobs['past_action'][:, :n_past, :]  # [B, n_past, D_action]
                 past_actions = past_actions.reshape(batch_size, -1)  # [B, n_past * D_action]
@@ -240,9 +237,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         if self.obs_as_global_cond:
             # condition through global feature
             if self.n_obs_stack > 1 or self.n_past_actions > 0:
-                global_cond = self._process_observations_with_stacking(
-                    nobs, B, To
-                )
+                global_cond = self._process_observations_with_stacking(nobs, B)
             else:
                 this_nobs = dict_apply(
                     nobs, lambda x: x[:, :To, ...].reshape(-1, *x.shape[2:]))
@@ -318,9 +313,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         cond_data = trajectory
         if self.obs_as_global_cond:
             if self.n_obs_stack > 1 or self.n_past_actions > 0:
-                global_cond = self._process_observations_with_stacking(
-                    nobs, batch_size, self.n_obs_steps
-                )
+                global_cond = self._process_observations_with_stacking(nobs, batch_size)
             else:
                 this_nobs = dict_apply(
                     nobs, lambda x: x[:, :self.n_obs_steps, ...].reshape(
