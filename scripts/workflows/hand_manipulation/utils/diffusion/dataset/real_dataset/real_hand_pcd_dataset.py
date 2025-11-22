@@ -132,6 +132,8 @@ class RealHandPCDDataset(BaseImageDataset):
 
         for key in self.image_key:
             normalizer[key] = get_image_range_normalizer()
+        # past_action uses the same normalization parameters as action
+        normalizer['past_action'] = normalizer['action']
         return normalizer
 
     def get_all_actions(self) -> torch.Tensor:
@@ -160,7 +162,8 @@ class RealHandPCDDataset(BaseImageDataset):
 
         data = {
             "obs": {
-                "agent_pos": obs
+                "agent_pos": obs,
+                "past_action": sample["action"],  # T, D_a (actions at each timestep)
             } | image_obs,
             'action': sample["action"],  # T, D_a
         }

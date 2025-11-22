@@ -3,17 +3,8 @@ import torch
 import numpy as np
 import copy
 import sys
-import os
 
-# Add diffusion_policy to path (try both locations)
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-diffusion_policy_path = os.path.join(SCRIPT_DIR, "..", "..", "diffusion_policy")
-if os.path.exists(diffusion_policy_path):
-    sys.path.insert(0, diffusion_policy_path)
-else:
-    # Fallback to submodule
-    sys.path.append("submodule/diffusion_policy")
-
+sys.path.append("submodule/diffusion_policy")
 from diffusion_policy.common.pytorch_util import dict_apply
 from diffusion_policy.common.replay_buffer import ReplayBuffer
 from diffusion_policy.common.sampler import (SequenceSampler, get_val_mask,
@@ -153,6 +144,8 @@ class PickandPlacePCDDataset(BaseImageDataset):
         normalizer = LinearNormalizer()
         normalizer.fit(data=data, last_n_dims=1, mode=mode, **kwargs)
         normalizer['seg_pc'] = get_pcd_range_normalizer()
+        # past_action uses the same normalization parameters as action
+        normalizer['past_action'] = normalizer['action']
         return normalizer
 
     def get_all_actions(self) -> torch.Tensor:
@@ -184,9 +177,11 @@ class PickandPlacePCDDataset(BaseImageDataset):
 
             image_obs[image_key][:, :3] += noise[:, :3]  # add noise to xyz
 
+        # Include past actions in observations (policy will extract what it needs)
         data = {
             "obs": {
-                "agent_pos": obs
+                "agent_pos": obs,
+                "past_action": sample[self.action_key],  # T, D_a (actions at each timestep)
             } | image_obs,
             'action': sample[self.action_key],  # T, D_a
         }

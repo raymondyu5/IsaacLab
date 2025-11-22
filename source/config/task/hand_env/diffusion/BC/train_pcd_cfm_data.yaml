@@ -18,6 +18,8 @@ obs_as_local_cond: False
 obs_as_global_cond: True
 pred_action_steps_only: False
 downsample_points: 2048
+n_obs_stack: 1  # num of obs timesteps to stack for proprio, 1 is no stacking
+n_past_actions: 0 # 0 = no past actions 
 
 shape_meta:
   action:
@@ -50,6 +52,8 @@ policy:
 
   n_action_steps: ${eval:'${n_action_steps}+${n_latency_steps}'}
   n_obs_steps: ${n_obs_steps}
+  n_obs_stack: ${n_obs_stack}
+  n_past_actions: ${n_past_actions}
 
   oa_step_convention: True
   obs_as_global_cond: ${obs_as_global_cond}
