@@ -53,6 +53,7 @@ class CollectRLWrapper:
         self.total_success = 0
         self.task = "place" if "Place" in args_cli.task else "grasp"
         self.horizon = self.env_config["params"]["Task"]["horizon"]
+        self.num_hand_joints = self.env_config["params"]["num_hand_joints"]
 
         self.horizon = self.env_config["params"]["Task"]["horizon"]
 
@@ -96,8 +97,15 @@ class CollectRLWrapper:
 
     def reset_robot_joints(self, ):
 
-        init_joint_pose = self.env_config["params"][
-            f"{self.hand_side}_reset_joint_pose"] + [0] * self.num_hand_joints
+        # Get arm joint pose from config
+        arm_joint_pose = self.env_config["params"][
+            f"{self.hand_side}_reset_joint_pose"]
+
+        # Get hand joint pose from config, default to zeros if not specified
+        hand_joint_pose = self.env_config["params"].get(
+            f"{self.hand_side}_reset_hand_joint_pose", [0] * self.num_hand_joints)
+
+        init_joint_pose = arm_joint_pose + hand_joint_pose
 
         self.env.scene[
             f"{self.hand_side}_hand"].root_physx_view.set_dof_positions(
@@ -137,13 +145,16 @@ class CollectRLWrapper:
 
     def collect_data(self, agent):
 
-
+        # wrapper.reset() now handles forced joint reset + 10 warmup steps internally
         next_obs, _ = self.wrapper.reset()
 
         if self.args_cli.save_path is not None:
             reset_buffer(self.wrapper)
             setattr(self.wrapper, "last_obs", next_obs)
         start_time = time.time()
+
+        # Number of initial steps to send zero actions (warmup period)
+        warmup_steps = getattr(self.args_cli, 'warmup_steps', 0)
 
         for i in range(self.horizon):
 
@@ -154,13 +165,29 @@ class CollectRLWrapper:
             else:
                 proccess_last_obs = last_obs["policy"]
 
-            actions = torch.as_tensor(
-                agent.predict(proccess_last_obs.cpu().numpy(),
-                              deterministic=True)[0]).to(self.device)
-            setattr(self.wrapper, "eval_iter", i)
+            # During warmup: bypass wrapper and send zero actions directly to env
+            if i < warmup_steps:
+                # Use raw action space dimension (arm + hand joints)
+                action_dim = self.wrapper.raw_action_space if hasattr(self.wrapper, 'raw_action_space') else 22
+                zero_action = torch.zeros(self.env.num_envs, action_dim,
+                                          dtype=torch.float32, device=self.device)
+                next_obs, rewards, terminated, time_outs, extras = self.env.step(zero_action)
 
-            next_obs, rewards, terminated, time_outs, extras, hand_arm_actions = self.wrapper.step(
-                actions)[:6]
+                # Update wrapper state for data collection
+                setattr(self.wrapper, "last_obs", next_obs)
+                if hasattr(self.wrapper, 'add_obs_to_buffer'):
+                    self.wrapper.add_obs_to_buffer(self.env.episode_length_buf[0])
+
+                hand_arm_actions = zero_action
+            else:
+                # Normal operation: use agent + wrapper
+                actions = torch.as_tensor(
+                    agent.predict(proccess_last_obs.cpu().numpy(),
+                                  deterministic=True)[0]).to(self.device)
+                setattr(self.wrapper, "eval_iter", i)
+
+                next_obs, rewards, terminated, time_outs, extras, hand_arm_actions = self.wrapper.step(
+                    actions)[:6]
 
             # cam_o3d = vis_pc(next_obs["policy"]["seg_pc"][0][0].cpu().numpy())
             # visualize_pcd([cam_o3d])
@@ -181,6 +208,14 @@ class CollectRLWrapper:
 
     def lift_or_not(self, last_obs):
         success_flag = self.wrapper.eval_success(last_obs)
+
+        # Save all data if flag is set (for testing with action clipping)
+        if hasattr(self.args_cli, 'save_all_data') and self.args_cli.save_all_data:
+            if self.args_cli.save_path is not None:
+                # Save all environments regardless of success/failure
+                index = torch.arange(self.env.num_envs)
+                filter_out_data(self.wrapper, index.cpu())
+            return success_flag
 
         if success_flag.sum() > 0 or self.args_cli.use_failure:
             if self.args_cli.save_path is not None:

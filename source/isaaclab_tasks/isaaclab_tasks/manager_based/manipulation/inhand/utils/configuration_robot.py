@@ -313,6 +313,11 @@ def config_reset_robot_setting(
     #     },
     # )
 
+    # Get hand joint pose from config if available
+    hand_joint_pose = env_cfg["params"].get(f"{hand_side}_reset_hand_joint_pose", None)
+    if hand_joint_pose is not None:
+        hand_joint_pose = torch.as_tensor(hand_joint_pose)
+
     reset_pole_position = EventTerm(
         func=mdp.reset_joints_by_interpolate,
         mode="reset",
@@ -322,6 +327,7 @@ def config_reset_robot_setting(
             "position_range": (-0.0 * math.pi, 0.0 * math.pi),
             "interpolation_range":
             torch.as_tensor(env_cfg["params"]["joint_interpolate_region"]),
+            "hand_joint_pos": hand_joint_pose,
         },
     )
     setattr(events, f"reset_{hand_side}_robot_pole_position",
@@ -353,11 +359,18 @@ def config_reset_joint_pose(events,
                             arm_joint_pos,
                             num_hand_joints,
                             arm_joint_limits,
-                            hand_side=None):
+                            hand_side=None,
+                            hand_joint_pos=None):
+
+    # Use provided hand joint pose or default to zeros
+    if hand_joint_pos is not None:
+        hand_joints = torch.as_tensor(hand_joint_pos)
+    else:
+        hand_joints = torch.zeros((num_hand_joints))
 
     target_joint_value = torch.cat(
         [torch.as_tensor(arm_joint_pos),
-         torch.zeros((num_hand_joints))], )
+         hand_joints], )
 
     reset_joint = EventTerm(func=mdp.reset_joints_by_values,
                             mode="reset",
@@ -586,8 +599,9 @@ def config_robot(object, actions, env_cfg):
             config_reset_joint_pose(object.events,
                                     env_cfg["params"]["left_reset_joint_pose"],
                                     env_cfg["params"]["num_hand_joints"],
-                                    rm_joint_limits=arm_joint_limits,
-                                    hand_side="left")
+                                    arm_joint_limits=arm_joint_limits,
+                                    hand_side="left",
+                                    hand_joint_pos=env_cfg["params"].get("left_reset_hand_joint_pose", None))
 
         if add_right_hand:
             if env_cfg["params"].get("right_reset_joint_pose",
@@ -598,7 +612,8 @@ def config_robot(object, actions, env_cfg):
                     env_cfg["params"]["right_reset_joint_pose"],
                     env_cfg["params"]["num_hand_joints"],
                     arm_joint_limits,
-                    hand_side="right")
+                    hand_side="right",
+                    hand_joint_pos=env_cfg["params"].get("right_reset_hand_joint_pose", None))
 
     # if env_cfg["params"]["contact_sensor"]["init"]:
     #     if add_left_hand:

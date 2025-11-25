@@ -17,6 +17,7 @@ import yaml
 # from pythae.models import AutoModel
 import os
 import isaaclab.utils.math as math_utils
+from isaaclab.utils.math import LPFilter
 from scripts.workflows.hand_manipulation.utils.vae.data_normalizer import (
     dataset_denrormalizer, dataset_normalizer, load_config,
     extract_finger_joints, TemporalEnsembleBufferAction,
@@ -69,6 +70,19 @@ class RLCFMStepWrapper:
             self.hand_side = "right"
         else:
             self.hand_side = "left"
+
+        # Initialize finger smoothing filter from config
+        finger_smoothing_cfg = self.env_config["params"].get("finger_smoothing", {})
+        finger_smooth_enabled = finger_smoothing_cfg.get("enabled", False)
+        finger_smooth_alpha = finger_smoothing_cfg.get("alpha", 1.0)
+
+        if finger_smooth_enabled and finger_smooth_alpha < 1.0:
+            self.finger_filter = LPFilter(alpha=finger_smooth_alpha).to(self.device)
+            self.use_finger_smoothing = True
+            print(f"[RLCFMStepWrapper] Finger smoothing enabled with alpha={finger_smooth_alpha}")
+        else:
+            self.finger_filter = None
+            self.use_finger_smoothing = False
 
         if self.args_cli.save_path is not None:
             self.collector_interface = MultiDatawrapper(
@@ -265,17 +279,52 @@ class RLCFMStepWrapper:
 
         self.horizon = self.env_config["params"]["Task"]["horizon"]
 
+    def reset_robot_joints(self):
+        """Force reset robot joints to stable pose from config."""
+        # Get arm joint pose from config
+        arm_joint_pose = self.env_config["params"][
+            f"{self.hand_side}_reset_joint_pose"]
+
+        # Get hand joint pose from config, default to zeros if not specified
+        hand_joint_pose = self.env_config["params"].get(
+            f"{self.hand_side}_reset_hand_joint_pose", [0] * self.num_hand_joints)
+
+        init_joint_pose = arm_joint_pose + hand_joint_pose
+
+        joint_tensor = torch.as_tensor(init_joint_pose, dtype=torch.float32).unsqueeze(0).to(
+            self.device).repeat_interleave(self.env.unwrapped.num_envs, dim=0)
+
+        env_ids = torch.arange(self.env.unwrapped.num_envs, device=self.device)
+
+        # Use write_joint_state_to_sim which updates both physics AND data buffers
+        asset = self.env.unwrapped.scene[f"{self.hand_side}_hand"]
+        joint_vel = torch.zeros_like(joint_tensor)
+        asset.write_joint_state_to_sim(joint_tensor, joint_vel, env_ids=env_ids)
+
     def reset(self):
 
         obs, info = self.env.reset()
 
+        # Force reset robot joints to stable pose from config BEFORE warmup steps
+        self.reset_robot_joints()
+
+        # Get configured hand joint reset pose for warmup actions
+        hand_joint_pose = self.env_config["params"].get(
+            f"{self.hand_side}_reset_hand_joint_pose", [0] * self.num_hand_joints)
+        hand_joint_tensor = torch.as_tensor(hand_joint_pose, dtype=torch.float32).to(
+            self.device).unsqueeze(0).repeat_interleave(self.env.unwrapped.num_envs, dim=0)
+
         for i in range(10):
 
             if "Rel" in self.args_cli.task:
+                # For relative actions, send zeros for arm (no movement) and configured hand pose
+                # The hand action is absolute position, so we need to send the target pose
+                warmup_action = torch.zeros(self.env.unwrapped.num_envs,
+                                           self.raw_action_space, device=self.device)
+                # Set hand joints (last num_hand_joints dimensions) to configured pose
+                warmup_action[:, -self.num_hand_joints:] = hand_joint_tensor
 
-                obs, rewards, terminated, time_outs, extras = self.env.step(
-                    torch.zeros(self.env.unwrapped.num_envs,
-                                self.raw_action_space).to(device=self.device))
+                obs, rewards, terminated, time_outs, extras = self.env.step(warmup_action)
             if "Abs" in self.args_cli.task:
 
                 # if self.args_cli.real_eval_mode:
@@ -291,10 +340,10 @@ class RLCFMStepWrapper:
                 #                                                           7].clone(
                 #                                                           )
 
+                # Use configured hand joint pose instead of zeros during warmup
                 final_ee_pose = torch.cat([
                     link7_pose,
-                    torch.zeros(
-                        (self.env.unwrapped.num_envs, 16)).to(self.device)
+                    hand_joint_tensor
                 ],
                                           dim=-1)
 
@@ -313,6 +362,13 @@ class RLCFMStepWrapper:
         self.last_obs = obs
         self.last_finger_pose = self.env.unwrapped.scene[
             f"{self.hand_side}_hand"].data.joint_pos[..., -16:].clone()
+
+        # Reset finger smoothing filter and initialize with current finger pose
+        if self.use_finger_smoothing:
+            self.finger_filter.reset()
+            current_finger_pose = self.env.unwrapped.scene[
+                f"{self.hand_side}_hand"].data.joint_pos[..., -self.num_hand_joints:].clone()
+            self.finger_filter(current_finger_pose)
 
         if self.save_data:
 
@@ -529,6 +585,18 @@ class RLCFMStepWrapper:
         #     clip_actions, reconstructed_hand_actions, residual_hand_action,
         #     action_idx)
 
+        # Zero out abduction/adduction joints (j0, j4, j8 for thumb, index, middle)
+        if hasattr(self.args_cli, 'zero_thumb_joints') and self.args_cli.zero_thumb_joints:
+            hand_arm_actions[:, 6] = 0.0   # j0: thumb abduction/adduction
+            hand_arm_actions[:, 10] = 0.0  # j4: index abduction/adduction
+            hand_arm_actions[:, 14] = 0.0  # j8: middle abduction/adduction
+
+        # Apply finger smoothing if enabled (low-pass filter to reduce jittery motions)
+        if self.use_finger_smoothing:
+            hand_arm_actions[:, -self.num_hand_joints:] = self.finger_filter(
+                hand_arm_actions[:, -self.num_hand_joints:].clone()
+            )
+
         if self.save_data or self.eval_mode:
             if self.task == "place":
                 if "Rel" in self.args_cli.task:
@@ -557,6 +625,17 @@ class RLCFMStepWrapper:
                 close_mask = dist < 0.075
                 hand_arm_actions[close_mask, :] = 0.0
 
+            # Apply real-world action clipping if enabled (clip physical deltas before converting to absolute pose)
+            if hasattr(self.args_cli, 'clip_real_world_actions') and self.args_cli.clip_real_world_actions:
+                # Clip xyz translation deltas: [-0.03, -0.03, -0.05] to [0.03, 0.03, 0.05]
+                hand_arm_actions[:, 0] = torch.clamp(hand_arm_actions[:, 0], -0.03, 0.03)
+                hand_arm_actions[:, 1] = torch.clamp(hand_arm_actions[:, 1], -0.03, 0.03)
+                hand_arm_actions[:, 2] = torch.clamp(hand_arm_actions[:, 2], -0.05, 0.05)
+                # Clip rotation deltas: [-0.1, -0.1, -0.1] to [0.1, 0.1, 0.1]
+                hand_arm_actions[:, 3] = torch.clamp(hand_arm_actions[:, 3], -0.1, 0.1)
+                hand_arm_actions[:, 4] = torch.clamp(hand_arm_actions[:, 4], -0.1, 0.1)
+                hand_arm_actions[:, 5] = torch.clamp(hand_arm_actions[:, 5], -0.1, 0.1)
+
             ee_pose = math_utils.apply_delta_pose(link7_pose[:, :3],
                                                   link7_pose[:, 3:7],
                                                   hand_arm_actions[:, :6])
@@ -572,6 +651,17 @@ class RLCFMStepWrapper:
                 execute_robot_action, next_rewards, terminated, time_outs, obs)
 
         else:
+            # Apply real-world action clipping if enabled (clip physical deltas, not raw policy output)
+            if hasattr(self.args_cli, 'clip_real_world_actions') and self.args_cli.clip_real_world_actions:
+                # Clip xyz translation deltas: [-0.03, -0.03, -0.05] to [0.03, 0.03, 0.05]
+                hand_arm_actions[:, 0] = torch.clamp(hand_arm_actions[:, 0], -0.03, 0.03)
+                hand_arm_actions[:, 1] = torch.clamp(hand_arm_actions[:, 1], -0.03, 0.03)
+                hand_arm_actions[:, 2] = torch.clamp(hand_arm_actions[:, 2], -0.05, 0.05)
+                # Clip rotation deltas: [-0.1, -0.1, -0.1] to [0.1, 0.1, 0.1]
+                hand_arm_actions[:, 3] = torch.clamp(hand_arm_actions[:, 3], -0.1, 0.1)
+                hand_arm_actions[:, 4] = torch.clamp(hand_arm_actions[:, 4], -0.1, 0.1)
+                hand_arm_actions[:, 5] = torch.clamp(hand_arm_actions[:, 5], -0.1, 0.1)
+                # Hand joint actions (dim 6+) are NOT clipped
 
             obs, next_rewards, terminated, time_outs, extras = self.env.step(
                 hand_arm_actions)

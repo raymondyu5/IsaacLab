@@ -18,9 +18,9 @@ obs_as_local_cond: False
 obs_as_global_cond: True
 pred_action_steps_only: False
 downsample_points: 2048
-n_obs_stack: 1  # num of obs timesteps to stack for proprio, 1 is no stacking
-n_past_actions: 0 # 0 = no past actions 
-_max_temporal_length: ${eval:'max(${n_obs_steps}, ${n_obs_stack}, ${n_past_actions})'} 
+n_obs_stack: 1  # num of obs timesteps to stack for proprio history (excludes current obs), 0 is no history stacking
+n_past_actions: 0 # 0 = no past actions
+_max_temporal_length: ${eval:'max(${n_obs_steps}, 1 + ${n_obs_stack}, ${n_past_actions})'} 
 
 shape_meta:
   action:

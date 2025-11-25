@@ -2071,6 +2071,7 @@ def reset_joints_by_interpolate(
         position_range: tuple[float, float],
         interpolation_range: tuple[float, float],
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+        hand_joint_pos: torch.Tensor = None,
 ):
 
     asset: Articulation = env.scene[asset_cfg.name]
@@ -2081,6 +2082,16 @@ def reset_joints_by_interpolate(
                                           interpolation_range[1],
                                           num_samples=len(env_ids)).to(
                                               env.device)
+
+    # Use provided hand joint pose if available, otherwise use reset_joint_pos
+    if hand_joint_pos is not None:
+        hand_joint_pos_tensor = hand_joint_pos.to(env.device)
+        # Handle case where hand_joint_pos might have wrong shape
+        if hand_joint_pos_tensor.dim() == 1:
+            hand_joint_pos_tensor = hand_joint_pos_tensor.unsqueeze(0).repeat(len(env_ids), 1)
+        joint_pos[:, 7:] = hand_joint_pos_tensor
+
+    # Add noise to hand joints
     joint_pos[:, 7:] += math_utils.sample_uniform(*position_range,
                                                   joint_pos.shape,
                                                   joint_pos.device)[:, 7:]

@@ -54,8 +54,8 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         global_cond_dim = None
         if obs_as_global_cond:
             input_dim = action_dim
-            # need to cmopute dim  
-            if n_obs_stack > 1 or n_past_actions > 0:
+            # need to cmopute dim
+            if n_obs_stack > 0 or n_past_actions > 0:
                 # PCD feature dim (from encoder, single timestep)
                 pcd_feature_dim = 0
                 for key in obs_encoder.pcd_keys:
@@ -139,12 +139,18 @@ class CFMnetPCDPolicy(BaseImagePolicy):
                 pcd_features.append(feature)
 
         # Stack proprio observations over n_obs_stack timesteps
+        # NOTE: we skip timestep 0 (current obs, already in PCD) and use timesteps 1:n_obs_stack+1 for history
         proprio_features = []
         if 'agent_pos' in nobs:
-            n_stack = min(self.n_obs_stack, nobs['agent_pos'].shape[1])
-            stacked_proprio = nobs['agent_pos'][:, :n_stack, :]  # [B, n_stack, D_proprio]
-            stacked_proprio = stacked_proprio.reshape(batch_size, -1)  # [B, n_stack * D_proprio]
-            proprio_features.append(stacked_proprio)
+            if self.n_obs_stack > 0:
+                # Start from index 1 to skip current obs, take next n_obs_stack timesteps as history
+                start_idx = 1
+                end_idx = min(start_idx + self.n_obs_stack, nobs['agent_pos'].shape[1])
+                n_stack = end_idx - start_idx
+                if n_stack > 0:
+                    stacked_proprio = nobs['agent_pos'][:, start_idx:end_idx, :]  # [B, n_stack, D_proprio]
+                    stacked_proprio = stacked_proprio.reshape(batch_size, -1)  # [B, n_stack * D_proprio]
+                    proprio_features.append(stacked_proprio)
 
         # Extract past actions
         past_action_features = []
@@ -236,7 +242,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         global_cond = None
         if self.obs_as_global_cond:
             # condition through global feature
-            if self.n_obs_stack > 1 or self.n_past_actions > 0:
+            if self.n_obs_stack > 0 or self.n_past_actions > 0:
                 global_cond = self._process_observations_with_stacking(nobs, B)
             else:
                 this_nobs = dict_apply(
@@ -312,7 +318,7 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         trajectory = nactions.to(batch['action'].device, non_blocking=True)
         cond_data = trajectory
         if self.obs_as_global_cond:
-            if self.n_obs_stack > 1 or self.n_past_actions > 0:
+            if self.n_obs_stack > 0 or self.n_past_actions > 0:
                 global_cond = self._process_observations_with_stacking(nobs, batch_size)
             else:
                 this_nobs = dict_apply(

@@ -37,6 +37,31 @@ rl_parser.add_argument(
     action="store_true",
 )
 
+rl_parser.add_argument(
+    "--clip_real_world_actions",
+    action="store_true",
+    help="Apply real-world action clipping during data collection (matches hardware constraints)",
+)
+
+rl_parser.add_argument(
+    "--save_all_data",
+    action="store_true",
+    help="Save all trajectories regardless of success or failure (temporary flag for testing)",
+)
+
+rl_parser.add_argument(
+    "--warmup_steps",
+    type=int,
+    default=0,
+    help="Number of initial steps to send zero actions (warmup period for robot settling)",
+)
+
+rl_parser.add_argument(
+    "--zero_thumb_joints",
+    action="store_true",
+    help="Zero out abduction/adduction joints for thumb, index, middle fingers (j0, j4, j8 = action dims 6, 10, 14)",
+)
+
 # launch omniverse app
 AppLauncher.add_app_launcher_args(rl_parser)
 args_cli, hydra_args = rl_parser.parse_known_args()
