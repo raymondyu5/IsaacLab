@@ -51,10 +51,14 @@ class CFMnetPCDPolicy(BaseImagePolicy):
 
         input_dim = action_dim + obs_feature_dim
 
+        # Current index in the sequence (where "now" is)
+        # With n_obs_stack frames of proprio history (including current), current is at index n_obs_stack-1
+        self.current_idx = n_obs_stack - 1 if n_obs_stack > 0 else 0
+
         global_cond_dim = None
         if obs_as_global_cond:
             input_dim = action_dim
-            # need to cmopute dim
+            # need to compute dim
             if n_obs_stack > 0 or n_past_actions > 0:
                 # PCD feature dim (from encoder, single timestep)
                 pcd_feature_dim = 0
@@ -67,8 +71,11 @@ class CFMnetPCDPolicy(BaseImagePolicy):
                 # Proprio dim, can just get from shape meta
                 proprio_dim = shape_meta['obs']['agent_pos']['shape'][0]
 
-                # Global cond = pcd_features + (proprio * n_obs_stack) + (action_dim * n_past_actions)
-                global_cond_dim = pcd_feature_dim + (proprio_dim * n_obs_stack) + (action_dim * n_past_actions)
+                # Past actions exclude current (to avoid data leak), so we use current_idx actions
+                n_actual_past_actions = self.current_idx
+
+                # Global cond = pcd_features + (proprio * n_obs_stack) + (action_dim * n_actual_past_actions)
+                global_cond_dim = pcd_feature_dim + (proprio_dim * n_obs_stack) + (action_dim * n_actual_past_actions)
             else:
                 # original - obs_feature_dim * n_obs_steps
                 global_cond_dim = obs_feature_dim * n_obs_steps
@@ -106,12 +113,21 @@ class CFMnetPCDPolicy(BaseImagePolicy):
             "inference_method"] if "inference_method" in kwargs else RK2
 
         if num_inference_steps is None:
-            num_inference_steps = noise_scheduler.config.num_train_timesteps
+            # Default for CFM (ConditionalFlowMatcher doesn't have .config)
+            num_inference_steps = 5
         self.num_inference_steps = num_inference_steps
 
     def _process_observations_with_stacking(self, nobs, batch_size):
         """
         Process observations with optional stacking for proprio and past actions.
+
+        Sequence structure (with n_obs_stack=8, current_idx=7):
+            idx:    0    1    2    3    4    5    6    7    8   ...  15
+            data:  p-7  p-6  p-5  p-4  p-3  p-2  p-1  CURR f+1 ...  f+8
+
+            PCD:           index 7 (current_idx)     → 1 frame
+            Proprio:       indices 0-7               → 8 frames (history + current)
+            Past actions:  indices 0-6               → 7 frames (history, excludes current to avoid data leak)
 
         Args:
             nobs: normalized observations dict with keys: 'agent_pos', 'seg_pc', 'past_action'
@@ -120,12 +136,13 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         Returns:
             global_cond: [B, feature_dim] if obs_as_global_cond
         """
-        # Extract point cloud features
+        current_idx = self.current_idx
+
+        # Extract point cloud features at CURRENT timestep
         pcd_obs = {}
         for key in self.obs_encoder.pcd_keys:
             if key in nobs:
-                # Only use first timestep for point clouds
-                pcd_obs[key] = nobs[key][:, 0:1, ...].reshape(-1, *nobs[key].shape[2:])
+                pcd_obs[key] = nobs[key][:, current_idx:current_idx+1, ...].reshape(-1, *nobs[key].shape[2:])
 
         # Encode point cloud
         pcd_features = []
@@ -133,33 +150,23 @@ class CFMnetPCDPolicy(BaseImagePolicy):
             if key in pcd_obs:
                 pcd = pcd_obs[key][:, :3]  # only xyz
                 pcd = pcd.to(next(self.obs_encoder.parameters()).device, non_blocking=True)
-                pcds = torch.cat([pcd], dim=0)
-                feature = self.obs_encoder.key_model_map[key](pcds)
+                feature = self.obs_encoder.key_model_map[key](pcd)
                 feature = feature.reshape(batch_size, feature.shape[-1])
                 pcd_features.append(feature)
 
-        # Stack proprio observations over n_obs_stack timesteps
-        # NOTE: we skip timestep 0 (current obs, already in PCD) and use timesteps 1:n_obs_stack+1 for history
+        # Proprio: indices 0 to n_obs_stack (history + current)
         proprio_features = []
-        if 'agent_pos' in nobs:
-            if self.n_obs_stack > 0:
-                # Start from index 1 to skip current obs, take next n_obs_stack timesteps as history
-                start_idx = 1
-                end_idx = min(start_idx + self.n_obs_stack, nobs['agent_pos'].shape[1])
-                n_stack = end_idx - start_idx
-                if n_stack > 0:
-                    stacked_proprio = nobs['agent_pos'][:, start_idx:end_idx, :]  # [B, n_stack, D_proprio]
-                    stacked_proprio = stacked_proprio.reshape(batch_size, -1)  # [B, n_stack * D_proprio]
-                    proprio_features.append(stacked_proprio)
+        if 'agent_pos' in nobs and self.n_obs_stack > 0:
+            stacked_proprio = nobs['agent_pos'][:, :self.n_obs_stack, :]  # [B, n_obs_stack, D_proprio]
+            stacked_proprio = stacked_proprio.reshape(batch_size, -1)  # [B, n_obs_stack * D_proprio]
+            proprio_features.append(stacked_proprio)
 
-        # Extract past actions
+        # Past actions: indices 0 to current_idx (EXCLUDES current to avoid data leak)
         past_action_features = []
-        if self.n_past_actions > 0 and 'past_action' in nobs:
-            n_past = min(self.n_past_actions, nobs['past_action'].shape[1])
-            if n_past > 0:
-                past_actions = nobs['past_action'][:, :n_past, :]  # [B, n_past, D_action]
-                past_actions = past_actions.reshape(batch_size, -1)  # [B, n_past * D_action]
-                past_action_features.append(past_actions)
+        if current_idx > 0 and 'past_action' in nobs:
+            past_actions = nobs['past_action'][:, :current_idx, :]  # [B, current_idx, D_action]
+            past_actions = past_actions.reshape(batch_size, -1)  # [B, current_idx * D_action]
+            past_action_features.append(past_actions)
 
         # concat
         all_features = pcd_features + proprio_features + past_action_features
@@ -284,8 +291,8 @@ class CFMnetPCDPolicy(BaseImagePolicy):
         naction_pred = nsample[..., :Da]
         action_pred = self.normalizer['action'].unnormalize(naction_pred)
 
-        # get action
-        start = To - 1
+        # get action starting from current_idx
+        start = self.current_idx
         end = start + self.n_action_steps
         action = action_pred[:, start:end]
 
@@ -298,15 +305,8 @@ class CFMnetPCDPolicy(BaseImagePolicy):
 
     def compute_loss(self, batch):
         # normalize input
-        
-        
-
         assert 'valid_mask' not in batch
         nobs = self.normalizer.normalize(batch['obs'])
-        # import pdb
-        # pdb.set_trace()
-        # o3d = vis_pc(nobs["seg_pc"][10,0].transpose(0, 1).cpu().numpy()[:,:3],nobs["seg_pc"][10,0].transpose(0, 1).cpu().numpy()[:,3:6])
-        # visualize_pcd([o3d])
 
         nactions = self.normalizer['action'].normalize(batch['action'])
         batch_size = nactions.shape[0]

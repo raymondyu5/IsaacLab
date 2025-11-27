@@ -360,10 +360,6 @@ def main(args_cli):
     config_path = args_cli.config_file  # <- put your config path here
 
     cfg = OmegaConf.load(config_path)
-    cfg.horizon = args_cli.horizon
-    cfg.n_obs_steps = args_cli.nobs
-    cfg.n_action_steps = args_cli.naction
-    cfg.policy.num_inference_steps = args_cli.num_inference
     cfg.dataset.num_demo = args_cli.num_demo
     cfg.training.resume = args_cli.resume
 
@@ -391,11 +387,6 @@ if __name__ == "__main__":
                         nargs='+',
                         default=None,
                         help="List of load paths")
-    parser.add_argument("--vae_path", type=str, default=None)
-    parser.add_argument("--horizon", type=int, default=4)
-    parser.add_argument("--nobs", type=int, default=1)
-    parser.add_argument("--naction", type=int, default=8)
-    parser.add_argument("--num_inference", type=int, default=5)
     parser.add_argument("--num_demo", type=int, default=250)
     parser.add_argument("--resume", action="store_true")
     args_cli, hydra_args = parser.parse_known_args()

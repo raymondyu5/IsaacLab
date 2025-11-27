@@ -18,9 +18,10 @@ obs_as_local_cond: False
 obs_as_global_cond: True
 pred_action_steps_only: False
 downsample_points: 2048
-n_obs_stack: 1  # num of obs timesteps to stack for proprio, 1 is no stacking
-n_past_actions: 0 # 0 = no past actions
-# Compute required padding to support stacking history longer than n_obs_steps
+n_obs_stack: 8  # proprio history length including current (indices 0 to 7)
+n_past_actions: 7 # past action history EXCLUDING current to avoid data leak (indices 0 to 6)
+# Sequence structure: [hist_0, hist_1, ..., hist_6, CURRENT, future_1, ..., future_8]
+# current_idx = n_obs_stack - 1 = 7, pad_before should equal current_idx
 _max_temporal_length: ${eval:'max(${n_obs_steps}, ${n_obs_stack}, ${n_past_actions})'} 
 
 shape_meta:
@@ -30,7 +31,7 @@ shape_meta:
   obs:
     agent_pos:
       shape:
-        - 22
+        - 23
       type: low_dim
     seg_pc:
       shape:
@@ -42,6 +43,7 @@ policy:
   _target_: scripts.workflows.hand_manipulation.utils.diffusion.policy.cfm_pcd_policy.CFMnetPCDPolicy
   down_dims: [256, 512, 1024]
   shape_meta: ${shape_meta}
+  num_inference_steps: 5
 
   inference_function:
     _target_: scripts.workflows.hand_manipulation.utils.diffusion.utils.inference_utils.RK2
@@ -73,7 +75,7 @@ dataset:
   pad_before: ${eval:'${_max_temporal_length}-1'}
   pad_after: ${eval:'${_max_temporal_length}-1'}
   obs_key: [joint_positions, gripper_position] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
-  camera_id: [CL838420160]
+  camera_id: [CL8384200N1]
 
   noise_key: [joint_positions, gripper_position]
   seed: ${training.seed}

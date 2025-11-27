@@ -212,7 +212,7 @@ class RealPCDSequenceSampler:
             if (sample_start_idx > 0) or (sample_end_idx
                                           < self.sequence_length):
                 data = np.zeros(shape=(self.sequence_length, ) +
-                                input_arr.shape[1:],
+                                sample.shape[1:],
                                 dtype=input_arr.dtype)
                 if sample_start_idx > 0:
                     data[:sample_start_idx] = sample[0]

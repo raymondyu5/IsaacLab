@@ -18,9 +18,11 @@ obs_as_local_cond: False
 obs_as_global_cond: True
 pred_action_steps_only: False
 downsample_points: 2048
-n_obs_stack: 1  # num of obs timesteps to stack for proprio history (excludes current obs), 0 is no history stacking
-n_past_actions: 0 # 0 = no past actions
-_max_temporal_length: ${eval:'max(${n_obs_steps}, 1 + ${n_obs_stack}, ${n_past_actions})'} 
+n_obs_stack: 8  # proprio history length including current (indices 0 to 7)
+n_past_actions: 7 # past action history EXCLUDING current to avoid data leak (indices 0 to 6)
+# Sequence structure: [hist_0, hist_1, ..., hist_6, CURRENT, future_1, ..., future_8]
+# current_idx = n_obs_stack - 1 = 7, pad_before should equal current_idx
+_max_temporal_length: ${eval:'max(${n_obs_steps}, ${n_obs_stack}, ${n_past_actions})'} 
 
 shape_meta:
   action:
@@ -29,7 +31,7 @@ shape_meta:
   obs:
     agent_pos:
       shape:
-        - 22
+        - 23
       type: low_dim
     seg_pc:
       shape:
@@ -71,14 +73,13 @@ dataset:
   horizon: ${horizon}
   pad_before: ${eval:'${_max_temporal_length}-1'}
   pad_after: ${eval:'${_max_temporal_length}-1'}
-  obs_key: ["right_hand_joint_pos", "right_ee_pose"] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
+  obs_key: ["right_hand_joint_pos"] #'right_object_in_tip', 'right_target_object_pose', 'right_manipulated_object_pose'
   image_key: ["seg_pc"]
-  noise_key: [right_hand_joint_pos, right_ee_pose]
+  noise_key: [right_hand_joint_pos]
   action_key: "action"
   seed: ${training.seed}
   noise_scale:
     right_hand_joint_pos: 0.05
-    right_ee_pose: 0.02
   val_ratio: 0.05
   downsample_points: ${downsample_points}
   pcd_noise: 0.020
